@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="du">
 <head>
 <meta charset="utf-8"/>
-<title>Big Data System Design (TICT-VKBDSD-17) dag 1</title>
+<title>Big Data System Design, dag 1</title>
 <meta name="author" content="(Roelant Ossewaarde (roelant.ossewaarde@hu.nl))"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
@@ -27,88 +27,80 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Big Data System Design (TICT-VKBDSD-17) dag 1</h1><h2 class="author">Roelant Ossewaarde (roelant.ossewaarde@hu.nl)</h2><h2 class="date">4 februari 2019</h2><p class="date">Created: 2019-02-02 Sat 23:26</p>
-</section>
-<section id="table-of-contents">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#/slide-org887becf">1. Introductie</a>
-<ul>
-<li><a href="#/slide-orge1bc764">1.1. Verkenning van het onderwerp</a>
-<ul>
-<li><a href="#/slide-org0dabc29">1.1.1. Over big data</a></li>
-<li><a href="#/slide-orgef7f574">1.1.2. Over system design</a></li>
-</ul>
-</li>
-<li><a href="#/slide-org0787cc1">1.2. Cursus outline</a></li>
-<li><a href="#/slide-org7c0d6f6">1.3. Programma</a></li>
-<li><a href="#/slide-org29373d5">1.4. Toetsing</a></li>
-</ul>
-</li>
-<li><a href="#/slide-orgb41e504">2. Over de Lambda/Kappa architectuur</a></li>
-</ul>
-</div>
-</div>
+<section id="sec-title-slide"><h1 class="title">Big Data System Design, dag 1</h1><h2 class="author">Roelant Ossewaarde (roelant.ossewaarde@hu.nl)</h2><h2 class="date">4 februari 2019</h2>
 </section>
 
 
 <section>
-<section id="slide-org887becf">
-<h2 id="org887becf"><span class="section-number-2">1</span> Introductie</h2>
+<section id="slide-orgbc556f5">
+<h2 id="orgbc556f5"><span class="section-number-2">1</span> Introductie</h2>
 <p>
 Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/1111">Big Data System Design</a>. 
 </p>
 
 </section>
-</section>
-<section>
-<section id="slide-orge1bc764">
-<h3 id="orge1bc764"><span class="section-number-3">1.1</span> Verkenning van het onderwerp</h3>
+<section id="slide-org5afdd68">
+<h3 id="org5afdd68"><span class="section-number-3">1.1</span> Over Big Data</h3>
 <p>
-Big data
+<a href="https://roelanto.shinyapps.io/bigdata1/">Systemen</a> waarin data zó snel groeit dat de kosten van opslag en verwerking per datapunt hoger wordt dan de waarde er van.
 </p>
 
 </section>
-<section id="slide-org0dabc29">
-<h4 id="org0dabc29"><span class="section-number-4">1.1.1</span> Over big data</h4>
+<section id="slide-org656a72b">
+<h3 id="org656a72b"><span class="section-number-3">1.2</span> Visualizatie van typen data</h3>
+
+<div class="figure">
+<p><img src="./images/growthofdata.png" alt="growthofdata.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org9d4cdc8">
+<h3 id="org9d4cdc8"><span class="section-number-3">1.3</span> Vijf V's</h3>
 <p>
-Er is wat te zeggen over big data
+De toename van het <b>volume</b> van data stelt nieuwe eisen aan de manier waarop we data opslaan (<b>storage</b>) en aan de manier waarop we data opvragen (<b>retrieval</b>).
 </p>
 
-<ul>
-<li>Big data is een leuke term</li>
-<li>Big data is eenv vervelende term</li>
-
-</ul>
 <p>
-as,dklaskdkas
+Tegelijkertijd is het steeds belangrijker dat de snelheid (<b>velocity</b>) van dataverwerking niet afneemt. 
 </p>
 
+<p>
+Ook de variëteit (<b>variety</b>) aan opgeslagen data verandert: er wordt per jaar bijna drie keer zo veel ongestructureerde data opgeslagen als gestructureerde data.
+</p>
+
+<p>
+Het belang &#x2013; en dus ook de waarde <b>Value</b> &#x2013; van data in bedrijven neemt toe. 
+</p>
+
+<p>
+Voor sommige bedrijfsprocessen hoeft data niet per se 100% de werkelijkheid weer te geven <b>veracity</b>. 
+</p>
 
 </section>
-<section id="slide-orgef7f574">
-<h4 id="orgef7f574"><span class="section-number-4">1.1.2</span> Over system design</h4>
+<section id="slide-org403cd51">
+<h3 id="org403cd51"><span class="section-number-3">1.4</span> Cursus outline</h3>
+<p>
+Onderwerpen die we bespreken:
+</p>
 
-</section>
-</section>
-<section>
-<section id="slide-org0787cc1">
-<h3 id="org0787cc1"><span class="section-number-3">1.2</span> Cursus outline</h3>
 <ul>
 <li>Big Data Architectuur
 <ul>
-<li>Attribute Driven Design (ADD0</li>
+<li>Attribute Driven Design (ADD)</li>
 <li>Lambda en Kappa architectuur</li>
 
 </ul></li>
+
+</ul>
+<ul>
 <li>Big Data Storage &amp; Retrieval
 <ul>
 <li>HDFS</li>
 <li>NoSQL</li>
 
 </ul></li>
+
 <li>Big Data Processing
 <ul>
 <li>(Parallel en gedistribueerd programmeren)</li>
@@ -126,15 +118,15 @@ as,dklaskdkas
 
 
 </section>
-</section>
-<section>
-<section id="slide-org7c0d6f6" data-background="#dbdbed" class="table-small">
-<h3 id="org7c0d6f6"><span class="section-number-3">1.3</span> Programma</h3>
+<section id="slide-org402ac7d" data-background="#dbdbed" class="table-small">
+<h3 id="org402ac7d"><span class="section-number-3">1.5</span> Programma</h3>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
 <col  class="org-right" />
+
+<col  class="org-left" />
 
 <col  class="org-left" />
 
@@ -154,6 +146,7 @@ as,dklaskdkas
 <th scope="col" class="org-left">Onderwerp</th>
 <th scope="col" class="org-left">Opdracht</th>
 <th scope="col" class="org-left">Voorbereiding</th>
+<th scope="col" class="org-left">&#xa0;</th>
 </tr>
 </thead>
 <tbody>
@@ -162,6 +155,7 @@ as,dklaskdkas
 <td class="org-left">ma 4 feb</td>
 <td class="org-left">HL15-3.058</td>
 <td class="org-left">Introductie; architectuur</td>
+<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
@@ -173,15 +167,17 @@ as,dklaskdkas
 <td class="org-left">ADD</td>
 <td class="org-left">Introductie</td>
 <td class="org-left">Kazman, ch. 2</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-right">2</td>
 <td class="org-left">ma 11 feb</td>
 <td class="org-left">PL101-2.207</td>
-<td class="org-left">Hadoop, Apache ecostructuur</td>
+<td class="org-left">Spark, Apache ecostructuur</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left"><a href="https://www.researchgate.net/publication/282606236_Big_Data_Technologies_Trends_and_Applications">Singh et al 2015</a></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
@@ -191,6 +187,7 @@ as,dklaskdkas
 <td class="org-left">Geen les, lokaal beschikbaar</td>
 <td class="org-left">Uitwerken analysestrategie</td>
 <td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
@@ -198,6 +195,7 @@ as,dklaskdkas
 <td class="org-left">ma 18 feb</td>
 <td class="org-left">PL101-2.207</td>
 <td class="org-left">Data-analyse: regressie</td>
+<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
@@ -209,6 +207,7 @@ as,dklaskdkas
 <td class="org-left">&#xa0;</td>
 <td class="org-left">Consultancy Young Mavericks / OSF</td>
 <td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
@@ -216,6 +215,7 @@ as,dklaskdkas
 <td class="org-left">vr 22 feb</td>
 <td class="org-left">HL15-2.012</td>
 <td class="org-left">Text mining, neural networks</td>
+<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
@@ -227,6 +227,7 @@ as,dklaskdkas
 <td class="org-left">Streams &amp; Apache; HDFS</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
@@ -236,6 +237,7 @@ as,dklaskdkas
 <td class="org-left">Kwaliteit en testen</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left"><a href="https://qaconsultants.com/wp-content/uploads/2015/10/Primer-on-Big-Data-Testing.pdf">Primer on Big Data Testing</a></td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
@@ -243,6 +245,7 @@ as,dklaskdkas
 <td class="org-left">ma 4 mar</td>
 <td class="org-left">HL15-3.058</td>
 <td class="org-left">Casus: actuele systemen</td>
+<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
@@ -254,6 +257,7 @@ as,dklaskdkas
 <td class="org-left">Geen les, lokaal beschikbaar</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
@@ -261,6 +265,7 @@ as,dklaskdkas
 <td class="org-left">ma 11 mar</td>
 <td class="org-left">PL101-2.207</td>
 <td class="org-left">(PageRank, graphs, Neo4J)</td>
+<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
@@ -272,15 +277,14 @@ as,dklaskdkas
 <td class="org-left">&#xa0;</td>
 <td class="org-left">Oplevering systeem</td>
 <td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
 
 </section>
-</section>
-<section>
-<section id="slide-org29373d5">
-<h3 id="org29373d5"><span class="section-number-3">1.4</span> Toetsing</h3>
+<section id="slide-orgca512dc">
+<h3 id="orgca512dc"><span class="section-number-3">1.6</span> Toetsing</h3>
 <ul>
 <li>Tentamen: over de stof op Canvas.</li>
 <li>Opdracht: in samenwerking met Young Mavericks (data science consultants) en Open State foundation.
@@ -289,13 +293,103 @@ as,dklaskdkas
 <li>Ontwerpen en implementeren van text mining analyse</li>
 
 </ul></li>
+<li>Studiebelasting: 140 uur, 5 ECTS: ongeveer 80 uur voor opdracht.</li>
 
 </ul>
+
+
 </section>
 </section>
 <section>
-<section id="slide-orgb41e504">
-<h2 id="orgb41e504"><span class="section-number-2">2</span> Over de Lambda/Kappa architectuur</h2>
+<section id="slide-orgc64699c">
+<h2 id="orgc64699c"><span class="section-number-2">2</span> Big Data systemen: maturity</h2>
+<p>
+Als introductie in de thema's die belangrijk zijn voor Big Data systemen, ga je aan de slag met een model waarmee je kunt beoordelen hoe goed en waardevol de <b>master data management</b> van een willekeurige organisatie is. 
+</p>
+
+<p>
+Het model dat we gebruiken is het MD3M model van Spruit en Pietzka. Het is beschreven in een <a href="http://dx.doi.org/10.1016/j.chb.2014.09.030">artikel</a> (Link via de <a href="https://hu.on.worldcat.org/oclc/5693215120">bibliotheek</a>, <a href="https://canvas.hu.nl/files/121270">kopie op Canvas</a>). In deze opdracht moet je over een systeem nadenken in de context van dit model. 
+</p>
+
+</section>
+<section id="slide-orgfcf60f8">
+<h3 id="orgfcf60f8"><span class="section-number-3">2.1</span> Opdracht 1: beschrijven van systeem</h3>
+<p>
+Werk samen in groepjes van 2 of 3 studenten. Kies uit systemen waar jullie in het verleden aan hebben gewerkt (bijvoorbeeld vanuit stage) het meest volwassen systeem, en beoordeel dat systeem aan de hand van het MD3M-model zoals beschreven in appendix A van het gelinkte artikel. 
+</p>
+
+<p>
+Geef voor dat systeem een score van 1 (<i>initial</i>)-5 (<i>optimized</i>) op elk van de hoofdcategorieën van Fig. 1 (dus: <i>Data Model</i>, <i>Data Quality</i>, <i>Usage &amp; Ownership</i>, <i>Data Protection</i>, <i>Maintenance</i>). 
+</p>
+
+<p>
+Baseer de score steeds op de beschrijvingen in appendix A. Iedere categorie heeft steeds meerdere beschrijvingen, dus je zult met verstand een inschatting moeten maken.
+</p>
+
+</section>
+<section id="slide-org99adc85">
+<h3 id="org99adc85"><span class="section-number-3">2.2</span> Opdracht 2: advies voor verbetering</h3>
+<p>
+Verplaats je nu in een rol als technisch consultant. Het management van de organizatie wil graag de score op het MD3M-model verbeteren. Geef voor elk van de hoofdcategorieën een concreet voorstel om het niveau één punt te verbeteren. 
+</p>
+
+</section>
+<section id="slide-org33d5260">
+<h3 id="org33d5260"><span class="section-number-3">2.3</span> Verslaglegging</h3>
+<p>
+Beschrijf in een document:
+</p>
+
+<ol>
+<li>Het systeem dat je hebt geanalyseerd.</li>
+<li>De bevindingen, uitgewerkt per hoofdcategorie (antwoord op vraag 1).</li>
+<li>Het advies, uitgewerkt per hoofdcategorie (antwoord op vraag 2).</li>
+
+</ol>
+
+<p>
+Afhankelijk van de omvang van de klas bespreken we jullie uitwerkingen klassikaal of individueel.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org95e4e02">
+<h2 id="org95e4e02"><span class="section-number-2">3</span> Kappa en Lambda Architectuur</h2>
+
+<div class="figure">
+<p><img src="./images/latency.png" alt="latency.png" />
+</p>
+</div>
+</section>
+<section id="slide-orgeeda2f2">
+<h3 id="orgeeda2f2"><span class="section-number-3">3.1</span> Lambda architectuur</h3>
+
+<div class="figure">
+<p><img src="./images/lambda-architecture.png" alt="lambda-architecture.png" />
+</p>
+</div>
+</section>
+<section id="slide-org81f12aa">
+<h3 id="org81f12aa"><span class="section-number-3">3.2</span> Kappa architectuur</h3>
+
+<div class="figure">
+<p><img src="./images/kappa-architecture.png" alt="kappa-architecture.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgadef04a">
+<h2 id="orgadef04a"><span class="section-number-2">4</span> Vooruitblik</h2>
+<p>
+Vrijdag komen consultants van de Open State Foundation en van Young Mavericks om de opdracht te introduceren. 
+</p>
+
+<p>
+Ter voorbereiding vraag ik jullie om <a href="http://ptgmedia.pearsoncmg.com/images/9780134390789/samplepages/9780134390789.pdf">hoofdstuk 2 van Cervantes &amp; Kazman "Designing Software Architectures"</a> te lezen. Het beschrijft een gestuctureerde manier waarop je een Big Data architectuur kunt ontwerpen. Je moet dit kunnen toepassen op casus van de opdracht. 
+</p>
 </section>
 </section>
 </div>
@@ -316,7 +410,6 @@ slideNumber: 'c',
 rollingLinks: false,
 keyboard: true,
 overview: true,
-margin: 0.00,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
