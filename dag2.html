@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="du">
+<head>
+<meta charset="utf-8"/>
+<title>Big Data System Design</title>
+<meta name="author" content="(Roelant Ossewaarde / HU)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Big Data System Design</h1><h2 class="author">Roelant Ossewaarde / HU</h2><h2 class="date">Dag 2, 8 februari 2019</h2>
+</section>
+
+
+<section>
+<section id="slide-org9338c3c">
+<h2 id="org9338c3c"><span class="section-number-2">1</span> Bepalen van requirements</h2>
+<p>
+<i>Gebaseerd op hoofdstuk 5 van <a href="https://learning.oreilly.com/library/view/designing-software-architectures/9780134390857/">"Designing Software Architectures" (Cervantes &amp; Kazman 2016)</a>.</i>
+</p>
+
+<p>
+<b>Business case:</b> Een Internet bedrijf bedient veel klanten dmv. online-content (vgl. <i>reddit</i>). Al hun systemen maken logs aan met gegevens over de systemen, gedrag van gebruikers, etc. Deze logs worden gebruikt om bedrijfsprocessen bij te sturen.
+</p>
+
+<p>
+De infrastructuur groeit hard; er is behoefte aan een nieuw systeem waarmee de verschillende <i>stakeholders</i> inzicht kunnen krijgen in de gelogde gegevens. 
+</p>
+</section>
+<section id="slide-orge1b8c79">
+<h4 id="orge1b8c79"><span class="section-number-4">1.0.1</span> Marketecture</h4>
+
+<div class="figure">
+<p><img src="./images/kazman_fig_5_1.jpg" alt="kazman_fig_5_1.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgd2806d0" class="p-small">
+<h4 id="orgd2806d0"><span class="section-number-4">1.0.2</span> Use case model</h4>
+<ol class="org-ol">
+<li><a id="org21b0e1a"></a>UC-1: Monitor online services<br />
+<p>
+Mensen van <i>operations</i> moeten de huidige staat van de diensten en infrastructuur kunnen monitoren (zoals web load, aantal gebruikers, etc) op een real-time dashboard.
+</p>
+</li>
+<li><a id="orgcc9d3e1"></a>UC-2: Troubleshoot online service issues<br />
+<p>
+Als er problemen zijn, moeten systeembeheerders snel door recente logs kunnen zoeken naar relevante berichten over het systeem. 
+</p>
+</li>
+<li><a id="orgda5e903"></a>UC-3: Provide management reports<br />
+<p>
+Voor managementrapportages moeten er over een lange termijn logs opgevraagd kunnen worden over bijvoorbeeld het gebruik van de infrastructuur en knelpunten.
+</p>
+</li>
+<li><a id="org5dc7358"></a>UC-4: Support data analytics<br /></li>
+<li><a id="orga4de31f"></a>UC-5: Anomaly detection<br /></li>
+<li><a id="orgfa7935e"></a>UC-6: Provide security reports<br /></li>
+</ol>
+
+</section>
+<section id="slide-org0896d71" class="p-small">
+<h4 id="org0896d71"><span class="section-number-4">1.0.3</span> Quality attribute scenarios</h4>
+<ol class="org-ol">
+<li><a id="org5a3c428"></a>QA-1 Performance<br />
+<p>
+Het systeem moet 15000 events per seconde van ongeveer 300 web servers kunnen afhandelen.
+</p>
+</li>
+<li><a id="orgaa6e7dd"></a>QA-2 Performance<br />
+<p>
+Het systeem zal het dashboard updaten met maximaal 1 minuut vertraging (latency).
+</p>
+</li>
+<li><a id="orgdce0c40"></a>QA-3 Performance<br />
+<p>
+Het systeem zal real-time queries ondersteunen voor troubleshooting met een maximum query tijd van 10 seconden over data van 2 weken terug in het verleden. 
+</p>
+</li>
+<li><a id="org156849d"></a>QA-6 Schaalbaarheid<br />
+<p>
+Het systeem zal ruwe data voor de laatste 2 weken apart beschikbaar stellen voor full-text searches. 
+</p>
+</li>
+<li><a id="orge44cd08"></a>QA-7 Schaalbaarheid<br />
+<p>
+Het systeem zal ruwe data opslaan voor de afgelopen 60 dagen (1 Tb ruwe data per dag, 60 Tb ruwe data totaal).
+</p>
+</li>
+</ol>
+</section>
+<section id="slide-orga55edb6" class="p-small">
+<h4 id="orga55edb6"><span class="section-number-4">1.0.4</span> Constraints</h4>
+<ol class="org-ol">
+<li><a id="org5e038a1"></a>CON-1 Gebruik open source<br />
+<p>
+Vanwege kostenoverwegingen zal het systeem primair gebruik maken van Open Source software. 
+</p>
+</li>
+<li><a id="org157af4a"></a>CON-2 Gebruik visualizatie<br />
+<p>
+Het systeem zal gebruik maken van een corporate BI-tool met een SQL-interface voor het visualizeren van informatie.
+</p>
+</li>
+<li><a id="org7b9f70e"></a>CON-3 Deployment<br />
+<p>
+Het systeem zal zowel in een private cloud als in een publieke cloud geïntegreerd kunnen worden. Architectuurbeslissingen moeten zo min mogelijk vendor-specifiek (Google, Amazon) zijn.
+</p>
+</li>
+</ol>
+</section>
+</section>
+<section>
+<section id="slide-orgbb616ae" class="img-80">
+<h2 id="orgbb616ae"><span class="section-number-2">2</span> Design proces:</h2>
+
+<div class="figure">
+<p><img src="./images/kazman_fig_3_1.jpg" alt="kazman_fig_3_1.jpg" />
+</p>
+</div>
+</section>
+<section id="slide-orgdf18f98" class="p-small">
+<h3 id="orgdf18f98"><span class="section-number-3">2.1</span> Stappen in Iteratie #1</h3>
+<ol class="org-ol">
+<li><a id="org5f2d5d6"></a>Review Inputs<br />
+<p>
+Bepaal welke use cases significant zijn.
+</p>
+</li>
+<li><a id="orga57e259"></a>Bepaal het doel van de iteratie op basis van de <i>drivers</i><br />
+<p>
+De drivers zijn de kwaliteitsattributen en constraints die van belang zijn voor de significante use cases (uit stap 1).
+</p>
+</li>
+<li><a id="org6369f9b"></a>Kies elementen van het systeem om over te besluiten<br />
+<p>
+In een eerste iteratie is dat het hele systeem.
+</p>
+</li>
+<li><a id="orgd5e457c"></a>Kies design concepten voor de gekozen drivers uit stap 2.<br />
+<p>
+Geef ook een reden waarom je voor andere mogelijke design concepten <b>niet</b> hebt gekozen.
+Relevante designkeuzes voor databasetechniek: <a href="./misc/reference-architectures.pdf">Reference architectures for Data Analytics</a>. 
+</p>
+</li>
+<li><a id="org137ab95"></a>Bepaal verantwoordelijkheden en interfaces<br />
+<p>
+In een eerste iteratie nog niet relevant. 
+</p>
+</li>
+<li><a id="org5619e6c"></a>Schets architectuur en documenteer beslissingen.<br /></li>
+<li><a id="org02b8cbc"></a>Review<br /></li>
+</ol>
+
+</section>
+</section>
+<section>
+<section id="slide-org57a09ec">
+<h2 id="org57a09ec"><span class="section-number-2">3</span> Iteratie #2</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: false,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
