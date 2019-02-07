@@ -1,6 +1,8 @@
-/* Style sheet for Reveal.js Presentations
-Author: Vincent Bauer
-Date: 3/25/2016
+/* Adapatation of style sheet for Reveal.js Presentations
+Original author: Vincent Bauer
+Original date: 3/25/2016
+
+Further customized: Roelant Ossewaarde, feb 2019
 */
 
 <style>
@@ -48,7 +50,7 @@ Date: 3/25/2016
 }
 
 .reveal h2.author { /* Heading 2 for an author */
-	font-style: normal; /* could make bold or italics */
+    font-style: normal; /* could make bold or italics */
 }
 
 /* Images */
@@ -72,6 +74,30 @@ Date: 3/25/2016
 
 .reveal .table-small table {
     font-size: 50%;
+}
+
+.reveal .p-small p {
+    font-size: 60%;
+}
+
+#slide-orgdf18f98 {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: 500px;
+}
+
+
+.reveal .img-80 .figure {
+    height: 80%;
+}
+
+.reveal .img-80 img {
+    max-height: 500px;
+}
+
+
+.reveal .slides .title {
+    font-size: 3em;
 }
 
 body {
