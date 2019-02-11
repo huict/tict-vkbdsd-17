@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="du">
+<head>
+<meta charset="utf-8"/>
+<title>Big Data System Design</title>
+<meta name="author" content="(Roelant Ossewaarde / HU)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Big Data System Design</h1><h2 class="author">Roelant Ossewaarde / HU</h2><h2 class="date">Dag 3, 11 februari 2019</h2>
+</section>
+
+
+<section>
+<section id="slide-org0f6f3dd">
+<h2 id="org0f6f3dd"><span class="section-number-2">1</span> Peer-beoordelingen</h2>
+<p>
+Iedere student krijgt één inzending van een andere groep. Dus per groep krijg je de inzendingen van 3 andere groepen te zien. 
+</p>
+
+<p>
+Bekijk eerst de drie inzendingen, vergelijk ze met elkaar en geef feedback.
+</p>
+
+<p>
+Je hoeft niet te <i>beoordelen</i>, het doel is om elkaar te helpen.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb3ffefa">
+<h2 id="orgb3ffefa"><span class="section-number-2">2</span> Gedistribueerde databases</h2>
+<p>
+(zie PDF van PPT op Canvas) 
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgd5ba5b0" class="img-80">
+<h2 id="orgd5ba5b0"><span class="section-number-2">3</span> Design proces:</h2>
+
+<div class="figure">
+<p><img src="./images/kazman_fig_3_1_b.jpg" alt="kazman_fig_3_1_b.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-org8cc1107" class="p-small">
+<h3 id="org8cc1107"><span class="section-number-3">3.1</span> Stappen in Iteratie #1</h3>
+<ol class="org-ol">
+<li><a id="orga97a207"></a>Review Inputs<br />
+<p>
+Bepaal welke use cases significant zijn.
+</p>
+</li>
+<li><a id="org9b550c7"></a>Bepaal het doel van de iteratie op basis van de <i>drivers</i><br />
+<p>
+De drivers zijn de kwaliteitsattributen en constraints die van belang zijn voor de significante use cases (uit stap 1) die je in deze iteratie uitwerkt.
+</p>
+</li>
+<li><a id="org7ee6c5b"></a>Kies elementen van het systeem om over te besluiten<br />
+<p>
+Eerste iteratie: gehele systeem.
+</p>
+</li>
+<li><a id="orgde66d05"></a>Kies design concepten voor de gekozen drivers uit stap 2.<br />
+<p>
+Geef ook een reden waarom je voor andere mogelijke design concepten <b>niet</b> hebt gekozen.
+Relevante designkeuzes voor databasetechniek: <a href="./misc/reference-architectures.pdf">Reference architectures for Data Analytics</a>. 
+</p>
+</li>
+<li><a id="org941b65b"></a>Bepaal verantwoordelijkheden en interfaces<br />
+<p>
+Eerste iteratie: nog niet relevant. 
+</p>
+</li>
+<li><a id="org5dc2949"></a>Schets architectuur en documenteer beslissingen.<br /></li>
+<li><a id="org6129fcf"></a>Review<br /></li>
+</ol>
+
+</section>
+<section id="slide-org3c7dab7">
+<h3 id="org3c7dab7"><span class="section-number-3">3.2</span> Zelf doen: iteratie #1</h3>
+<p>
+Bepaal in de komende dagen welke architectuur je wil gebruiken voor de practicum-opdracht. Bestudeer de architecturen uit <a href="./misc/reference-architectures.pdf">Reference architectures for Data Analytics</a> plus natuurlijk de standaard relationele architecturen. 
+</p>
+
+<p>
+Bekijk ook of je de <a href="http://milinda.pathirage.org/kappa-architecture.com/">Kappa architectuur</a> misschien geschikt vindt. 
+</p>
+
+<p>
+Documenteer: 
+</p>
+
+<ul>
+<li>de architectuur die je hebt gekozen, en waarom.</li>
+<li>kort: waarom je de andere architecturen <b>niet</b> hebt gekozen.</li>
+<li><b>per usecase</b>: hoe die het beste werkt in de gekozen architectuur.</li>
+
+</ul>
+
+<p>
+Maandag 18 februari doen we gezamenlijk iteratie #2: de keuze van de juiste technologie bij de architectuur die jullie voorstellen. Ook bespreken we dan: textanalyse methoden.
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: false,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
