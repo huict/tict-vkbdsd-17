@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="du">
+<head>
+<meta charset="utf-8"/>
+<title>Big Data System Design: Data analyse</title>
+<meta name="author" content="(Roelant Ossewaarde / HU)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Big Data System Design: Data analyse</h1><h2 class="author">Roelant Ossewaarde / HU</h2><h2 class="date">Dag 4, 18 februari 2019</h2>
+</section>
+
+
+<section>
+<section id="slide-orgc3ba732">
+<h2 id="orgc3ba732"><span class="section-number-2">1</span> Referentiestructuren</h2>
+
+<div class="figure">
+<p><img src="./images/reference-architecture.png" alt="reference-architecture.png" />
+</p>
+</div>
+
+<p>
+ETL: <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load">Extract Transform Load</a>.
+</p>
+
+<p>
+MPP: Massively Parallel Processing: problemen waar verschillende CPU's tegelijk aan kunnen werken.
+</p>
+
+
+</section>
+<section id="slide-org5282143">
+<h3 id="org5282143"><span class="section-number-3">1.1</span> Pure Relational</h3>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-pure-relational.png" alt="reference-architecture-pure-relational.png" />
+</p>
+</div>
+
+<p>
+Bekende technologie. De ETL en messaging vindt plaats in het RDBMS. Als er een voorbewerking van de data plaats vindt buiten het database-systeem (bijvoorbeeld door scripts), kies dan voor <i>data refinery</i> architectuur. 
+</p>
+</section>
+<section id="slide-org0a394f1">
+<h3 id="org0a394f1"><span class="section-number-3">1.2</span> Extended Relational</h3>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-extended-relational.png" alt="reference-architecture-extended-relational.png" />
+</p>
+</div>
+
+<p>
+Vooral geschikt voor CPU-intensieve problemen ("Massively Parallel Processing") waarbij het <i>volume</i> data minder ver opschaalt. 
+</p>
+
+<p>
+Variatie in <i>vorm</i> van queries mogelijk (snel antwoord), maar botteleneck: geen on-disk persistentie. 
+</p>
+</section>
+<section id="slide-org62708b6">
+<h3 id="org62708b6"><span class="section-number-3">1.3</span> Pure Non-relational</h3>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-pure-nonrelational.png" alt="reference-architecture-pure-nonrelational.png" />
+</p>
+</div>
+
+<p>
+Vooral geschikt als de <i>vorm</i> van queries al vaststaat en het schaalprobleem vooral het <i>volume</i> van de data betreft. 
+</p>
+
+</section>
+<section id="slide-org5ebe8c2">
+<h3 id="org5ebe8c2"><span class="section-number-3">1.4</span> Data refinery</h3>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-data-refinery.png" alt="reference-architecture-data-refinery.png" />
+</p>
+</div>
+
+<p>
+Voorbewerking vindt plaats buiten relationele database. Dat maakt in-memory relationele database mogelijk. 
+</p>
+
+<p>
+Real-time analyse is beperkt (want er is een voorbewerking), <i>volume</i> is beperkt tot geheugengrenzen, maar wel grote <i>varieteit</i> aan data mogelijk doordat er een uitgebreide voorbewerking mogelijk is. 
+</p>
+</section>
+<section id="slide-orga6dd0ed">
+<h3 id="orga6dd0ed"><span class="section-number-3">1.5</span> Lambda architecture</h3>
+
+<div class="figure">
+<p><img src="./images/lambda-architecture.png" alt="lambda-architecture.png" />
+</p>
+</div>
+
+<p>
+Kan alles, schaalt ongelimiteerd. Maar duur in onderhoud, want verschillende databases/codebases/etc. 
+</p>
+
+</section>
+<section id="slide-org13a6364">
+<h3 id="org13a6364"><span class="section-number-3">1.6</span> Kappa architecture</h3>
+
+<div class="figure">
+<p><img src="./images/kappa-architecture.png" alt="kappa-architecture.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orge0e1854" class="p-smaller">
+<h3 id="orge0e1854"><span class="section-number-3">1.7</span> Overwegingen voor de opdracht:</h3>
+<p>
+Er is sprake van <i>Query en reporting</i> (use cases die teksten opvragen) en van <i>advanced analytics</i> (use cases met text mining). 
+</p>
+
+<p>
+Het volume/varieteit van data eist niet een in-memory database. (<b>geen MPP analytic RDBMS</b>)
+</p>
+
+<p>
+De data bestaat uit documenten en blobs. (<b>wel NoSQL</b>)
+</p>
+
+<p>
+Er zijn een <i>batch</i>-layer en <i>speed</i>-layer, namelijk: textmining in de batch-layer; queries aan de speed layer. 
+</p>
+
+<p>
+Gezien het <i>volume</i> van de data, lijkt de lambda-architectuur overkill: een enkel DBMS zal voldoende krachtig zijn om zowel de batch- als de speed-layer te ondersteunen.
+</p>
+
+<p>
+Dus: NoSQL geschikt voor documenten in een <i>pure non-relational</i>-architectuur of in een <i>kappa</i>-architectuur. 
+</p>
+
+<p>
+Keuze: als er de noodzaak is om regelmatig de hele dataset opnieuw te indexeren, dan is de kappa-architectuur het meest geschikt. 
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org3f7068c">
+<h2 id="org3f7068c"><span class="section-number-2">2</span> Map-reduce</h2>
+<p>
+Multi-core computers kunnen efficiënt processen in parallel afwerken. Ze moeten dan wel op de juiste manier aangestuurd worden. Eén van de toepassingen is <b>data-intensive scalabale computing (DISC)</b>: het verwerken van grote datasets. Google ontwikkelde een belangrijk algoritme: MapReduce. Yahoo ontwikkelde een architectuur (<a href="https://hadoop.apache.org/">Hadoop</a>) waarin MapReduce efficiënt geïmplementeerd kan worden.
+</p>
+
+</section>
+<section id="slide-org08a7c64">
+<h3 id="org08a7c64"><span class="section-number-3">2.1</span> Architectuur van een MapReduce implementatie</h3>
+
+<div class="figure">
+<p><img src="./images/mapreduce1.png" alt="mapreduce1.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org47a36b3" class="p-smaller">
+<h3 id="org47a36b3"><span class="section-number-3">2.2</span> Workflow voorbeeld van Word Count</h3>
+
+<div class="figure">
+<p><img src="./images/mapreduce-workflow.png" alt="mapreduce-workflow.png" />
+</p>
+</div>
+
+<p>
+(bron: <a href="https://dzone.com/articles/word-count-hello-word-program-in-mapreduce">https://dzone.com/articles/word-count-hello-word-program-in-mapreduce</a>)
+</p>
+
+</section>
+<section id="slide-org0a2398b">
+<h3 id="org0a2398b"><span class="section-number-3">2.3</span> Voorbeeld-run van een word count mapper</h3>
+<p>
+Zie <a href="https://github.com/roelanto/tcifbigdata">https://github.com/roelanto/tcifbigdata</a> voor een voorbeeldimplementatie met werkende code. 
+</p>
+
+<p>
+Mapper: <i>emit</i> een 1 voor ieder woord dat gevonden wordt. 
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">WordCountMapper</span> <span style="color: #a020f0;">extends</span> <span style="color: #228b22;">Mapper</span>&lt;<span style="color: #228b22;">LongWritable</span>, <span style="color: #228b22;">Text</span>, <span style="color: #228b22;">Text</span>, <span style="color: #228b22;">IntWritable</span>&gt; {
+
+    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">map</span>(<span style="color: #228b22;">LongWritable</span> <span style="color: #a0522d;">Key</span>,
+                    <span style="color: #228b22;">Text</span> <span style="color: #a0522d;">value</span>,
+                    <span style="color: #228b22;">Context</span> <span style="color: #a0522d;">context</span>) <span style="color: #a020f0;">throws</span> <span style="color: #228b22;">IOException</span>, <span style="color: #228b22;">InterruptedException</span> {
+        <span style="color: #228b22;">String</span>[] <span style="color: #a0522d;">tokens</span> = value.toString().split(<span style="color: #8b2252;">"\\s"</span>);
+        <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">String</span> <span style="color: #a0522d;">s</span> : tokens) {
+            context.write(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">Text</span>(s), <span style="color: #a020f0;">new</span> <span style="color: #228b22;">IntWritable</span>(1));
+        }
+    }
+}
+</pre>
+</div>
+
+</section>
+<section id="slide-org8c00cd5">
+<h3 id="org8c00cd5"><span class="section-number-3">2.4</span> Voorbeeld-run van een word count reducer</h3>
+<p>
+Reducer: <i>emit</i> de som van alle gevonden '1'-en.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-java"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">WordCountReducer</span> <span style="color: #a020f0;">extends</span> <span style="color: #228b22;">Reducer</span>&lt;<span style="color: #228b22;">Text</span>, <span style="color: #228b22;">IntWritable</span>, <span style="color: #228b22;">Text</span>, <span style="color: #228b22;">IntWritable</span>&gt; {
+        <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">reduce</span>(<span style="color: #228b22;">Text</span> <span style="color: #a0522d;">key</span>,
+                           <span style="color: #228b22;">Iterable</span>&lt;<span style="color: #228b22;">IntWritable</span>&gt; <span style="color: #a0522d;">values</span>,
+                           <span style="color: #228b22;">Context</span> <span style="color: #a0522d;">context</span>) <span style="color: #a020f0;">throws</span> <span style="color: #228b22;">IOException</span>, <span style="color: #228b22;">InterruptedException</span> {
+                <span style="color: #228b22;">int</span> <span style="color: #a0522d;">sum</span> = 0;
+                <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">IntWritable</span> <span style="color: #a0522d;">i</span> : values) {
+                        sum += i.get();
+                }
+                context.write(key, <span style="color: #a020f0;">new</span> <span style="color: #228b22;">IntWritable</span>(sum));
+        }
+}
+</pre>
+</div>
+
+</section>
+<section id="slide-org07e6c9c" class="p-smaller">
+<h3 id="org07e6c9c"><span class="section-number-3">2.5</span> HDFS</h3>
+<p>
+Traditioneel: <b>storage</b> is een aparte component in het systeem, gescheiden van <b>compute</b>; tegenwoordig wordt storage vaak geïmplementeerd als bijvoorbeeld Netword Attached Storage (NAS) of Storage Area Networks (SAN). Dataverwerking volgt in zulke systemen steeds dezelfde stappen: haal input data uit store; plaats data in geheugen; verwerk data; schrijf data weg.
+</p>
+
+<p>
+Bij groei van <b>storage</b> moet ook <b>compute</b> groeien; en dus ook de verbinding tussen die twee. Probleem is dat de kosten van verbindingen niet-lineair stijgen: 10 x zo veel bandbreedte is meer dan 10 x zo duur. Bovendien zijn eisen aan opslag tegewoordig anders dan de eisen waarmee traditionele filesystems zijn geb
+</p>
+
+<p>
+De oplossing die Google bedacht: het Google File System (GFS). Het motto is om storage en compute niet meer te scheiden, zoals in de Von Neumann architectuur: ``breng compute naar data, niet andersom''. Hadoop Distributed File System is een open source implementatie van GFS.
+</p>
+
+</section>
+<section id="slide-org7a5a023">
+<h4 id="org7a5a023"><span class="section-number-4">2.5.1</span> Andere architectuur, ander filesysteem</h4>
+<p>
+Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de opslag. Design principes van traditionele filesystemen vs. GFS:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><b>traditioneel</b></th>
+<th scope="col" class="org-left"><b>GFS</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">component failures zijn</td>
+<td class="org-left">excepties</td>
+<td class="org-left">de norm</td>
+</tr>
+
+<tr>
+<td class="org-left">geoptimaliseerd voor</td>
+<td class="org-left">files &lt; 100 Mb</td>
+<td class="org-left">files &gt; 100 Mb</td>
+</tr>
+
+<tr>
+<td class="org-left">datamutatie en lezen vooral</td>
+<td class="org-left">random</td>
+<td class="org-left">sequential</td>
+</tr>
+
+<tr>
+<td class="org-left"># clients</td>
+<td class="org-left">minder</td>
+<td class="org-left">veel</td>
+</tr>
+
+<tr>
+<td class="org-left">belangrijk qua snelheid</td>
+<td class="org-left">latency</td>
+<td class="org-left">bandbreedte</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgf01a15e">
+<h4 id="orgf01a15e"><span class="section-number-4">2.5.2</span> Bewerkingen via HDFS</h4>
+
+<div class="figure">
+<p><img src="./images/hdfs.png" alt="hdfs.png" />
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: false,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
