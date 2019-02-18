@@ -32,8 +32,8 @@
 
 
 <section>
-<section id="slide-orgc3ba732">
-<h2 id="orgc3ba732"><span class="section-number-2">1</span> Referentiestructuren</h2>
+<section id="slide-org6e7cdfb">
+<h2 id="org6e7cdfb"><span class="section-number-2">1</span> Referentiestructuren</h2>
 
 <div class="figure">
 <p><img src="./images/reference-architecture.png" alt="reference-architecture.png" />
@@ -50,8 +50,8 @@ MPP: Massively Parallel Processing: problemen waar verschillende CPU's tegelijk 
 
 
 </section>
-<section id="slide-org5282143">
-<h3 id="org5282143"><span class="section-number-3">1.1</span> Pure Relational</h3>
+<section id="slide-org506f32d">
+<h3 id="org506f32d"><span class="section-number-3">1.1</span> Pure Relational</h3>
 
 <div class="figure">
 <p><img src="./images/reference-architecture-pure-relational.png" alt="reference-architecture-pure-relational.png" />
@@ -62,8 +62,8 @@ MPP: Massively Parallel Processing: problemen waar verschillende CPU's tegelijk 
 Bekende technologie. De ETL en messaging vindt plaats in het RDBMS. Als er een voorbewerking van de data plaats vindt buiten het database-systeem (bijvoorbeeld door scripts), kies dan voor <i>data refinery</i> architectuur. 
 </p>
 </section>
-<section id="slide-org0a394f1">
-<h3 id="org0a394f1"><span class="section-number-3">1.2</span> Extended Relational</h3>
+<section id="slide-org1f58c18">
+<h3 id="org1f58c18"><span class="section-number-3">1.2</span> Extended Relational</h3>
 
 <div class="figure">
 <p><img src="./images/reference-architecture-extended-relational.png" alt="reference-architecture-extended-relational.png" />
@@ -78,8 +78,8 @@ Vooral geschikt voor CPU-intensieve problemen ("Massively Parallel Processing") 
 Variatie in <i>vorm</i> van queries mogelijk (snel antwoord), maar botteleneck: geen on-disk persistentie. 
 </p>
 </section>
-<section id="slide-org62708b6">
-<h3 id="org62708b6"><span class="section-number-3">1.3</span> Pure Non-relational</h3>
+<section id="slide-org4975d1a">
+<h3 id="org4975d1a"><span class="section-number-3">1.3</span> Pure Non-relational</h3>
 
 <div class="figure">
 <p><img src="./images/reference-architecture-pure-nonrelational.png" alt="reference-architecture-pure-nonrelational.png" />
@@ -91,8 +91,8 @@ Vooral geschikt als de <i>vorm</i> van queries al vaststaat en het schaalproblee
 </p>
 
 </section>
-<section id="slide-org5ebe8c2">
-<h3 id="org5ebe8c2"><span class="section-number-3">1.4</span> Data refinery</h3>
+<section id="slide-org3986134">
+<h3 id="org3986134"><span class="section-number-3">1.4</span> Data refinery</h3>
 
 <div class="figure">
 <p><img src="./images/reference-architecture-data-refinery.png" alt="reference-architecture-data-refinery.png" />
@@ -107,8 +107,8 @@ Voorbewerking vindt plaats buiten relationele database. Dat maakt in-memory rela
 Real-time analyse is beperkt (want er is een voorbewerking), <i>volume</i> is beperkt tot geheugengrenzen, maar wel grote <i>varieteit</i> aan data mogelijk doordat er een uitgebreide voorbewerking mogelijk is. 
 </p>
 </section>
-<section id="slide-orga6dd0ed">
-<h3 id="orga6dd0ed"><span class="section-number-3">1.5</span> Lambda architecture</h3>
+<section id="slide-org0f83d75">
+<h3 id="org0f83d75"><span class="section-number-3">1.5</span> Lambda architecture</h3>
 
 <div class="figure">
 <p><img src="./images/lambda-architecture.png" alt="lambda-architecture.png" />
@@ -120,8 +120,8 @@ Kan alles, schaalt ongelimiteerd. Maar duur in onderhoud, want verschillende dat
 </p>
 
 </section>
-<section id="slide-org13a6364">
-<h3 id="org13a6364"><span class="section-number-3">1.6</span> Kappa architecture</h3>
+<section id="slide-org815ff04">
+<h3 id="org815ff04"><span class="section-number-3">1.6</span> Kappa architecture</h3>
 
 <div class="figure">
 <p><img src="./images/kappa-architecture.png" alt="kappa-architecture.png" />
@@ -129,8 +129,8 @@ Kan alles, schaalt ongelimiteerd. Maar duur in onderhoud, want verschillende dat
 </div>
 
 </section>
-<section id="slide-orge0e1854" class="p-smaller">
-<h3 id="orge0e1854"><span class="section-number-3">1.7</span> Overwegingen voor de opdracht:</h3>
+<section id="slide-orgd373cd9" class="p-smaller">
+<h3 id="orgd373cd9"><span class="section-number-3">1.7</span> Overwegingen voor de opdracht:</h3>
 <p>
 Er is sprake van <i>Query en reporting</i> (use cases die teksten opvragen) en van <i>advanced analytics</i> (use cases met text mining). 
 </p>
@@ -160,17 +160,33 @@ Keuze: als er de noodzaak is om regelmatig de hele dataset opnieuw te indexeren,
 </p>
 
 </section>
+<section id="slide-org188f258">
+<h3 id="org188f258"><span class="section-number-3">1.8</span> Peer-beoordelingen</h3>
+<p>
+Iedere student krijgt één inzending van een andere groep. Dus per groep krijg je de inzendingen van 3 andere groepen te zien. 
+</p>
+
+<p>
+Bekijk eerst de drie inzendingen, vergelijk ze met elkaar en geef feedback.
+</p>
+
+<p>
+Je hoeft niet te <i>beoordelen</i>, het doel is om elkaar te helpen.
+</p>
+
+
+</section>
 </section>
 <section>
-<section id="slide-org3f7068c">
-<h2 id="org3f7068c"><span class="section-number-2">2</span> Map-reduce</h2>
+<section id="slide-org1a717fd">
+<h2 id="org1a717fd"><span class="section-number-2">2</span> Map-reduce</h2>
 <p>
 Multi-core computers kunnen efficiënt processen in parallel afwerken. Ze moeten dan wel op de juiste manier aangestuurd worden. Eén van de toepassingen is <b>data-intensive scalabale computing (DISC)</b>: het verwerken van grote datasets. Google ontwikkelde een belangrijk algoritme: MapReduce. Yahoo ontwikkelde een architectuur (<a href="https://hadoop.apache.org/">Hadoop</a>) waarin MapReduce efficiënt geïmplementeerd kan worden.
 </p>
 
 </section>
-<section id="slide-org08a7c64">
-<h3 id="org08a7c64"><span class="section-number-3">2.1</span> Architectuur van een MapReduce implementatie</h3>
+<section id="slide-orgebbd3bf">
+<h3 id="orgebbd3bf"><span class="section-number-3">2.1</span> Architectuur van een MapReduce implementatie</h3>
 
 <div class="figure">
 <p><img src="./images/mapreduce1.png" alt="mapreduce1.png" />
@@ -178,8 +194,8 @@ Multi-core computers kunnen efficiënt processen in parallel afwerken. Ze moeten
 </div>
 
 </section>
-<section id="slide-org47a36b3" class="p-smaller">
-<h3 id="org47a36b3"><span class="section-number-3">2.2</span> Workflow voorbeeld van Word Count</h3>
+<section id="slide-orgddcad19" class="p-smaller">
+<h3 id="orgddcad19"><span class="section-number-3">2.2</span> Workflow voorbeeld van Word Count</h3>
 
 <div class="figure">
 <p><img src="./images/mapreduce-workflow.png" alt="mapreduce-workflow.png" />
@@ -191,8 +207,8 @@ Multi-core computers kunnen efficiënt processen in parallel afwerken. Ze moeten
 </p>
 
 </section>
-<section id="slide-org0a2398b">
-<h3 id="org0a2398b"><span class="section-number-3">2.3</span> Voorbeeld-run van een word count mapper</h3>
+<section id="slide-org41b7472">
+<h3 id="org41b7472"><span class="section-number-3">2.3</span> Voorbeeld-run van een word count mapper</h3>
 <p>
 Zie <a href="https://github.com/roelanto/tcifbigdata">https://github.com/roelanto/tcifbigdata</a> voor een voorbeeldimplementatie met werkende code. 
 </p>
@@ -218,8 +234,8 @@ Mapper: <i>emit</i> een 1 voor ieder woord dat gevonden wordt.
 </div>
 
 </section>
-<section id="slide-org8c00cd5">
-<h3 id="org8c00cd5"><span class="section-number-3">2.4</span> Voorbeeld-run van een word count reducer</h3>
+<section id="slide-orgea1cdcf">
+<h3 id="orgea1cdcf"><span class="section-number-3">2.4</span> Voorbeeld-run van een word count reducer</h3>
 <p>
 Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </p>
@@ -241,8 +257,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </div>
 
 </section>
-<section id="slide-org07e6c9c" class="p-smaller">
-<h3 id="org07e6c9c"><span class="section-number-3">2.5</span> HDFS</h3>
+<section id="slide-orge8f124b" class="p-smaller">
+<h3 id="orge8f124b"><span class="section-number-3">2.5</span> HDFS</h3>
 <p>
 Traditioneel: <b>storage</b> is een aparte component in het systeem, gescheiden van <b>compute</b>; tegenwoordig wordt storage vaak geïmplementeerd als bijvoorbeeld Netword Attached Storage (NAS) of Storage Area Networks (SAN). Dataverwerking volgt in zulke systemen steeds dezelfde stappen: haal input data uit store; plaats data in geheugen; verwerk data; schrijf data weg.
 </p>
@@ -256,8 +272,8 @@ De oplossing die Google bedacht: het Google File System (GFS). Het motto is om s
 </p>
 
 </section>
-<section id="slide-org7a5a023">
-<h4 id="org7a5a023"><span class="section-number-4">2.5.1</span> Andere architectuur, ander filesysteem</h4>
+<section id="slide-org177ff00">
+<h4 id="org177ff00"><span class="section-number-4">2.5.1</span> Andere architectuur, ander filesysteem</h4>
 <p>
 Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de opslag. Design principes van traditionele filesystemen vs. GFS:
 </p>
@@ -313,8 +329,8 @@ Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de ops
 </table>
 
 </section>
-<section id="slide-orgf01a15e">
-<h4 id="orgf01a15e"><span class="section-number-4">2.5.2</span> Bewerkingen via HDFS</h4>
+<section id="slide-orge4e408d">
+<h4 id="orge4e408d"><span class="section-number-4">2.5.2</span> Bewerkingen via HDFS</h4>
 
 <div class="figure">
 <p><img src="./images/hdfs.png" alt="hdfs.png" />
