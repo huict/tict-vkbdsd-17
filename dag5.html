@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="du">
+<head>
+<meta charset="utf-8"/>
+<title>Big Data System Design: Data analyse</title>
+<meta name="author" content="(Roelant Ossewaarde / HU)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Big Data System Design: Data analyse</h1><h2 class="author">Roelant Ossewaarde / HU</h2><h2 class="date">Dag 5, 22 februari 2019</h2>
+</section>
+
+
+<section>
+<section id="slide-org2a7f454">
+<h2 id="org2a7f454"><span class="section-number-2">1</span> OLTP vs OLAP</h2>
+<p>
+Een belangrijke toepassing van databases is om een analyse te doen van data: <b>Online Analytic Processing</b> (OLAP). Opgezochte informatie wordt dan vaak gebruikt om bedrijfsprocessen te sturen; de database wordt gebruikt als <b>decision support system</b>. Een bedrijf wil bijvoorbeeld weten welke producten beter of juist minder goed verkopen.
+</p>
+
+<p>
+Decision support queries bevragen vaak grote datasets. Ter contrast: het registreren van bedrijfsprocessen raakt vaak maar een klein stukje van de database. Systemen die vooral registreren worden <b>Online Transaction Processing</b> (OLTP) genoemd.
+</p>
+
+</section>
+<section id="slide-orgfc1ab75">
+<h3 id="orgfc1ab75"><span class="section-number-3">1.1</span> Waarom is niet alles OLTP?</h3>
+<p>
+OLTP gaat uit van sommige aannames:
+</p>
+
+<ol>
+<li>Informatie-elementen worden altijd maar één keer, op één plaats, opgeslagen, om redundantie te voorkomen. Updates worden daardoor ook snel.</li>
+<li>Queries mogen complex zijn, want ze veranderen niet vaak.</li>
+<li>Full table scans worden zo veel mogelijk vermeden.</li>
+
+</ol>
+
+<p>
+OLAP-queries zijn bijna altijd ad-hoc, en dus kun je de database niet vantevoren optimaliseren. 
+</p>
+
+</section>
+<section id="slide-orgb4c6a20">
+<h4 id="orgb4c6a20"><span class="section-number-4">1.1.1</span> Typisch OLTP-schema</h4>
+
+<div class="figure">
+<p><img src="./images/oltp.png" alt="oltp.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org9f0c03e">
+<h4 id="org9f0c03e"><span class="section-number-4">1.1.2</span> Typische OLAP-query</h4>
+<p>
+"I noticed that there was a Heineken promotion recently, directed at people who live in small towns.
+How much Heineken beer did we sell in those towns yesterday? 
+And how much on the same day a month ago?"
+</p>
+
+
+<div class="figure">
+<p><img src="./images/oltp_small.png" alt="oltp_small.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org08f6f75">
+<h4 id="org08f6f75"><span class="section-number-4">1.1.3</span> OLTP-query voor probleem op vorige slide</h4>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><span style="color: #a020f0;">select</span> <span style="color: #483d8b;">sum</span>(sales.quantity_sold) 
+<span style="color: #a020f0;">from</span> sales, products, product_categories, manufacturers, stores, cities
+<span style="color: #a020f0;">where</span> manufacturer_name = <span style="color: #8b2252;">'Heineken'</span>
+<span style="color: #a020f0;">and</span> product_category_name = <span style="color: #8b2252;">'beer'</span>
+<span style="color: #a020f0;">and</span> cities.population &lt; 40000
+<span style="color: #a020f0;">and</span> trunc(sales.date_time_of_sale) = trunc(sysdate-1)  <span style="color: #b22222;">-- restrict to yesterday</span>
+<span style="color: #a020f0;">and</span> sales.product_id = products.product_id
+<span style="color: #a020f0;">and</span> sales.store_id = stores.store_id
+<span style="color: #a020f0;">and</span> products.product_category_id = product_categories.product_category_id
+<span style="color: #a020f0;">and</span> products.manufacturer_id = manufacturers.manufacturer_id
+<span style="color: #a020f0;">and</span> stores.city_id = cities.city_id;
+</pre>
+</div>
+
+</section>
+<section id="slide-orgbc78666">
+<h3 id="orgbc78666"><span class="section-number-3">1.2</span> OLTP-query: gelijke queries zijn het niet</h3>
+<p>
+Sales in vakantie-periodes:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><span style="color: #a020f0;">select</span> <span style="color: #483d8b;">sum</span>(sales.quantity_sold) 
+<span style="color: #a020f0;">from</span> sales, holiday_map
+<span style="color: #a020f0;">where</span> trunc(sales.date_time_of_sale) = trunc(holiday_map.holiday_date)
+</pre>
+</div>
+
+<p>
+Sales in niet-vakantie-periodes:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-sql"><span style="color: #a020f0;">select</span> <span style="color: #483d8b;">sum</span>(sales.quantity_sold) 
+<span style="color: #a020f0;">from</span> sales
+<span style="color: #a020f0;">where</span> trunc(sales.date_time_of_sale) 
+<span style="color: #a020f0;">not</span> <span style="color: #a020f0;">in</span>
+(<span style="color: #a020f0;">select</span> holiday_date <span style="color: #a020f0;">from</span> holiday_map)
+</pre>
+</div>
+
+</section>
+<section id="slide-orgb17fd66">
+<h3 id="orgb17fd66"><span class="section-number-3">1.3</span> OLTP-query: onverwachte performanceproblemen</h3>
+<p>
+"Sales in winkels met veel verkoop."
+</p>
+
+<p>
+&#x2026; SQL om winkels te vinden die veel verkopen&#x2026;
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><span style="color: #a020f0;">select</span> store_id 
+<span style="color: #a020f0;">from</span> sales
+<span style="color: #a020f0;">group</span> <span style="color: #a020f0;">by</span> store_id
+<span style="color: #a020f0;">having</span> <span style="color: #483d8b;">sum</span>(quantity_sold) &gt; 1000
+</pre>
+</div>
+
+<p>
+&#x2026; SQL om in die winkels (via subquery) de sales te vinden&#x2026;
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><span style="color: #a020f0;">select</span> <span style="color: #483d8b;">sum</span>(quantity_sold) 
+<span style="color: #a020f0;">from</span> sales
+<span style="color: #a020f0;">where</span> store_id <span style="color: #a020f0;">in</span>
+(<span style="color: #a020f0;">select</span> store_id 
+ <span style="color: #a020f0;">from</span> sales
+ <span style="color: #a020f0;">group</span> <span style="color: #a020f0;">by</span> store_id
+ <span style="color: #a020f0;">having</span> <span style="color: #483d8b;">sum</span>(quantity_sold) &gt; 1000)
+</pre>
+</div>
+
+<p>
+Wat is het probleem?
+</p>
+
+</section>
+<section id="slide-orgc7c2dd9">
+<h3 id="orgc7c2dd9"><span class="section-number-3">1.4</span> Sterschema</h3>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="./images/starschema.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+</section>
+<section id="slide-org6cc4224">
+<h4 id="org6cc4224"><span class="section-number-4">1.4.1</span> Sterschema: gedenormaliseerde database.</h4>
+<p>
+De objects of interest staan gegroepeerd in een <b>fact table</b> met zogenaamde <b>dependent attributes</b>, en alle eigenschappen staan in zogenaamde <b>dimension tables</b>. De fact table vormt het midden van de ster, en de dimension tables zijn de punten van de ster. Dimensies van een tabel met verkoop kunnen zijn: de datum van verkoop, de plaats van verkoop, het type item, de betaal-methode, etc. 
+</p>
+
+<p>
+In het eerste jaar in de database-cursus wordt juist een andere manier aangeleerd om schema's te ontwerpen, namelijk door normalizatie-regels.
+</p>
+
+</section>
+<section id="slide-orgb1a357a">
+<h4 id="orgb1a357a"><span class="section-number-4">1.4.2</span> Opdracht A</h4>
+<p>
+Transformeer het genormaliseerde model tot een star schema. 
+</p>
+
+
+<div class="figure">
+<p><img src="./images/oltp.png" alt="oltp.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgcb25237">
+<h4 id="orgcb25237"><span class="section-number-4">1.4.3</span> Opdracht B</h4>
+<p>
+Welke query?
+</p>
+
+<p>
+"Rapporteer sales per seizoen".
+</p>
+
+<p>
+Schrijf uit voor de genormaliseerde en voor de gedenormaliseerde versie. 
+</p>
+
+</section>
+<section id="slide-orgd3d584e">
+<h3 id="orgd3d584e"><span class="section-number-3">1.5</span> Slicing en dicing</h3>
+<p>
+Soms willen we de granulariteit van een dimensie verminderen. We zijn bijvoorbeeld niet geïnteresseerd in individuele auto's, maar in auto's gegroepeerd naar merk of kleur; of we willen alle verkopen op een dag nauwkeurig, in plaats van op de seconde nauwkeurig weten. 
+</p>
+
+<p>
+Voor dealers kunnen we indelen per dealer, per stad, per staat, of helemaal niet groeperen. 
+</p>
+
+<p>
+Het groeperen in een kubus heet <b>dicing</b>. We zijn vaak geinteresseerd in één specifieke dice: <b>slicing</b>. Queries die de data grover indelen, noemen we <b>roll up</b>-queries; een query die juist meer partities maakt en dus de data fijnmaziger indeelt, heet een <b>drill-down</b>-query.
+</p>
+
+</section>
+<section id="slide-org45bf8ee">
+<h3 id="org45bf8ee"><span class="section-number-3">1.6</span> De datakubus.</h3>
+
+<div class="figure">
+<p><img src="./images/cube.png" alt="cube.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org12c1c1a">
+<h2 id="org12c1c1a"><span class="section-number-2">2</span> Ongestructureerde data: text mining</h2>
+<p>
+Eén van de vijf V's van big data: <b>variety</b>. 
+</p>
+
+<p>
+Text mining representeert een klasse toepassingen waarbij uit
+ongestructureerde data (teksten, plaatjes, video, audio) informatie
+wordt verkregen.
+</p>
+
+<p>
+In de kern gaat het bij text mining om het "samenvatten van tekst": afleiden van zinvolle karakteristieken waarmee je teksten kun vergelijken. Zo ook bij plaatjes/video/audio etc. Begrip: <i>features</i>. 
+</p>
+
+
+</section>
+<section id="slide-orgb1b2f86">
+<h3 id="orgb1b2f86"><span class="section-number-3">2.1</span> Analyse van antwoorden op open vragen.</h3>
+<p>
+Bijvoorbeeld: klant-contact data en het vinden van sentiment. 
+</p>
+
+<p>
+Big Data projecten: Vodafone-Ziggo project. 
+</p>
+
+</section>
+<section id="slide-org1bf8da2">
+<h3 id="org1bf8da2"><span class="section-number-3">2.2</span> Automatisch categoriseren van berichten, email.</h3>
+<p>
+Bijvoorbeeld: routeren van klantcontacten. Implementatie achter chatbots. Detectie van spam. 
+</p>
+
+<p>
+In video: vinden van illegale kopieën van video's op youtube. 
+</p>
+
+</section>
+<section id="slide-org3055c5a">
+<h3 id="org3055c5a"><span class="section-number-3">2.3</span> Analyse van notities, bijvoorbeeld overdrachten medische dossiers, warranty claims bij verzekeringen.</h3>
+<p>
+In video: detecteren van beweging. 
+</p>
+
+</section>
+<section id="slide-org903f815">
+<h3 id="org903f815"><span class="section-number-3">2.4</span> "Authorship attribution"</h3>
+<p>
+Gegeven een tekst, wie is de auteur? 
+</p>
+
+<p>
+Bijvoorbeeld belangrijk om te bepalen wat voor iemand een tweet heeft geplaatst (voor het targeten van advertenties). 
+</p>
+
+<p>
+Bijvoorbeeld: detectie van nepbellers bij de suicide hotlijn.
+</p>
+
+</section>
+<section id="slide-org42ef57d">
+<h3 id="org42ef57d"><span class="section-number-3">2.5</span> Named-Entity-Recognition.</h3>
+<p>
+Herkennen van namen en persoonsgerelateerde informatie. 
+</p>
+
+<p>
+Tegenwoordig zeer belangrijk om anonimiteit en privacy te garanderen (AVG), 
+</p>
+
+<p>
+Bijvoorbeeld: "Mijn tante <i>Elsbeth</i> ging gisteren naar <i>New York</i>."
+</p>
+
+<p>
+In video: detecteren van objecten.
+</p>
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgf54e87d">
+<h2 id="orgf54e87d"><span class="section-number-2">3</span> Spark</h2>
+<p>
+Databricks]] is een PAAS (Platform-as-a-service) provider voor Big Data analyse. Zij bieden een gratis Apache Spark omgeving, waar je direct Spark-notebooks kunt implementeren en testen. Ga naar hun <a href="https://databricks.com/try-databricks">trial-omgeving</a> en schrijf je in voor de Community Edition (gebruik eventueel een <a href="https://10minutemail.com/">tijdelijk account</a> als je geen spam wilt ontvangen).
+</p>
+
+<p>
+Volg binnen hun omgeving de <a href="https://docs.databricks.com/_static/notebooks/gentle-introduction-to-apache-spark.html">introductie-tutorial</a>. 
+</p>
+
+</section>
+<section id="slide-org7a02256">
+<h3 id="org7a02256"><span class="section-number-3">3.1</span> TF/IDF analyse</h3>
+<p>
+Apache Spark heeft standaard <a href="https://spark.apache.org/docs/2.3.3/ml-features.html">TF/IDF analysemogelijkheden</a> aan boord. 
+</p>
+
+<p>
+Her-implementeeer je oplossing van maandag met behulp van Spark. 
+</p>
+
+</section>
+<section id="slide-orgd5fd614">
+<h3 id="orgd5fd614"><span class="section-number-3">3.2</span> De <b>echte</b> data</h3>
+<p>
+Een run van de spider van OSF resulteerde in een eerste set met 1,5 Gb aan data. Je kunt de data via <a href="https://filesender.surf.nl/?s=download&amp;token=b2c65a3a-44d9-42ef-9974-1fff1068a3d0">deze link</a> downloaden. 
+</p>
+
+<p>
+Laad de data in je Spark notebook. 
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: false,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
