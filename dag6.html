@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="du">
+<head>
+<meta charset="utf-8"/>
+<title>Big Data System Design: Data analyse</title>
+<meta name="author" content="(Roelant Ossewaarde / HU)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Big Data System Design: Data analyse</h1><h2 class="author">Roelant Ossewaarde / HU</h2><h2 class="date">Dag 6, 25 februari 2019</h2>
+</section>
+
+
+
+<section>
+<section id="slide-orgc34e2de">
+<h2 id="orgc34e2de"><span class="section-number-2">1</span> Streams</h2>
+<p>
+Een <b>stream</b> is een <i>unbounded, continuous, real-time flow of records</i>.
+</p>
+
+<p>
+Voorbeelden:
+</p>
+
+<ol>
+<li>GPS-bewegingen van voertuigem.</li>
+<li>Financiële transacties.</li>
+<li>Web traffic op websites</li>
+<li>Tweets van twitter.</li>
+<li>IoT-devices (Alstom!).</li>
+<li>Spelersgedrag in games.</li>
+
+</ol>
+
+<p>
+"You don't request data, it comes to you."
+</p>
+
+
+</section>
+<section id="slide-org02e5981">
+<h3 id="org02e5981"><span class="section-number-3">1.1</span> Waarom is dat anders?</h3>
+<p>
+Voor sommige inzichten geldt: de waarde (<i>value</i>) neemt af als het langer duurt tussen het verkrijgen van de data en het berekenen van het inzicht. 
+</p>
+
+<p>
+Bijvoorbeeld: de bewaking van condities met sensoren (temperatuur, hartbewaking, <i>geofencing</i>).
+</p>
+
+<p>
+Bijvoorbeeld: het detecteren van keywords in chat-gesprekken.
+</p>
+
+<p>
+Bijvoorbeeld: bewegingsdetectie in beveiligingscamera's. 
+</p>
+
+</section>
+<section id="slide-org7f6321e">
+<h3 id="org7f6321e"><span class="section-number-3">1.2</span> Realtime data is lastig voor een "batch"-model.</h3>
+<p>
+Data komt binnen als een continue stroom <i>events</i>. 
+</p>
+
+<p>
+Batch-processing betekent: opslaan van events, dan de data collectie onderbreken voor analyse, en dat herhalen. 
+</p>
+
+<p>
+Real-time: data geanalyseerd als die binnenkomt. 
+</p>
+
+
+</section>
+<section id="slide-orgc36ec60">
+<h3 id="orgc36ec60"><span class="section-number-3">1.3</span> Realtime processing van realtime data is sneller</h3>
+<p>
+Batch-processing betekent: data wordt opgespaard totdat die geanalyseerd kan worden. Spark moet een nieuwe <i>job</i> inplannen voor iedere minibatch.
+</p>
+
+<p>
+Door realtime data te verwerken is de handeling-per-data eenvoudiger (want er is minder data dan in een batch) en daardoor eenvoudiger schaalbaar. "Kleinere unit-of-work".
+</p>
+
+</section>
+<section id="slide-org9c53589">
+<h3 id="org9c53589"><span class="section-number-3">1.4</span> Een <i>stream</i> is niet een <i>message</i></h3>
+<p>
+Messages zijn berichten waarin de context er niet toe doet. Bij een stream is de context wel van belang: een stream kent een volgorde. Vergelijking: hartritme-verstoring (volgorde, <i>stream</i>) versus foutmelding (geen volgorde, <i>message</i>). 
+</p>
+
+<p>
+Omdat een stream een volgorde heeft, kun je streams opnieuw starten, terugdraaien, etc. Dat is zinvol als je data wil heranalyseren. 
+</p>
+
+</section>
+<section id="slide-org02c7548">
+<h3 id="org02c7548"><span class="section-number-3">1.5</span> Een streams pipleine</h3>
+
+<div class="figure">
+<p><img src="./images/streamingarchitecture.png" alt="streamingarchitecture.png" />
+</p>
+</div>
+
+
+</section>
+<section id="slide-orgcde3483">
+<h3 id="orgcde3483"><span class="section-number-3">1.6</span> Versus Apache Spark</h3>
+<p>
+Spark heeft micro-batches, waardoor near-realtime processing mogelijk is. Maar er is binnen Spark geen oplossing voor <i>unbounded</i> input.
+</p>
+
+<p>
+Spark heeft geen inherente notie van "volgorde" of van "tijd" - geen <i>replayablity</i>. Dat moet met de hand toegevoegd worden door middel van bijvoorbeeld timestamps. 
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc441032">
+<h2 id="orgc441032"><span class="section-number-2">2</span> Streaming processors - Kafka Stream</h2>
+
+<div class="figure">
+<p><img src="./images/kafka-apis.png" alt="kafka-apis.png" />
+</p>
+</div>
+
+
+</section>
+<section id="slide-org4b4c76e">
+<h3 id="org4b4c76e"><span class="section-number-3">2.1</span> Concepten van Apache Kafka:</h3>
+<ol>
+<li>Een <i>event</i> (buiten de applicatie) genereert een <i>record</i> (de realtime data, binnen de applicatie). Een record is typisch een Key/Value-pair.</li>
+<li>De key/value zijn een <i>topic</i> en de <i>data</i>. Door middel van het topic wordt het type data aangegeven.</li>
+<li>Een <i>record</i> wordt bewaard door een <i>broker</i>. Ieder topic heeft zijn eigen <i>partition</i>.</li>
+<li>Een <a href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">Publish-subscribe</a>-pattern:
+<ol>
+<li>Een <i>producer</i> genereert en stuurt (<i>publishes</i>) een record over een topic.</li>
+<li>Een <i>consumer</i> luistert (<i>subscribes</i>) naar een topic.</li>
+
+</ol></li>
+
+</ol>
+
+
+</section>
+<section id="slide-orge985222">
+<h3 id="orge985222"><span class="section-number-3">2.2</span> Topics en partitions</h3>
+
+<div class="figure">
+<p><img src="./images/log_anatomy.png" alt="log_anatomy.png" />
+</p>
+</div>
+
+<p>
+Een <i>partition</i> is een geordende, read-only reeks van records waar steeds nieuwe informatie aan wordt toegevoegd. Binnen elke partition worden records genummerd (de zgn. <i>offset</i>). 
+</p>
+
+<p>
+Een <i>partition</i> past op één machine. Maar een serie partities kan horizontaal schalen over verschillende systemen. 
+</p>
+
+</section>
+<section id="slide-orgd6c944a">
+<h3 id="orgd6c944a"><span class="section-number-3">2.3</span> Partitions hebben consumers en producers</h3>
+
+<div class="figure">
+<p><img src="./images/log_consumer.png" alt="log_consumer.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgb2f832e">
+<h3 id="orgb2f832e"><span class="section-number-3">2.4</span> Consumers zijn georganiseerd in <i>consumer groups</i></h3>
+
+<div class="figure">
+<p><img src="./images/consumer-groups.png" alt="consumer-groups.png" />
+</p>
+</div>
+
+<p>
+NB: Kafka kan records verspreiden als in een <a href="http://en.wikipedia.org/wiki/Message_queue">queue</a> of als in een <a href="http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">publish-subscribe</a> pattern (zie <a href="https://dzone.com/articles/comparing-publish-subscribe-messaging-and-message">vergelijking</a>). 
+</p>
+
+</section>
+<section id="slide-orgeb104e4">
+<h3 id="orgeb104e4"><span class="section-number-3">2.5</span> Voorbeeld (abstract)</h3>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://ci.apache.org/projects/flink/flink-docs-release-1.2/fig/parallel_dataflow.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+</section>
+<section id="slide-orgb536da6">
+<h3 id="orgb536da6"><span class="section-number-3">2.6</span> Voorbeeld: fraude-detectie van reviews, batch.</h3>
+<p>
+<img src="./images/kafka_case_a.png" alt="kafka_case_a.png" />
+(<a href="https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85">bron</a>)
+</p>
+
+</section>
+<section id="slide-orgf75b19c">
+<h3 id="orgf75b19c"><span class="section-number-3">2.7</span> Voorbeeld: fraude-detectie van reviews, streaming.</h3>
+
+<div class="figure">
+<p><img src="./images/kafka_case_b.png" alt="kafka_case_b.png" />
+</p>
+</div>
+
+<p>
+(<a href="https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85">bron</a>)
+</p>
+
+</section>
+<section id="slide-orge16e0b7">
+<h3 id="orge16e0b7"><span class="section-number-3">2.8</span> Voorbeeld-applicatie van Kafka (mbv Kafka Streams)</h3>
+
+<div class="figure">
+<p><img src="./images/streams-table-updates.png" alt="streams-table-updates.png" />
+</p>
+</div>
+
+<p>
+(<a href="https://kafka.apache.org/21/documentation/streams/quickstart">bron</a>)
+</p>
+
+</section>
+<section id="slide-orge15eb06">
+<h3 id="orge15eb06"><span class="section-number-3">2.9</span> De analyse van data gebeurt soms op basis van eeen window</h3>
+<p>
+De data is dan opgespaard over een bepaalde tijd (<i>x</i> minuten) of een bepaalde hoeveelheid data (<i>x</i> events). 
+</p>
+
+<p>
+Er zijn verschillende <a href="https://flink.apache.org/news/2015/12/04/Introducing-windows.html">typen windows</a>:
+</p>
+
+<ol>
+<li><b>Sliding</b> window: het window "beweegt" steeds maar een deel van de window-breedte. Bijvoorbeeld voor het berekenen van <i>Moving Averages</i>.</li>
+<li><b>Tumbling</b> window: Het window "beweegt" zodat er geen overlap is tussen windows.</li>
+<li><b>Session</b> window: Het window staat steeds om data heen die bij elkaar horen.</li>
+
+</ol>
+
+</section>
+<section id="slide-org852a3c8">
+<h3 id="org852a3c8"><span class="section-number-3">2.10</span> The latest and greatest</h3>
+<p>
+Er zijn onlangs implementaties verschenen waarmee je SQL-achtige statements kunt gebruiken om streaming data mee te bevragen. Zie <a href="https://www.youtube.com/watch?v=YO95iAkwapQ">bijvoorbeeld deze video</a> voor een technische uitleg daarvan.
+</p>
+
+<p>
+Als <i>stream processor</i> wordt tegenwoordig vaak <a href="https://flink.apache.org/">Apache Flink</a> gebruikt. Dat is dus het framework dat de <code>consumer</code> en <code>producer</code> API's (van bijvoorbeeld Kafka) aan elkaar knoopt. Flink is een gedistribueerd framework.  
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org71546ec" class="p-smaller">
+<h2 id="org71546ec"><span class="section-number-2">3</span> HDFS</h2>
+<p>
+Traditioneel: <b>storage</b> is een aparte component in het systeem, gescheiden van <b>compute</b>; tegenwoordig wordt storage vaak geïmplementeerd als bijvoorbeeld Netword Attached Storage (NAS) of Storage Area Networks (SAN). Dataverwerking volgt in zulke systemen steeds dezelfde stappen: haal input data uit store; plaats data in geheugen; verwerk data; schrijf data weg.
+</p>
+
+<p>
+Bij groei van <b>storage</b> moet ook <b>compute</b> groeien; en dus ook de verbinding tussen die twee. Probleem is dat de kosten van verbindingen niet-lineair stijgen: 10 x zo veel bandbreedte is meer dan 10 x zo duur. Bovendien zijn eisen aan opslag tegewoordig anders dan de eisen waarmee traditionele filesystems zijn geb
+</p>
+
+<p>
+De oplossing die Google bedacht: het Google File System (GFS). Het motto is om storage en compute niet meer te scheiden, zoals in de Von Neumann architectuur: ``breng compute naar data, niet andersom''. Hadoop Distributed File System is een open source implementatie van GFS.
+</p>
+
+</section>
+<section id="slide-orgf83b845">
+<h4 id="orgf83b845"><span class="section-number-4">3.0.1</span> Andere architectuur, ander filesysteem</h4>
+<p>
+Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de opslag. Design principes van traditionele filesystemen vs. GFS:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><b>traditioneel</b></th>
+<th scope="col" class="org-left"><b>GFS</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">component failures zijn</td>
+<td class="org-left">excepties</td>
+<td class="org-left">de norm</td>
+</tr>
+
+<tr>
+<td class="org-left">geoptimaliseerd voor</td>
+<td class="org-left">files &lt; 100 Mb</td>
+<td class="org-left">files &gt; 100 Mb</td>
+</tr>
+
+<tr>
+<td class="org-left">datamutatie en lezen vooral</td>
+<td class="org-left">random</td>
+<td class="org-left">sequential</td>
+</tr>
+
+<tr>
+<td class="org-left"># clients</td>
+<td class="org-left">minder</td>
+<td class="org-left">veel</td>
+</tr>
+
+<tr>
+<td class="org-left">belangrijk qua snelheid</td>
+<td class="org-left">latency</td>
+<td class="org-left">bandbreedte</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-org69f205f">
+<h4 id="org69f205f"><span class="section-number-4">3.0.2</span> Bewerkingen via HDFS</h4>
+
+<div class="figure">
+<p><img src="./images/hdfs.png" alt="hdfs.png" />
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: false,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
