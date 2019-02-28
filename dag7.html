@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="du">
+<head>
+<meta charset="utf-8"/>
+<title>Big Data System Design: Kwaliteit en testen</title>
+<meta name="author" content="(Roelant Ossewaarde / HU)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Big Data System Design: Kwaliteit en testen</h1><h2 class="author">Roelant Ossewaarde / HU</h2><h2 class="date">Dag 7, 1 maart 2019</h2>
+</section>
+
+<section>
+<section id="slide-orgd208932">
+<h2 id="orgd208932"><span class="section-number-2">1</span> Introductie - kwaliteitsattributen</h2>
+
+<div class="figure">
+<p><img src="./images/quality_attributes.png" alt="quality_attributes.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org87ad85f">
+<h2 id="org87ad85f"><span class="section-number-2">2</span> Big data aspecten:</h2>
+<p>
+Verschillende aspecten van het systeem om mee rekening te houden:
+</p>
+
+<ol>
+<li>De kwaliteit van de data</li>
+<li>De kwaliteit van de analyses</li>
+<li>De kwaliteit van de systemen om data &amp; analyses op te slaan.</li>
+
+</ol>
+
+<p>
+Big Data Testing Aspects:
+</p>
+
+<ol>
+<li>Validation of structured and unstructured data</li>
+<li>Performing non-functional testing</li>
+<li>Optimal test environment</li>
+<li>Dealing with non-relational databases.</li>
+
+</ol>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org476ba09">
+<h2 id="org476ba09"><span class="section-number-2">3</span> Kwaliteit in verschillende fases van data</h2>
+<p>
+Als je werkt met een datalake dan wordt data in zo min mogelijk bewerkte vorm opgeslagen (brondata). Data wordt pas gestructureerd als een toepassing er ook echt gebruik van maakt. 
+</p>
+
+<p>
+<i>Bring computation to the data</i>.
+</p>
+
+<p>
+Typische tests:
+</p>
+
+<ol>
+<li>Data type validatie</li>
+<li>Range en constraint validatie</li>
+<li>Code en cross-reference validatie.</li>
+<li>Complexere validaties, zoals conditionele validaties.</li>
+
+</ol>
+
+<p>
+Wat is relevant voor de OSF data?
+</p>
+
+</section>
+<section id="slide-orgd96c386" class="p-smaller">
+<h3 id="orgd96c386"><span class="section-number-3">3.1</span> HDFS</h3>
+<p>
+Traditioneel: <b>storage</b> is een aparte component in het systeem, gescheiden van <b>compute</b>; tegenwoordig wordt storage vaak geïmplementeerd als bijvoorbeeld Netword Attached Storage (NAS) of Storage Area Networks (SAN). Dataverwerking volgt in zulke systemen steeds dezelfde stappen: haal input data uit store; plaats data in geheugen; verwerk data; schrijf data weg.
+</p>
+
+<p>
+Bij groei van <b>storage</b> moet ook <b>compute</b> groeien; en dus ook de verbinding tussen die twee. Probleem is dat de kosten van verbindingen niet-lineair stijgen: 10 x zo veel bandbreedte is meer dan 10 x zo duur. Bovendien zijn eisen aan opslag tegewoordig anders dan de eisen waarmee traditionele filesystems zijn geb
+</p>
+
+<p>
+De oplossing die Google bedacht: het Google File System (GFS). Het motto is om storage en compute niet meer te scheiden, zoals in de Von Neumann architectuur: ``breng compute naar data, niet andersom''. <a href="https://hadoop.apache.org/docs/r3.2.0/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html">Hadoop Distributed File System</a> is een open source implementatie van GFS.
+</p>
+
+</section>
+<section id="slide-orgd8ad838">
+<h4 id="orgd8ad838"><span class="section-number-4">3.1.1</span> Andere architectuur, ander filesysteem</h4>
+<p>
+Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de opslag. Design principes van traditionele filesystemen vs. GFS:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><b>traditioneel</b></th>
+<th scope="col" class="org-left"><b>GFS</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">component failures zijn</td>
+<td class="org-left">excepties</td>
+<td class="org-left">de norm</td>
+</tr>
+
+<tr>
+<td class="org-left">geoptimaliseerd voor</td>
+<td class="org-left">files &lt; 100 Mb</td>
+<td class="org-left">files &gt; 100 Mb</td>
+</tr>
+
+<tr>
+<td class="org-left">datamutatie en lezen vooral</td>
+<td class="org-left">random</td>
+<td class="org-left">sequential</td>
+</tr>
+
+<tr>
+<td class="org-left"># clients</td>
+<td class="org-left">minder</td>
+<td class="org-left">veel</td>
+</tr>
+
+<tr>
+<td class="org-left">belangrijk qua snelheid</td>
+<td class="org-left">latency</td>
+<td class="org-left">bandbreedte</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+<section id="slide-org8a37729">
+<h4 id="org8a37729"><span class="section-number-4">3.1.2</span> Bewerkingen via HDFS</h4>
+
+<div class="figure">
+<p><img src="./images/hdfs.png" alt="hdfs.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org0366ea3">
+<h4 id="org0366ea3"><span class="section-number-4">3.1.3</span> Verschillende nodes met verschillende rollen</h4>
+<ol>
+<li>NameNode (backup node)</li>
+<li>DataNode</li>
+<li>Checkpoint Node</li>
+
+</ol>
+
+</section>
+<section id="slide-org5755e91">
+<h3 id="org5755e91"><span class="section-number-3">3.2</span> Validatie van proces-output</h3>
+<p>
+In een typisch Hadoop/Spark/MapReduce proces wordt de bewerking bij de data uitgevoerd. Als het filesysteem over <i>x</i> machines is verspreid, dan worden dus op elk van die <i>x</i> machines ook bewerkingen van de data gedaan. 
+</p>
+
+<p>
+Het framework (MapReduce / Spark) regelt en coordineert de processen over de verschillende deelsystemen. 
+</p>
+
+<p>
+Daarvoor moeten bewerkingen wel parallel gemaakt kunnen worden. Zie de <a href="https://qaconsultants.com/wp-content/uploads/2015/10/Primer-on-Big-Data-Testing.pdf">primer</a> voor tooling die je kunt gebruiken voor Unit Testing. 
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf42675c">
+<h2 id="orgf42675c"><span class="section-number-2">4</span> Kwaliteit van analyses</h2>
+<p>
+Typische benadering data-analyse: neem een subset van de data en ontwikkel een model dat geldig is voor de gehele data-set. Hoe meer data, hoe specifieker het model.
+</p>
+
+<p>
+Over het algemeen geldt: hoe meer data, hoe beter het model. Maar te veel data is ook niet goed: wat je vindt moet een juiste afspiegeling zijn van wat je zoekt (<a href="https://rationalwiki.org/wiki/Bonferroni's_principle">Bonferroni's principe</a>) om te voorkomen dat je onzin-patronen vindt. 
+</p>
+
+<p>
+Meer informatie per data-punt lijdt tot exponentiele groei van de data die we nodig hebben: de <a href="http://www.visiondummy.com/2014/04/curse-dimensionality-affect-classification/">Curse of dimensionality</a>. 
+</p>
+
+</section>
+<section id="slide-org3aeac42">
+<h3 id="org3aeac42"><span class="section-number-3">4.1</span> Bonferroni's principle</h3>
+<p>
+Zelfs in compleet random datasets zullen bepaalde patronen ontstaan. Die lijken interessant, maar zijn slechts statistische ruis.
+</p>
+
+<p>
+Voorbeeld: massa-surveillance om weinig voorkomende patronen te herkennen.
+</p>
+
+<p>
+Voorbeeld: gezichtsherkenning van terroristen.
+</p>
+
+</section>
+<section id="slide-orga153b83">
+<h3 id="orga153b83"><span class="section-number-3">4.2</span> Hypotheses</h3>
+<p>
+Bijna altijd in data mining problemen geldt dat we iets willen leren van een grote groep door een kleine groep te bestuderen. Een typisch klassificatie-probleem is bijvoorbeeld het bepalen of iets wel, of niet, aan bepaalde voorwaarden voldoet. 
+</p>
+
+<p>
+Een belangrijke vraag is: hoe goed voorspelt een hypothese toekomstige voorbeelden? M.a.w., hoe goed <b>generaliseert</b> de hypothese?
+</p>
+
+<p>
+Als we een hypothese leren op basis van een deel van de data, dan maken we altijd aannames. Als een hypothese te simpel wordt gesteld, dan is er sprake van <b>underfitting</b>. Als de hypothese te complex wordt gesteld, dan is er sprake van <b>overfitting</b>.
+</p>
+
+
+</section>
+<section id="slide-org0bbe991">
+<h3 id="org0bbe991"><span class="section-number-3">4.3</span> Oplossingen</h3>
+<p>
+Om generalisaties te testen, wordt data vaak verdeeld in drie groepen: training data (om hypotheses op te stellen), validation data (om de generalisatie van de gekozen hypothese te testen) en test data (waar het allemaal om draait). 
+</p>
+
+<p>
+Door dat verschillende keren te herhalen met elke keer een andere verdeling (cross-validatie) krijg je een idee van de under- en over-fitting (links en rechts hieronder) van een dataset. 
+</p>
+
+<p>
+<div class="row"><div class="column"><img src="./images/underfitting.png" alt="Underfitting" style="width:60%"></div><div class="column"><img src="./images/overfitting.png" alt="Overfitting" style="width:100%"></div>
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: false,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
