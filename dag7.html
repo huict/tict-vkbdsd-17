@@ -31,8 +31,8 @@
 </section>
 
 <section>
-<section id="slide-orgd208932">
-<h2 id="orgd208932"><span class="section-number-2">1</span> Introductie - kwaliteitsattributen</h2>
+<section id="slide-org45556fd">
+<h2 id="org45556fd"><span class="section-number-2">1</span> Introductie - kwaliteitsattributen</h2>
 
 <div class="figure">
 <p><img src="./images/quality_attributes.png" alt="quality_attributes.png" />
@@ -42,8 +42,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org87ad85f">
-<h2 id="org87ad85f"><span class="section-number-2">2</span> Big data aspecten:</h2>
+<section id="slide-org3892f2b">
+<h2 id="org3892f2b"><span class="section-number-2">2</span> Big data aspecten:</h2>
 <p>
 Verschillende aspecten van het systeem om mee rekening te houden:
 </p>
@@ -71,8 +71,8 @@ Big Data Testing Aspects:
 </section>
 </section>
 <section>
-<section id="slide-org476ba09">
-<h2 id="org476ba09"><span class="section-number-2">3</span> Kwaliteit in verschillende fases van data</h2>
+<section id="slide-org2c3c4f6">
+<h2 id="org2c3c4f6"><span class="section-number-2">3</span> Kwaliteit in verschillende fases van dataverwerking</h2>
 <p>
 Als je werkt met een datalake dan wordt data in zo min mogelijk bewerkte vorm opgeslagen (brondata). Data wordt pas gestructureerd als een toepassing er ook echt gebruik van maakt. 
 </p>
@@ -93,13 +93,18 @@ Typische tests:
 
 </ol>
 
-<p>
-Wat is relevant voor de OSF data?
+</section>
+<section id="slide-org355f766">
+<h3 id="org355f766"><span class="section-number-3">3.1</span> Wat is relevant voor de OSF data?</h3>
+
+<div class="figure">
+<p><img src="./images/bigdata_validationprocess.png" alt="bigdata_validationprocess.png" />
 </p>
+</div>
 
 </section>
-<section id="slide-orgd96c386" class="p-smaller">
-<h3 id="orgd96c386"><span class="section-number-3">3.1</span> HDFS</h3>
+<section id="slide-org5cd1159" class="p-smaller">
+<h3 id="org5cd1159"><span class="section-number-3">3.2</span> HDFS</h3>
 <p>
 Traditioneel: <b>storage</b> is een aparte component in het systeem, gescheiden van <b>compute</b>; tegenwoordig wordt storage vaak geïmplementeerd als bijvoorbeeld Netword Attached Storage (NAS) of Storage Area Networks (SAN). Dataverwerking volgt in zulke systemen steeds dezelfde stappen: haal input data uit store; plaats data in geheugen; verwerk data; schrijf data weg.
 </p>
@@ -113,8 +118,8 @@ De oplossing die Google bedacht: het Google File System (GFS). Het motto is om s
 </p>
 
 </section>
-<section id="slide-orgd8ad838">
-<h4 id="orgd8ad838"><span class="section-number-4">3.1.1</span> Andere architectuur, ander filesysteem</h4>
+<section id="slide-org6b51082">
+<h4 id="org6b51082"><span class="section-number-4">3.2.1</span> Andere architectuur, ander filesysteem</h4>
 <p>
 Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de opslag. Design principes van traditionele filesystemen vs. GFS:
 </p>
@@ -171,8 +176,8 @@ Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de ops
 
 
 </section>
-<section id="slide-org8a37729">
-<h4 id="org8a37729"><span class="section-number-4">3.1.2</span> Bewerkingen via HDFS</h4>
+<section id="slide-orge1b9d89">
+<h4 id="orge1b9d89"><span class="section-number-4">3.2.2</span> Bewerkingen via HDFS</h4>
 
 <div class="figure">
 <p><img src="./images/hdfs.png" alt="hdfs.png" />
@@ -180,8 +185,8 @@ Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de ops
 </div>
 
 </section>
-<section id="slide-org0366ea3">
-<h4 id="org0366ea3"><span class="section-number-4">3.1.3</span> Verschillende nodes met verschillende rollen</h4>
+<section id="slide-org92f3d9d">
+<h4 id="org92f3d9d"><span class="section-number-4">3.2.3</span> Verschillende nodes met verschillende rollen</h4>
 <ol>
 <li>NameNode (backup node)</li>
 <li>DataNode</li>
@@ -190,8 +195,8 @@ Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de ops
 </ol>
 
 </section>
-<section id="slide-org5755e91">
-<h3 id="org5755e91"><span class="section-number-3">3.2</span> Validatie van proces-output</h3>
+<section id="slide-org0625788">
+<h3 id="org0625788"><span class="section-number-3">3.3</span> Validatie van proces-output</h3>
 <p>
 In een typisch Hadoop/Spark/MapReduce proces wordt de bewerking bij de data uitgevoerd. Als het filesysteem over <i>x</i> machines is verspreid, dan worden dus op elk van die <i>x</i> machines ook bewerkingen van de data gedaan. 
 </p>
@@ -207,8 +212,8 @@ Daarvoor moeten bewerkingen wel parallel gemaakt kunnen worden. Zie de <a href="
 </section>
 </section>
 <section>
-<section id="slide-orgf42675c">
-<h2 id="orgf42675c"><span class="section-number-2">4</span> Kwaliteit van analyses</h2>
+<section id="slide-org190db8a">
+<h2 id="org190db8a"><span class="section-number-2">4</span> Kwaliteit van analyses</h2>
 <p>
 Typische benadering data-analyse: neem een subset van de data en ontwikkel een model dat geldig is voor de gehele data-set. Hoe meer data, hoe specifieker het model.
 </p>
@@ -222,8 +227,8 @@ Meer informatie per data-punt lijdt tot exponentiele groei van de data die we no
 </p>
 
 </section>
-<section id="slide-org3aeac42">
-<h3 id="org3aeac42"><span class="section-number-3">4.1</span> Bonferroni's principle</h3>
+<section id="slide-org70072ce">
+<h3 id="org70072ce"><span class="section-number-3">4.1</span> Bonferroni's principle</h3>
 <p>
 Zelfs in compleet random datasets zullen bepaalde patronen ontstaan. Die lijken interessant, maar zijn slechts statistische ruis.
 </p>
@@ -237,8 +242,8 @@ Voorbeeld: gezichtsherkenning van terroristen.
 </p>
 
 </section>
-<section id="slide-orga153b83">
-<h3 id="orga153b83"><span class="section-number-3">4.2</span> Hypotheses</h3>
+<section id="slide-org19f168b">
+<h3 id="org19f168b"><span class="section-number-3">4.2</span> Hypotheses</h3>
 <p>
 Bijna altijd in data mining problemen geldt dat we iets willen leren van een grote groep door een kleine groep te bestuderen. Een typisch klassificatie-probleem is bijvoorbeeld het bepalen of iets wel, of niet, aan bepaalde voorwaarden voldoet. 
 </p>
@@ -253,8 +258,8 @@ Als we een hypothese leren op basis van een deel van de data, dan maken we altij
 
 
 </section>
-<section id="slide-org0bbe991">
-<h3 id="org0bbe991"><span class="section-number-3">4.3</span> Oplossingen</h3>
+<section id="slide-org4316cf7">
+<h3 id="org4316cf7"><span class="section-number-3">4.3</span> Oplossingen</h3>
 <p>
 Om generalisaties te testen, wordt data vaak verdeeld in drie groepen: training data (om hypotheses op te stellen), validation data (om de generalisatie van de gekozen hypothese te testen) en test data (waar het allemaal om draait). 
 </p>
