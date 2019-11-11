@@ -5,9 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Programma TICT-VKBDSD-17 (nov-dec 2019)</title>
+<title>Big Data System Design: Streams, Apache, Spark</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Roelant Ossewaarde" />
+<meta name="author" content="Roelant Ossewaarde / HU" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -228,193 +228,12 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Programma TICT-VKBDSD-17 (nov-dec 2019)</h1>
+<h1 class="title">Big Data System Design: Streams, Apache, Spark</h1>
 
-<div id="outline-container-orgc609a13" class="outline-2">
-<h2 id="orgc609a13"><span class="section-number-2">1</span> Canvas</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-Alle stof staat ook beschreven via de <a href="https://canvas.hu.nl/courses/7548">Canvas-site</a> die hoort bij deze cursus. 
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgf78c918" class="outline-2">
-<h2 id="orgf78c918"><span class="section-number-2">2</span> Dagindeling</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-Op woensdag (maar in week 3 op dinsdag) is er een centraal hoorcollege met beide klassen. Op vrijdag is er steeds een werkcollege waarin per klas aan opdrachten gewerkt wordt: de A-klas in HL15-3.100 en de B-klas in HL15-4.020.
-</p>
-
-<p>
-De stof per dag is als volgt:
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-right" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-right">Week</th>
-<th scope="col" class="org-left">Dag</th>
-<th scope="col" class="org-left">Lokatie</th>
-<th scope="col" class="org-left">Onderwerp</th>
-<th scope="col" class="org-left">Opdracht</th>
-<th scope="col" class="org-left">Voorbereiding</th>
-<th scope="col" class="org-left">&#xa0;</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-right">1</td>
-<td class="org-left">wo 13 nov</td>
-<td class="org-left">HL15-Collegezaal 4</td>
-<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag1.html">Introductie; NoSQL, Big Data</a></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">1</td>
-<td class="org-left">vr 15 nov</td>
-<td class="org-left">HL15-3.100 (klas A)/ 4.020 (klas B)</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Opdracht 1</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">2</td>
-<td class="org-left">woe 21 nov</td>
-<td class="org-left">HL15-1.022, HL15-1.024</td>
-<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag3.html">ADD, Apache ecostructuur</a></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><a href="http://ptgmedia.pearsoncmg.com/images/9780134390789/samplepages/9780134390789.pdf">Kazman, ch. 2</a></td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">2</td>
-<td class="org-left">vr 23 nov</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Opdracht 2</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">3</td>
-<td class="org-left">di 26 nov</td>
-<td class="org-left">HL15-Collegezaal 4</td>
-<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag5.html">Nog meer architecturen, HDFS, dataopslag</a></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">3</td>
-<td class="org-left">vr 29 nov</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Opdracht 3</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">4</td>
-<td class="org-left">wo 4 dec</td>
-<td class="org-left">HL15-Collegezaal 4</td>
-<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag7.html">Streams &amp; Apache; Spark</a></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">4</td>
-<td class="org-left">vr 6 dec</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">Opdracht 4</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">5</td>
-<td class="org-left">wo 11 dec</td>
-<td class="org-left">HL15-Collegezaal 4</td>
-<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/feb2019/dag9.html">Casus: actuele systemen</a></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><a href="https://www.infoq.com/articles/netflix-migrating-stream-processing">Case-study streaming Netflix</a></td>
-</tr>
-
-<tr>
-<td class="org-right">5</td>
-<td class="org-left">vr 13 dec</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">6</td>
-<td class="org-left">wo 18 dec</td>
-<td class="org-left">HL15-Collegezaal 4</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">6</td>
-<td class="org-left">vr 20 dec</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
-<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag12.html">Proeftentamen</a></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="outline-container-org8e66dc9" class="outline-2">
-<h2 id="org8e66dc9"><span class="section-number-2">3</span> Archief vorige cursus</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-Deze cursus werd ook in februari 2019 gegeven. De stof die we toen hebben aangeboden is nog beschikbaar in de <a href="https://huict.github.io/tict-vkbdsd-17/feb2019/">archiefsite februari 2019</a>. 
-</p>
-</div>
-</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: nov-dec 2019</p>
-<p class="author">Author: Roelant Ossewaarde</p>
+<p class="date">Date: Dag 7, 4 december 2019</p>
+<p class="author">Author: Roelant Ossewaarde / HU</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
