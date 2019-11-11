@@ -1,266 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="du" xml:lang="du">
+<!DOCTYPE html>
+<html lang="du">
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8"/>
 <title>Big Data System Design: introductie Programma TICT-VKBDSD-17 (nov-dec 2019)</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Roelant Ossewaarde (roelant.ossewaarde@hu.nl)" />
+<meta name="author" content="(Roelant Ossewaarde (roelant.ossewaarde@hu.nl))"/>
 <style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+.underline { text-decoration: underline; }
 </style>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
 
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+<link rel="stylesheet" href="./reveal.css"/>
 
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
 </script>
 </head>
 <body>
-<div id="content">
-<h1 class="title">Big Data System Design: introductie Programma TICT-VKBDSD-17 (nov-dec 2019)</h1>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Big Data System Design: introductie Programma TICT-VKBDSD-17 (nov-dec 2019)</h1><h2 class="author">Roelant Ossewaarde (roelant.ossewaarde@hu.nl)</h2><h2 class="date">13 november 2019 nov-dec 2019</h2>
+</section>
 
-<div id="outline-container-orge481402" class="outline-2">
-<h2 id="orge481402"><span class="section-number-2">1</span> Introductie</h2>
-<div class="outline-text-2" id="text-1">
+<section>
+<section id="slide-org38d6c5e">
+<h2 id="org38d6c5e"><span class="section-number-2">1</span> Introductie</h2>
 <p>
 Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/1111">Big Data System Design</a>. 
 </p>
-</div>
 
-<div id="outline-container-orgf5a1bb4" class="outline-3">
-<h3 id="orgf5a1bb4"><span class="section-number-3">1.1</span> Over Big Data</h3>
-<div class="outline-text-3" id="text-1-1">
+</section>
+<section id="slide-org53cf76c">
+<h3 id="org53cf76c"><span class="section-number-3">1.1</span> Over Big Data</h3>
 <p>
 <a href="https://roelanto.shinyapps.io/bigdata1/">Systemen</a> waarin data zó snel groeit dat de kosten van opslag en verwerking per datapunt hoger wordt dan de waarde er van.
 </p>
-</div>
-</div>
 
-<div id="outline-container-org37ad449" class="outline-3">
-<h3 id="org37ad449"><span class="section-number-3">1.2</span> Visualizatie van typen data</h3>
-<div class="outline-text-3" id="text-1-2">
+</section>
+<section id="slide-orgbc757e6">
+<h3 id="orgbc757e6"><span class="section-number-3">1.2</span> Visualizatie van typen data</h3>
 
 <div class="figure">
 <p><img src="./images/growthofdata.png" alt="growthofdata.png" />
 </p>
 </div>
-</div>
-</div>
 
-<div id="outline-container-org704e694" class="outline-3">
-<h3 id="org704e694"><span class="section-number-3">1.3</span> Vijf V's</h3>
-<div class="outline-text-3" id="text-1-3">
+</section>
+<section id="slide-org684b617">
+<h3 id="org684b617"><span class="section-number-3">1.3</span> Vijf V's</h3>
 <p>
 De toename van het <b>volume</b> van data stelt nieuwe eisen aan de manier waarop we data opslaan (<b>storage</b>) en aan de manier waarop we data opvragen (<b>retrieval</b>).
 </p>
@@ -280,62 +75,61 @@ Het belang &#x2013; en dus ook de waarde <b>Value</b> &#x2013; van data in bedri
 <p>
 Voor sommige bedrijfsprocessen hoeft data niet per se 100% de werkelijkheid weer te geven <b>veracity</b>. 
 </p>
-</div>
-</div>
 
-<div id="outline-container-orgb951d7b" class="outline-3">
-<h3 id="orgb951d7b"><span class="section-number-3">1.4</span> Cursus outline</h3>
-<div class="outline-text-3" id="text-1-4">
+</section>
+<section id="slide-org8c4fae0">
+<h3 id="org8c4fae0"><span class="section-number-3">1.4</span> Cursus outline</h3>
 <p>
 Onderwerpen die we bespreken:
 </p>
 
-<ul class="org-ul">
+<ul>
 <li>Big Data Architectuur
-<ul class="org-ul">
+<ul>
 <li>Attribute Driven Design (ADD)</li>
 <li>Lambda en Kappa architectuur</li>
+
 </ul></li>
+
 </ul>
-<ul class="org-ul">
+<ul>
 <li>Big Data Storage &amp; Retrieval
-<ul class="org-ul">
+<ul>
 <li>HDFS</li>
 <li>NoSQL</li>
+
 </ul></li>
 
 <li>Big Data Processing
-<ul class="org-ul">
+<ul>
 <li>(Parallel en gedistribueerd programmeren)</li>
 <li>MapReduce</li>
 <li>Stream processing (Apache Spark &amp; Flink)</li>
+
 </ul></li>
 <li>Big Data Analyse (Machine Learning)
-<ul class="org-ul">
+<ul>
 <li>Text analyse</li>
+
 </ul></li>
+
 </ul>
-</div>
-</div>
 
 
-<div id="outline-container-orgfe86bfd" class="outline-3">
-<h3 id="orgfe86bfd"><span class="section-number-3">1.5</span> Programma</h3>
-<div class="outline-text-3" id="text-1-5">
-</div>
+</section>
+<section id="slide-org62b9f37" data-background="#dbdbed" class="table-small">
+<h3 id="org62b9f37"><span class="section-number-3">1.5</span> Programma</h3>
 
-<div id="outline-container-org602e471" class="outline-4">
-<h4 id="org602e471"><span class="section-number-4">1.5.1</span> Canvas</h4>
-<div class="outline-text-4" id="text-1-5-1">
+</section>
+<section id="slide-org7b1861f">
+<h4 id="org7b1861f"><span class="section-number-4">1.5.1</span> Canvas</h4>
 <p>
 Alle stof staat ook beschreven via de <a href="https://canvas.hu.nl/courses/7548">Canvas-site</a> die hoort bij deze cursus. 
 </p>
-</div>
-</div>
 
-<div id="outline-container-orgcfa06d6" class="outline-4">
-<h4 id="orgcfa06d6"><span class="section-number-4">1.5.2</span> Dagindeling</h4>
-<div class="outline-text-4" id="text-1-5-2">
+</section>
+<section id="slide-org29665c2">
+<h4 id="org29665c2"><span class="section-number-4">1.5.2</span> Dagindeling</h4>
 <p>
 Op woensdag (maar in week 3 op dinsdag) is er een centraal hoorcollege met beide klassen. Op vrijdag is er steeds een werkcollege waarin per klas aan opdrachten gewerkt wordt: de A-klas in HL15-3.100 en de B-klas in HL15-4.020.
 </p>
@@ -495,37 +289,65 @@ De stof per dag is als volgt:
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div id="outline-container-org689c58e" class="outline-4">
-<h4 id="org689c58e"><span class="section-number-4">1.5.3</span> Archief vorige cursus</h4>
-<div class="outline-text-4" id="text-1-5-3">
+</section>
+<section id="slide-orgd85a2e8">
+<h4 id="orgd85a2e8"><span class="section-number-4">1.5.3</span> Archief vorige cursus</h4>
 <p>
 Deze cursus werd ook in februari 2019 gegeven. De stof die we toen hebben aangeboden is nog beschikbaar in de <a href="https://huict.github.io/tict-vkbdsd-17/feb2019/">archiefsite februari 2019</a>. 
 </p>
-</div>
-</div>
-</div>
 
-<div id="outline-container-orgd583c8d" class="outline-3">
-<h3 id="orgd583c8d"><span class="section-number-3">1.6</span> Toetsing</h3>
-<div class="outline-text-3" id="text-1-6">
-<ul class="org-ul">
+</section>
+<section id="slide-org087f46b">
+<h3 id="org087f46b"><span class="section-number-3">1.6</span> Toetsing</h3>
+<ul>
 <li>Tentamen: over de stof op Canvas.</li>
 <li>Opdracht: 
-<ul class="org-ul">
+<ul>
 <li>Je moet elk van de opdrachten voldoende afronden.</li>
+
 </ul></li>
 <li>Studiebelasting: 140 uur, 5 ECTS: ongeveer 80 uur voor opdracht.</li>
+
 </ul>
+</section>
+</section>
 </div>
 </div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 13 november 2019 nov-dec 2019</p>
-<p class="author">Author: Roelant Ossewaarde (roelant.ossewaarde@hu.nl)</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: false,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'fast',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
 </body>
 </html>
