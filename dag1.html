@@ -2,8 +2,8 @@
 <html lang="du">
 <head>
 <meta charset="utf-8"/>
-<title>Big Data System Design: introductie Programma TICT-VKBDSD-17 (nov-dec 2019)</title>
-<meta name="author" content="(Roelant Ossewaarde (roelant.ossewaarde@hu.nl))"/>
+<title>Big Data System Design</title>
+<meta name="author" content="((link (:type mailto :path roelant.ossewaarde@hu.nl :format bracket :raw-link mailto:roelant.ossewaarde@hu.nl :application nil :search-option nil :begin 1 :end 57 :contents-begin 36 :contents-end 54 :post-blank 1 :parent #0) Roelant Ossewaarde) en  (link (:type mailto :path jos.vanreenen@hu.nl :format bracket :raw-link mailto:jos.vanreenen@hu.nl :application nil :search-option nil :begin 60 :end 106 :contents-begin 90 :contents-end 104 :post-blank 0 :parent #0) Jos van Reenen) , B 2019-2020)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
 
-<link rel="stylesheet" href="./reveal.css"/>
+<link rel="stylesheet" href="./personalization.css"/>
 
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
@@ -27,26 +27,24 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Big Data System Design: introductie Programma TICT-VKBDSD-17 (nov-dec 2019)</h1><h2 class="author">Roelant Ossewaarde (roelant.ossewaarde@hu.nl)</h2><h2 class="date">13 november 2019 nov-dec 2019</h2>
+<section id="sec-title-slide" data-background="images/huhl15.jpg"><h1>Big Data System Design</h1><h3>Introductie, thema's: V's, architecturen</h3><p><small><a href="mailto:roelant.ossewaarde@hu.nl">Roelant Ossewaarde</a> en <a href="mailto:jos.vanreenen@hu.nl">Jos van Reenen</a>, B 2019-2020</small></p>
 </section>
 
 <section>
-<section id="slide-org38d6c5e">
-<h2 id="org38d6c5e"><span class="section-number-2">1</span> Introductie</h2>
+<section id="slide-orge523363">
+<h2 id="orge523363"><span class="section-number-2">1</span> Introductie</h2>
 <p>
-Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/1111">Big Data System Design</a>. 
+Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/7548">Big Data System Design</a>. 
 </p>
 
 </section>
-<section id="slide-org53cf76c">
-<h3 id="org53cf76c"><span class="section-number-3">1.1</span> Over Big Data</h3>
-<p>
-<a href="https://roelanto.shinyapps.io/bigdata1/">Systemen</a> waarin data zó snel groeit dat de kosten van opslag en verwerking per datapunt hoger wordt dan de waarde er van.
-</p>
+<section id="slide-orgecddc7f">
+<h3 id="orgecddc7f"><span class="section-number-3">1.1</span> Over Big Data</h3>
+<a href="https://roelanto.shinyapps.io/bigdata1/" data-preview-link>Systemen</a> waarin data zó snel groeit dat de kosten van opslag en verwerking per datapunt hoger wordt dan de waarde er van.
 
 </section>
-<section id="slide-orgbc757e6">
-<h3 id="orgbc757e6"><span class="section-number-3">1.2</span> Visualizatie van typen data</h3>
+<section id="slide-org431a9b7">
+<h3 id="org431a9b7"><span class="section-number-3">1.2</span> Visualizatie van typen data</h3>
 
 <div class="figure">
 <p><img src="./images/growthofdata.png" alt="growthofdata.png" />
@@ -54,8 +52,8 @@ Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/1111">Big 
 </div>
 
 </section>
-<section id="slide-org684b617">
-<h3 id="org684b617"><span class="section-number-3">1.3</span> Vijf V's</h3>
+<section id="slide-org63b5f00">
+<h3 id="org63b5f00"><span class="section-number-3">1.3</span> Vijf V's</h3>
 <p>
 De toename van het <b>volume</b> van data stelt nieuwe eisen aan de manier waarop we data opslaan (<b>storage</b>) en aan de manier waarop we data opvragen (<b>retrieval</b>).
 </p>
@@ -77,8 +75,8 @@ Voor sommige bedrijfsprocessen hoeft data niet per se 100% de werkelijkheid weer
 </p>
 
 </section>
-<section id="slide-org8c4fae0">
-<h3 id="org8c4fae0"><span class="section-number-3">1.4</span> Cursus outline</h3>
+<section id="slide-org59272e8">
+<h3 id="org59272e8"><span class="section-number-3">1.4</span> Cursus outline</h3>
 <p>
 Onderwerpen die we bespreken:
 </p>
@@ -90,16 +88,12 @@ Onderwerpen die we bespreken:
 <li>Lambda en Kappa architectuur</li>
 
 </ul></li>
-
-</ul>
-<ul>
 <li>Big Data Storage &amp; Retrieval
 <ul>
 <li>HDFS</li>
 <li>NoSQL</li>
 
 </ul></li>
-
 <li>Big Data Processing
 <ul>
 <li>(Parallel en gedistribueerd programmeren)</li>
@@ -109,35 +103,15 @@ Onderwerpen die we bespreken:
 </ul></li>
 <li>Big Data Analyse (Machine Learning)
 <ul>
-<li>Text analyse</li>
+<li>Text analyse? Beeldherkenning?</li>
 
 </ul></li>
 
 </ul>
 
-
 </section>
-<section id="slide-org62b9f37" data-background="#dbdbed" class="table-small">
-<h3 id="org62b9f37"><span class="section-number-3">1.5</span> Programma</h3>
-
-</section>
-<section id="slide-org7b1861f">
-<h4 id="org7b1861f"><span class="section-number-4">1.5.1</span> Canvas</h4>
-<p>
-Alle stof staat ook beschreven via de <a href="https://canvas.hu.nl/courses/7548">Canvas-site</a> die hoort bij deze cursus. 
-</p>
-
-</section>
-<section id="slide-org29665c2">
-<h4 id="org29665c2"><span class="section-number-4">1.5.2</span> Dagindeling</h4>
-<p>
-Op woensdag (maar in week 3 op dinsdag) is er een centraal hoorcollege met beide klassen. Op vrijdag is er steeds een werkcollege waarin per klas aan opdrachten gewerkt wordt: de A-klas in HL15-3.100 en de B-klas in HL15-4.020.
-</p>
-
-<p>
-De stof per dag is als volgt:
-</p>
-
+<section id="slide-orge975823" data-background="#dbdbed" class="table-small">
+<h3 id="orge975823"><span class="section-number-3">1.5</span> Programma</h3>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -146,7 +120,7 @@ De stof per dag is als volgt:
 
 <col  class="org-left" />
 
-<col  class="org-left" />
+<col  class="org-right" />
 
 <col  class="org-left" />
 
@@ -160,20 +134,20 @@ De stof per dag is als volgt:
 <tr>
 <th scope="col" class="org-right">Week</th>
 <th scope="col" class="org-left">Dag</th>
+<th scope="col" class="org-right">Tijd</th>
 <th scope="col" class="org-left">Lokatie</th>
 <th scope="col" class="org-left">Onderwerp</th>
 <th scope="col" class="org-left">Opdracht</th>
 <th scope="col" class="org-left">Voorbereiding</th>
-<th scope="col" class="org-left">&#xa0;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="org-right">1</td>
 <td class="org-left">wo 13 nov</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-Collegezaal 4</td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag1.html">Introductie; NoSQL, Big Data</a></td>
-<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
@@ -181,39 +155,39 @@ De stof per dag is als volgt:
 <tr>
 <td class="org-right">1</td>
 <td class="org-left">vr 15 nov</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-3.100 (klas A)/ 4.020 (klas B)</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">Opdracht 1</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">1</td>
+<td class="org-left"><a href="http://dx.doi.org/10.1016/j.chb.2014.09.030">MD3M model</a> (<a href="https://hu.on.worldcat.org/oclc/5693215120">bibliotheek</a>, <a href="https://canvas.hu.nl/files/121270">Canvas</a>)</td>
 </tr>
 
 <tr>
 <td class="org-right">2</td>
 <td class="org-left">woe 21 nov</td>
-<td class="org-left">HL15-1.022, HL15-1.024</td>
+<td class="org-right">9:30-11:30</td>
+<td class="org-left"><b>HL15-1.022, HL15-1.024</b></td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag3.html">ADD, Apache ecostructuur</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left"><a href="http://ptgmedia.pearsoncmg.com/images/9780134390789/samplepages/9780134390789.pdf">Kazman, ch. 2</a></td>
-<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-right">2</td>
 <td class="org-left">vr 23 nov</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-3.100 / 4.020</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">Opdracht 2</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">1 inleveren</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-right">3</td>
-<td class="org-left">di 26 nov</td>
+<td class="org-left"><b>di 26 nov</b></td>
+<td class="org-right"><b>8:30-10:30</b></td>
 <td class="org-left">HL15-Collegezaal 4</td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag5.html">Nog meer architecturen, HDFS, dataopslag</a></td>
-<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
@@ -221,19 +195,19 @@ De stof per dag is als volgt:
 <tr>
 <td class="org-right">3</td>
 <td class="org-left">vr 29 nov</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-3.100 / 4.020</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">Opdracht 3</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">2</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-right">4</td>
 <td class="org-left">wo 4 dec</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-Collegezaal 4</td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag7.html">Streams &amp; Apache; Spark</a></td>
-<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
@@ -241,19 +215,19 @@ De stof per dag is als volgt:
 <tr>
 <td class="org-right">4</td>
 <td class="org-left">vr 6 dec</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-3.100 / 4.020</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">Opdracht 4</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">2 inleveren</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-right">5</td>
 <td class="org-left">wo 11 dec</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-Collegezaal 4</td>
-<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/feb2019/dag9.html">Casus: actuele systemen</a></td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag9.html">Casus: actuele systemen</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left"><a href="https://www.infoq.com/articles/netflix-migrating-stream-processing">Case-study streaming Netflix</a></td>
 </tr>
@@ -261,18 +235,18 @@ De stof per dag is als volgt:
 <tr>
 <td class="org-right">5</td>
 <td class="org-left">vr 13 dec</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-3.100 / 4.020</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">3</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-right">6</td>
 <td class="org-left">wo 18 dec</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-Collegezaal 4</td>
-<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
@@ -281,58 +255,645 @@ De stof per dag is als volgt:
 <tr>
 <td class="org-right">6</td>
 <td class="org-left">vr 20 dec</td>
+<td class="org-right">9:30-11:30</td>
 <td class="org-left">HL15-3.100 / 4.020</td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag12.html">Proeftentamen</a></td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">3 inleveren</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="slide-orgd85a2e8">
-<h4 id="orgd85a2e8"><span class="section-number-4">1.5.3</span> Archief vorige cursus</h4>
+
 <p>
-Deze cursus werd ook in februari 2019 gegeven. De stof die we toen hebben aangeboden is nog beschikbaar in de <a href="https://huict.github.io/tict-vkbdsd-17/feb2019/">archiefsite februari 2019</a>. 
+Let op: 
 </p>
+<ul>
+<li>Wk 2: woensdag ander lokaal.</li>
+<li>Wk 3: di ipv woe, en een uur eerder.</li>
+<li>Deadlines voor opdrachten: vr 23 nov, 6 dec, 20 dec.</li>
+
+</ul>
 
 </section>
-<section id="slide-org087f46b">
-<h3 id="org087f46b"><span class="section-number-3">1.6</span> Toetsing</h3>
+<section id="slide-org5ab755e">
+<h3 id="org5ab755e"><span class="section-number-3">1.6</span> Toetsing</h3>
 <ul>
-<li>Tentamen: over de stof op Canvas.</li>
+<li>Tentamen: 
+<ul>
+<li>Alle stof op Canvas.</li>
+<li>Alle stof in de slides.</li>
+<li><a href="http://dx.doi.org/10.1016/j.chb.2014.09.030">MD3M model</a> (Link via de <a href="https://hu.on.worldcat.org/oclc/5693215120">bibliotheek</a>, <a href="https://canvas.hu.nl/files/121270">kopie op Canvas</a>)</li>
+<li><a href="http://ptgmedia.pearsoncmg.com/images/9780134390789/samplepages/9780134390789.pdf">hoofdstuk 2 van Cervantes &amp; Kazman "Designing Software Architectures"</a></li>
+<li><a href="https://www.infoq.com/articles/netflix-migrating-stream-processing">Case-study streaming Netflix</a></li>
+
+</ul></li>
 <li>Opdracht: 
 <ul>
 <li>Je moet elk van de opdrachten voldoende afronden.</li>
+<li>Er zijn drie opdrachten die meetellen voor je cijfer.</li>
+<li>Als je opdrachten te laat inlevert, kijken we die misschien pas aan het eind van het blok na.</li>
 
 </ul></li>
-<li>Studiebelasting: 140 uur, 5 ECTS: ongeveer 80 uur voor opdracht.</li>
+<li>Studiebelasting: 140 uur, 5 ECTS.</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org6594bf5">
+<h2 id="org6594bf5"><span class="section-number-2">2</span> Soorten data: OLTP vs OLAP</h2>
+<p>
+Een belangrijke toepassing van databases is om een analyse te doen van data: <b>Online Analytic Processing</b> (OLAP). Opgezochte informatie wordt dan vaak gebruikt om bedrijfsprocessen te sturen; de database wordt gebruikt als <b>decision support system</b>. Een bedrijf wil bijvoorbeeld weten welke producten beter of juist minder goed verkopen.
+</p>
+
+<p>
+Decision support queries bevragen vaak grote datasets. Ter contrast: het registreren van bedrijfsprocessen raakt vaak maar een klein stukje van de database. Systemen die vooral registreren worden <b>Online Transaction Processing</b> (OLTP) genoemd.
+</p>
+
+<p>
+Als je een aankoop doet bij Albert Heijn wordt die geregistreerd in een OLTP-systeem. Als Albert Heijn wil weten welke artikelen goed verkopen, gebruiken ze een OLAP-systeem. 
+</p>
+
+</section>
+<section id="slide-org30cf86e">
+<h3 id="org30cf86e"><span class="section-number-3">2.1</span> Verschil OLTP en OLAP.</h3>
+<p>
+OLTP gaat uit van sommige aannames:
+</p>
+
+<ol>
+<li>Informatie-elementen worden altijd maar één keer, op één plaats, opgeslagen, om redundantie te voorkomen. Updates worden daardoor ook snel.</li>
+<li>Queries mogen complex zijn, want ze veranderen niet vaak.</li>
+<li>Full table scans worden zo veel mogelijk vermeden.</li>
+
+</ol>
+
+<p>
+OLAP-queries zijn bijna altijd ad-hoc, en dus kun je de database niet vantevoren optimaliseren. 
+</p>
+
+</section>
+<section id="slide-org1a93252">
+<h3 id="org1a93252"><span class="section-number-3">2.2</span> Uitgewerkt voorbeeld</h3>
+<p>
+Gegeven een standaard database met gegevens van <b>producten</b>, <b>winkels</b> en <b>verkoop</b>.
+</p>
+
+
+<div class="figure">
+<p><img src="./images/sales.png" alt="sales.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org1283e38" data-background="./images/wpcoke.jpg" data-background-transition="slide" data-background-opacity="0.2">
+<h4 id="org1283e38"><span class="section-number-4">2.2.1</span> Voorbeeld-query #1</h4>
+<p>
+Hoe veel Prodent tandpasta hebben we gisteren verkocht in kleine gemeentes?
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> <span style="color: #483d8b;">SUM</span>(sale.quantity_sold)
+<span style="color: #a020f0;">FROM</span>   sale,
+       product,
+       product_category,
+       manufacturer,
+       store,
+       city
+<span style="color: #a020f0;">WHERE</span>  manufacturer_name = <span style="color: #8b2252;">'Prodent'</span>
+       <span style="color: #a020f0;">AND</span> product_category_name = <span style="color: #8b2252;">'tandpasta'</span>
+       <span style="color: #a020f0;">AND</span> city.population &lt; 40000
+       <span style="color: #a020f0;">AND</span> sale.product_id = product.product_id
+       <span style="color: #a020f0;">AND</span> sale.store_id = store.store_id
+       <span style="color: #a020f0;">AND</span> <span style="color: #228b22;">Date</span>(sale.date_time_of_sale) = <span style="color: #228b22;">Date</span>(Sysdate() - 1)
+       <span style="color: #a020f0;">AND</span> product.product_category_id = product_category.product_category_id
+       <span style="color: #a020f0;">AND</span> product.manufacturer_id = manufacturer.manufacturer_id
+       <span style="color: #a020f0;">AND</span> store.city_id = city.city_id; 
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org398e233">
+<h4 id="org398e233"><span class="section-number-4">2.2.2</span> Voorbeeld-query : opwarmen</h4>
+<p>
+Query 2: Hoe veel producten hebben we in vakantiedagen verkocht?
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> <span style="color: #483d8b;">SUM</span>(sale.quantity_sold)
+<span style="color: #a020f0;">FROM</span>   sale,
+       holiday_map
+<span style="color: #a020f0;">WHERE</span>  <span style="color: #228b22;">DATE</span>(sale.date_time_of_sale) = <span style="color: #228b22;">DATE</span>(holiday_map.holiday_date); 
+</code></pre>
+</div>
+
+<p>
+<b>Zelf doen:</b> stel een query op voor de volgende vraag:
+</p>
+
+<p>
+<i>Query 3: Hoe veel producten hebben we op niet-vakantiedagen verkocht?</i>
+</p>
+
+<ul>
+<li>Log in via <a href="http://198.211.127.65/phpmyadmin">http://198.211.127.65/phpmyadmin</a>.</li>
+<li>Gebruik als username / wachtwoord: je studentnummer.</li>
+<li>Gebruik database: <code>sales</code>.</li>
+
+</ul>
+
+<p>
+Het antwoord moet zijn: 2006.
+</p>
+
+</section>
+<section id="slide-org49ec358">
+<h4 id="org49ec358"><span class="section-number-4">2.2.3</span> Voorbeeld-query : opwarmen</h4>
+<p>
+Query 2: Hoe veel producten hebben we in vakantiedagen verkocht?
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> <span style="color: #483d8b;">SUM</span>(sale.quantity_sold)
+<span style="color: #a020f0;">FROM</span>   sale,
+       holiday_map
+<span style="color: #a020f0;">WHERE</span>  <span style="color: #228b22;">DATE</span>(sale.date_time_of_sale) = <span style="color: #228b22;">DATE</span>(holiday_map.holiday_date); 
+</code></pre>
+</div>
+
+
+<p>
+Query 3: Hoe veel producten hebben we op niet-vakantiedagen verkocht?
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> <span style="color: #483d8b;">SUM</span>(sale.quantity_sold)
+<span style="color: #a020f0;">FROM</span> sale
+<span style="color: #a020f0;">WHERE</span> <span style="color: #228b22;">DATE</span>(sale.date_time_of_sale)
+<span style="color: #a020f0;">NOT</span> <span style="color: #a020f0;">IN</span>
+(<span style="color: #a020f0;">SELECT</span> holiday_date <span style="color: #a020f0;">FROM</span> holiday_map);
+</code></pre>
+</div>
+
+<p>
+De vraag van de eerste en de tweede query zijn bijna identiek, maar de structuur van de query is heel anders!
+</p>
+
+</section>
+<section id="slide-org73b7ce0">
+<h4 id="org73b7ce0"><span class="section-number-4">2.2.4</span> Voorbeeld-query: performance</h4>
+<p>
+Query 4: Welke winkels verkopen best-sellers?
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> store_id 
+<span style="color: #a020f0;">FROM</span> sale
+<span style="color: #a020f0;">GROUP</span> <span style="color: #a020f0;">BY</span> store_id
+<span style="color: #a020f0;">HAVING</span> <span style="color: #483d8b;">SUM</span>(quantity_sold) &gt; 1000;
+</code></pre>
+</div>
+
+<p>
+<b>Zelf doen:</b> stel een query op voor de volgende vraag:
+</p>
+
+<p>
+<i>Query 5: Wat wordt er verkocht in de winkels met best-sellers?</i>
+</p>
+
+<ul>
+<li>Log in via <a href="http://198.211.127.65/phpmyadmin">http://198.211.127.65/phpmyadmin</a>.</li>
+<li>Gebruik als username / wachtwoord: je studentnummer.</li>
+<li>Gebruik database: <code>sales</code>.</li>
+
+</ul>
+
+<p>
+Het antwoord moet zijn: 2004. 
+</p>
+
+</section>
+<section id="slide-orgac58f8b">
+<h4 id="orgac58f8b"><span class="section-number-4">2.2.5</span> Voorbeeld-query: performance</h4>
+<p>
+Query 4: Welke winkels verkopen best-sellers?
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> store_id 
+<span style="color: #a020f0;">FROM</span> sale
+<span style="color: #a020f0;">GROUP</span> <span style="color: #a020f0;">BY</span> store_id
+<span style="color: #a020f0;">HAVING</span> <span style="color: #483d8b;">SUM</span>(quantity_sold) &gt; 1000;
+</code></pre>
+</div>
+
+
+<p>
+Query 5: Wat wordt er verkocht in de winkels met best-sellers?
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> <span style="color: #483d8b;">SUM</span>(quantity_sold) 
+<span style="color: #a020f0;">FROM</span> sale
+<span style="color: #a020f0;">WHERE</span> store_id <span style="color: #a020f0;">in</span>
+(<span style="color: #a020f0;">SELECT</span> store_id 
+ <span style="color: #a020f0;">FROM</span> sale
+ <span style="color: #a020f0;">GROUP</span> <span style="color: #a020f0;">BY</span> store_id
+ <span style="color: #a020f0;">HAVING</span> <span style="color: #483d8b;">SUM</span>(quantity_sold) &gt; 1000);
+</code></pre>
+</div>
+
+<p>
+De subquery van query 5 lijkt erg op die van query 3. Maar ze verschillen radicaal in performance: de subquery van query 5 vraagt, sorteert en aggegreert uit de tabel <code>sale</code> die heel erg lang is. Sommige databases zullen de subquery voor <i>elke</i> rij van de main query uitvoeren!
+</p>
+
+<p>
+Er zit een enorm verschil in uitvoertijd tussen queries 3 en 5. 
+</p>
+
+</section>
+<section id="slide-org232ca1e">
+<h3 id="org232ca1e"><span class="section-number-3">2.3</span> Sterschema: gedenormaliseerde database.</h3>
+<p>
+De objects of interest staan gegroepeerd in een <b>fact table</b> met zogenaamde <b>dependent attributes</b>, en alle eigenschappen staan in zogenaamde <b>dimension tables</b>. De fact table vormt het midden van de ster, en de dimension tables zijn de punten van de ster. Dimensies van een tabel met verkoop kunnen zijn: de datum van verkoop, de plaats van verkoop, het type item, de betaal-methode, etc. 
+</p>
+
+<p>
+In het eerste jaar in de database-cursus wordt juist een andere manier aangeleerd om schema's te ontwerpen, namelijk door normalizatie-regels.
+</p>
+
+</section>
+<section id="slide-org202a4f3">
+<h4 id="org202a4f3"><span class="section-number-4">2.3.1</span> Star schema voorbeeld</h4>
+
+<div class="figure">
+<p><img src="./images/sales_star.png" alt="sales_star.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org3ebfff4">
+<h4 id="org3ebfff4"><span class="section-number-4">2.3.2</span> Star schema queries</h4>
+<p>
+Query 2: Hoe veel producten hebben we in vakantiedagen verkocht?
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> td.holiday_flag, <span style="color: #483d8b;">SUM</span>(f.unit_sales)
+<span style="color: #a020f0;">FROM</span> sale_fact f, time_dimension td
+<span style="color: #a020f0;">WHERE</span> f.time_key = td.time_key
+<span style="color: #a020f0;">AND</span> td.holiday_flag = <span style="color: #8b2252;">'t'</span>
+<span style="color: #a020f0;">GROUP</span> <span style="color: #a020f0;">BY</span> td.holiday_flag;
+</code></pre>
+</div>
+
+<pre class="example">
++--------------+-------------------+
+| holiday_flag | SUM(f.unit_sales) |
++--------------+-------------------+
+| t            |                 2 |
++--------------+-------------------+
+1 row in set (0.00 sec)
+</pre>
+
+<p>
+Query 4: Welke winkels verkopen best-sellers? 
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> sd.store_key, sd.<span style="color: #a020f0;">name</span> 
+<span style="color: #a020f0;">FROM</span> sale_fact f, store_dimension sd 
+<span style="color: #a020f0;">WHERE</span> f.store_key = sd.store_key 
+<span style="color: #a020f0;">GROUP</span> <span style="color: #a020f0;">BY</span> sd.store_key 
+<span style="color: #a020f0;">HAVING</span> <span style="color: #483d8b;">SUM</span>(f.unit_sales) &gt; 1000
+</code></pre>
+</div>
+
+<pre class="example">
++-----------+-----------------------------+
+| store_key | name                        |
++-----------+-----------------------------+
+|        16 | Albert Heijn Sarphatistraat |
++-----------+-----------------------------+
+1 row in set (0.00 sec)
+</pre>
+
+</section>
+<section id="slide-org5c33f6c">
+<h4 id="org5c33f6c"><span class="section-number-4">2.3.3</span> Star schema: zelf doen</h4>
+<p>
+Stel zelf de juiste queries op, maar nu in het star schema:
+</p>
+
+<p>
+<i>Query 3: Hoe veel producten hebben we op niet-vakantiedagen verkocht?</i>
+</p>
+
+<p>
+Juiste antwoord: 2006
+</p>
+
+<p>
+<i>Query 5: Wat wordt er verkocht in de winkels met best-sellers?</i>
+</p>
+
+<p>
+Juiste antwoord: 2004
+</p>
+
+<ul>
+<li>Log in via <a href="http://198.211.127.65/phpmyadmin">http://198.211.127.65/phpmyadmin</a>.</li>
+<li>Gebruik als username / wachtwoord: je studentnummer.</li>
+<li>Gebruik database: <code>sales_star</code>.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgcb6cd77">
+<h4 id="orgcb6cd77"><span class="section-number-4">2.3.4</span> Slicing en dicing</h4>
+<p>
+Het is nu vrij eenvoudig om <i>per dimensie</i> de data samen te vatten:
+</p>
+
+<p>
+Verkopen per fiscale periode:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> td.fiscal_period, <span style="color: #483d8b;">SUM</span>(f.dollar_sales)
+<span style="color: #a020f0;">FROM</span> sale_fact f, time_dimension td
+<span style="color: #a020f0;">WHERE</span> f.time_key = td.time_key
+<span style="color: #a020f0;">GROUP</span> <span style="color: #a020f0;">BY</span> td.fiscal_period;
+</code></pre>
+</div>
+
+<pre class="example">
++---------------+---------------------+
+| fiscal_period | SUM(f.dollar_sales) |
++---------------+---------------------+
+| DEC. 2019     |             5505.50 |
+| NOV. 2019     |               11.80 |
++---------------+---------------------+
+2 rows in set (0.00 sec)
+</pre>
+
+
+<p>
+Verkopen per stad
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">SELECT</span> sd.city, <span style="color: #483d8b;">SUM</span>(f.dollar_sales)
+<span style="color: #a020f0;">FROM</span> sale_fact f, store_dimension sd
+<span style="color: #a020f0;">WHERE</span> f.store_key = sd.store_key
+<span style="color: #a020f0;">GROUP</span> <span style="color: #a020f0;">BY</span> sd.city;
+</code></pre>
+</div>
+
+<pre class="example">
++-----------+---------------------+
+| city      | SUM(f.dollar_sales) |
++-----------+---------------------+
+| Amsterdam |             5511.00 |
+| Bilthoven |                6.30 |
++-----------+---------------------+
+2 rows in set (0.00 sec)
+</pre>
+
+</section>
+<section id="slide-org0a4c0cf">
+<h4 id="org0a4c0cf"><span class="section-number-4">2.3.5</span> Combineren van dimensies</h4>
+<p>
+Verkopen per stad per fiscale periode:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><code trim><span style="color: #a020f0;">select</span> sd.city, td.fiscal_period,  <span style="color: #483d8b;">sum</span>(f.dollar_sales)
+<span style="color: #a020f0;">from</span> sale_fact f, store_dimension sd, time_dimension td
+<span style="color: #a020f0;">where</span> f.store_key = sd.store_key
+<span style="color: #a020f0;">and</span> f.time_key = td.time_key
+<span style="color: #a020f0;">group</span> <span style="color: #a020f0;">by</span> sd.store_key, td.fiscal_period;
+</code></pre>
+</div>
+
+<pre class="example">
++-----------+---------------+---------------------+
+| city      | fiscal_period | sum(f.dollar_sales) |
++-----------+---------------+---------------------+
+| Amsterdam | DEC. 2019     |             5500.00 |
+| Amsterdam | NOV. 2019     |               11.00 |
+| Bilthoven | DEC. 2019     |                5.50 |
+| Bilthoven | NOV. 2019     |                0.80 |
++-----------+---------------+---------------------+
+4 rows in set (0.00 sec)
+</pre>
+
+</section>
+<section id="slide-org3342bd4">
+<h3 id="org3342bd4"><span class="section-number-3">2.4</span> Slicing en dicing</h3>
+<p>
+Soms willen we de granulariteit van een dimensie verminderen. We zijn bijvoorbeeld niet geïnteresseerd in individuele auto's, maar in auto's gegroepeerd naar merk of kleur; of we willen alle verkopen op een dag nauwkeurig, in plaats van op de seconde nauwkeurig weten. 
+</p>
+
+<p>
+Voor dealers kunnen we indelen per dealer, per stad, per staat, of helemaal niet groeperen. 
+</p>
+
+<p>
+Het groeperen in een kubus heet <b>dicing</b>. We zijn vaak geinteresseerd in één specifieke dice: <b>slicing</b>. Queries die de data grover indelen, noemen we <b>roll up</b>-queries; een query die juist meer partities maakt en dus de data fijnmaziger indeelt, heet een <b>drill-down</b>-query.
+</p>
+
+</section>
+<section id="slide-org272adb1">
+<h3 id="org272adb1"><span class="section-number-3">2.5</span> De datakubus.</h3>
+
+<div class="figure">
+<p><img src="./images/cube.png" alt="cube.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org9bd468f">
+<h2 id="org9bd468f"><span class="section-number-2">3</span> OLAP: Variety: Ongestructureerde data: text mining</h2>
+<p>
+Eén van de vijf V's van big data: <b>variety</b>. 
+</p>
+
+<p>
+Text mining representeert een klasse toepassingen waarbij uit
+ongestructureerde data (teksten, plaatjes, video, audio) informatie
+wordt verkregen.
+</p>
+
+<p>
+In de kern gaat het bij text mining om het "samenvatten van tekst": afleiden van zinvolle karakteristieken waarmee je teksten kun vergelijken. Zo ook bij plaatjes/video/audio etc. Begrip: <i>features</i>. 
+</p>
+
+
+</section>
+<section id="slide-org5ef1c46">
+<h3 id="org5ef1c46"><span class="section-number-3">3.1</span> Analyse van antwoorden op open vragen.</h3>
+<p>
+Bijvoorbeeld: klant-contact data en het vinden van sentiment. 
+</p>
+
+<p>
+Big Data projecten: Vodafone-Ziggo project. 
+</p>
+
+</section>
+<section id="slide-orgbac15fb">
+<h3 id="orgbac15fb"><span class="section-number-3">3.2</span> Automatisch categoriseren van berichten, email.</h3>
+<p>
+Bijvoorbeeld: routeren van klantcontacten. Implementatie achter chatbots. Detectie van spam. 
+</p>
+
+<p>
+In video: vinden van illegale kopieën van video's op youtube. 
+</p>
+
+</section>
+<section id="slide-org12f77b6">
+<h3 id="org12f77b6"><span class="section-number-3">3.3</span> Analyse van notities, bijvoorbeeld overdrachten medische dossiers, warranty claims bij verzekeringen.</h3>
+<p>
+In video: detecteren van beweging. 
+</p>
+
+</section>
+<section id="slide-org1052fce">
+<h3 id="org1052fce"><span class="section-number-3">3.4</span> "Authorship attribution"</h3>
+<p>
+Gegeven een tekst, wie is de auteur? 
+</p>
+
+<p>
+Bijvoorbeeld belangrijk om te bepalen wat voor iemand een tweet heeft geplaatst (voor het targeten van advertenties). 
+</p>
+
+<p>
+Bijvoorbeeld: detectie van nepbellers bij de suicide hotlijn.
+</p>
+
+</section>
+<section id="slide-orgf90e25d">
+<h3 id="orgf90e25d"><span class="section-number-3">3.5</span> Named-Entity-Recognition.</h3>
+<p>
+Herkennen van namen en persoonsgerelateerde informatie. 
+</p>
+
+<p>
+Tegenwoordig zeer belangrijk om anonimiteit en privacy te garanderen (AVG), 
+</p>
+
+<p>
+Bijvoorbeeld: "Mijn tante <i>Elsbeth</i> ging gisteren naar <i>New York</i>."
+</p>
+
+<p>
+In video: detecteren van objecten.
+</p>
+
+
+
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-org9f5d34a">
+<h2 id="org9f5d34a"><span class="section-number-2">4</span> OLTP: Velocity: streaming data</h2>
+<p>
+Een <b>stream</b> is een <i>unbounded, continuous, real-time flow of records</i>.
+</p>
+
+<p>
+Voorbeelden:
+</p>
+
+<ol>
+<li>GPS-bewegingen van voertuigem.</li>
+<li>Financiële transacties.</li>
+<li>Web traffic op websites</li>
+<li>Tweets van twitter.</li>
+<li>IoT-devices (Alstom!).</li>
+<li>Spelersgedrag in games.</li>
+
+</ol>
+
+<p>
+"You don't request data, it comes to you."
+</p>
+
+
+</section>
+<section id="slide-orgfa6c339">
+<h3 id="orgfa6c339"><span class="section-number-3">4.1</span> Waarom is dat anders?</h3>
+<p>
+Voor sommige inzichten geldt: de waarde (<i>value</i>) neemt af als het langer duurt tussen het verkrijgen van de data en het berekenen van het inzicht. 
+</p>
+
+<p>
+Bijvoorbeeld: de bewaking van condities met sensoren (temperatuur, hartbewaking, <i>geofencing</i>).
+</p>
+
+<p>
+Bijvoorbeeld: het detecteren van keywords in chat-gesprekken.
+</p>
+
+<p>
+Bijvoorbeeld: bewegingsdetectie in beveiligingscamera's. 
+</p>
+
+</section>
+<section id="slide-org3bc590a">
+<h3 id="org3bc590a"><span class="section-number-3">4.2</span> Realtime data is lastig voor een "batch"-model.</h3>
+<p>
+Data komt binnen als een continue stroom <i>events</i>. 
+</p>
+
+<p>
+<i>Batch-processing</i> betekent: opslaan van events, dan de data collectie onderbreken voor analyse, en dat herhalen. 
+</p>
+
+<p>
+<i>Real-time</i> betekent: data geanalyseerd als die binnenkomt. 
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org100c1a5">
+<h2 id="org100c1a5"><span class="section-number-2">5</span> Vooruitblik</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+</section>
+<section id="slide-orgb8ebe06">
+<h3 id="orgb8ebe06"><span class="section-number-3">5.1</span> Vrijdag: oefenen met:</h3>
+<ul>
+<li>opstellen van functionele eisen met het MD3M-model.</li>
+<li>stoeien met data warehousing (SQL-queries).</li>
 
 </ul>
 </section>
 </section>
 </div>
 </div>
-<script src="./reveal.js/lib/js/head.min.js"></script>
 <script src="./reveal.js/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-
-controls: true,
-progress: true,
-history: false,
-center: false,
-slideNumber: 'c',
-rollingLinks: false,
-keyboard: true,
-overview: true,
-
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: 'fast',
+slideNumber:true,
+width:"80%",
+height:"100%",
 multiplex: {
     secret: '', // null if client
     id: '', // id, obtained from socket.io server
@@ -341,7 +902,7 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
-{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+{ src: 'reveal.js/plugin/reveald3.js', async: true },
  { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
  { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
  { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },

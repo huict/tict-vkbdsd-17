@@ -32,8 +32,8 @@
 
 
 <section>
-<section id="slide-orgbbbc9fd">
-<h2 id="orgbbbc9fd"><span class="section-number-2">1</span> OLTP vs OLAP</h2>
+<section id="slide-orge44edf9">
+<h2 id="orge44edf9"><span class="section-number-2">1</span> OLTP vs OLAP</h2>
 <p>
 Een belangrijke toepassing van databases is om een analyse te doen van data: <b>Online Analytic Processing</b> (OLAP). Opgezochte informatie wordt dan vaak gebruikt om bedrijfsprocessen te sturen; de database wordt gebruikt als <b>decision support system</b>. Een bedrijf wil bijvoorbeeld weten welke producten beter of juist minder goed verkopen.
 </p>
@@ -43,8 +43,8 @@ Decision support queries bevragen vaak grote datasets. Ter contrast: het registr
 </p>
 
 </section>
-<section id="slide-org03c74c8">
-<h3 id="org03c74c8"><span class="section-number-3">1.1</span> Waarom is niet alles OLTP?</h3>
+<section id="slide-org8f92929">
+<h3 id="org8f92929"><span class="section-number-3">1.1</span> Waarom is niet alles OLTP?</h3>
 <p>
 OLTP gaat uit van sommige aannames:
 </p>
@@ -61,8 +61,8 @@ OLAP-queries zijn bijna altijd ad-hoc, en dus kun je de database niet vantevoren
 </p>
 
 </section>
-<section id="slide-orgc85401f">
-<h4 id="orgc85401f"><span class="section-number-4">1.1.1</span> Typisch OLTP-schema</h4>
+<section id="slide-org6c4386f">
+<h4 id="org6c4386f"><span class="section-number-4">1.1.1</span> Typisch OLTP-schema</h4>
 
 <div class="figure">
 <p><img src="./images/oltp.png" alt="oltp.png" />
@@ -70,8 +70,8 @@ OLAP-queries zijn bijna altijd ad-hoc, en dus kun je de database niet vantevoren
 </div>
 
 </section>
-<section id="slide-org61cbf20">
-<h4 id="org61cbf20"><span class="section-number-4">1.1.2</span> Typische OLAP-query</h4>
+<section id="slide-org7c057a6">
+<h4 id="org7c057a6"><span class="section-number-4">1.1.2</span> Typische OLAP-query</h4>
 <p>
 "I noticed that there was a Heineken promotion recently, directed at people who live in small towns.
 How much Heineken beer did we sell in those towns yesterday? 
@@ -85,8 +85,8 @@ And how much on the same day a month ago?"
 </div>
 
 </section>
-<section id="slide-org0e68533">
-<h4 id="org0e68533"><span class="section-number-4">1.1.3</span> OLTP-query voor probleem op vorige slide</h4>
+<section id="slide-org0df1e61">
+<h4 id="org0df1e61"><span class="section-number-4">1.1.3</span> OLTP-query voor probleem op vorige slide</h4>
 <div class="org-src-container">
 
 <pre  class="src src-sql"><span style="color: #a020f0;">select</span> <span style="color: #483d8b;">sum</span>(sales.quantity_sold) 
@@ -104,8 +104,8 @@ And how much on the same day a month ago?"
 </div>
 
 </section>
-<section id="slide-org71e35bf">
-<h3 id="org71e35bf"><span class="section-number-3">1.2</span> OLTP-query: gelijke queries zijn het niet</h3>
+<section id="slide-org781ae90">
+<h3 id="org781ae90"><span class="section-number-3">1.2</span> OLTP-query: gelijke queries zijn het niet</h3>
 <p>
 Sales in vakantie-periodes:
 </p>
@@ -132,8 +132,8 @@ Sales in niet-vakantie-periodes:
 </div>
 
 </section>
-<section id="slide-orge6e2afb">
-<h3 id="orge6e2afb"><span class="section-number-3">1.3</span> OLTP-query: onverwachte performanceproblemen</h3>
+<section id="slide-org33098db">
+<h3 id="org33098db"><span class="section-number-3">1.3</span> OLTP-query: onverwachte performanceproblemen</h3>
 <p>
 "Sales in winkels met veel verkoop."
 </p>
@@ -170,8 +170,8 @@ Wat is het probleem?
 </p>
 
 </section>
-<section id="slide-orgada75cb">
-<h3 id="orgada75cb"><span class="section-number-3">1.4</span> Sterschema</h3>
+<section id="slide-orge3905c8">
+<h3 id="orge3905c8"><span class="section-number-3">1.4</span> Sterschema</h3>
 
 <div class="figure">
 <p><object type="image/svg+xml" data="./images/starschema.svg" class="org-svg">
@@ -180,8 +180,8 @@ Sorry, your browser does not support SVG.</object>
 </div>
 
 </section>
-<section id="slide-orgc9f78d0">
-<h4 id="orgc9f78d0"><span class="section-number-4">1.4.1</span> Sterschema: gedenormaliseerde database.</h4>
+<section id="slide-orgf3f54ca">
+<h4 id="orgf3f54ca"><span class="section-number-4">1.4.1</span> Sterschema: gedenormaliseerde database.</h4>
 <p>
 De objects of interest staan gegroepeerd in een <b>fact table</b> met zogenaamde <b>dependent attributes</b>, en alle eigenschappen staan in zogenaamde <b>dimension tables</b>. De fact table vormt het midden van de ster, en de dimension tables zijn de punten van de ster. Dimensies van een tabel met verkoop kunnen zijn: de datum van verkoop, de plaats van verkoop, het type item, de betaal-methode, etc. 
 </p>
@@ -191,8 +191,8 @@ In het eerste jaar in de database-cursus wordt juist een andere manier aangeleer
 </p>
 
 </section>
-<section id="slide-orgb11b143">
-<h4 id="orgb11b143"><span class="section-number-4">1.4.2</span> Opdracht A</h4>
+<section id="slide-orgf2975a8">
+<h4 id="orgf2975a8"><span class="section-number-4">1.4.2</span> Opdracht A</h4>
 <p>
 Transformeer het genormaliseerde model tot een star schema. 
 </p>
@@ -204,8 +204,8 @@ Transformeer het genormaliseerde model tot een star schema.
 </div>
 
 </section>
-<section id="slide-org4b8d519">
-<h4 id="org4b8d519"><span class="section-number-4">1.4.3</span> Opdracht B</h4>
+<section id="slide-org120d9d9">
+<h4 id="org120d9d9"><span class="section-number-4">1.4.3</span> Opdracht B</h4>
 <p>
 Welke query?
 </p>
@@ -219,8 +219,8 @@ Schrijf uit voor de genormaliseerde en voor de gedenormaliseerde versie.
 </p>
 
 </section>
-<section id="slide-org1fd585b">
-<h3 id="org1fd585b"><span class="section-number-3">1.5</span> Slicing en dicing</h3>
+<section id="slide-orgf3f799a">
+<h3 id="orgf3f799a"><span class="section-number-3">1.5</span> Slicing en dicing</h3>
 <p>
 Soms willen we de granulariteit van een dimensie verminderen. We zijn bijvoorbeeld niet geïnteresseerd in individuele auto's, maar in auto's gegroepeerd naar merk of kleur; of we willen alle verkopen op een dag nauwkeurig, in plaats van op de seconde nauwkeurig weten. 
 </p>
@@ -234,8 +234,8 @@ Het groeperen in een kubus heet <b>dicing</b>. We zijn vaak geinteresseerd in é
 </p>
 
 </section>
-<section id="slide-org2fb5c41">
-<h3 id="org2fb5c41"><span class="section-number-3">1.6</span> De datakubus.</h3>
+<section id="slide-org045bf58">
+<h3 id="org045bf58"><span class="section-number-3">1.6</span> De datakubus.</h3>
 
 <div class="figure">
 <p><img src="./images/cube.png" alt="cube.png" />
@@ -245,8 +245,8 @@ Het groeperen in een kubus heet <b>dicing</b>. We zijn vaak geinteresseerd in é
 </section>
 </section>
 <section>
-<section id="slide-orgb7ae1b9">
-<h2 id="orgb7ae1b9"><span class="section-number-2">2</span> Ongestructureerde data: text mining</h2>
+<section id="slide-orga2531d8">
+<h2 id="orga2531d8"><span class="section-number-2">2</span> Ongestructureerde data: text mining</h2>
 <p>
 Eén van de vijf V's van big data: <b>variety</b>. 
 </p>
@@ -263,8 +263,8 @@ In de kern gaat het bij text mining om het "samenvatten van tekst": afleiden van
 
 
 </section>
-<section id="slide-org2a52f9a">
-<h3 id="org2a52f9a"><span class="section-number-3">2.1</span> Analyse van antwoorden op open vragen.</h3>
+<section id="slide-org478d92d">
+<h3 id="org478d92d"><span class="section-number-3">2.1</span> Analyse van antwoorden op open vragen.</h3>
 <p>
 Bijvoorbeeld: klant-contact data en het vinden van sentiment. 
 </p>
@@ -274,8 +274,8 @@ Big Data projecten: Vodafone-Ziggo project.
 </p>
 
 </section>
-<section id="slide-orgad82ad1">
-<h3 id="orgad82ad1"><span class="section-number-3">2.2</span> Automatisch categoriseren van berichten, email.</h3>
+<section id="slide-org7f225e8">
+<h3 id="org7f225e8"><span class="section-number-3">2.2</span> Automatisch categoriseren van berichten, email.</h3>
 <p>
 Bijvoorbeeld: routeren van klantcontacten. Implementatie achter chatbots. Detectie van spam. 
 </p>
@@ -285,15 +285,15 @@ In video: vinden van illegale kopieën van video's op youtube.
 </p>
 
 </section>
-<section id="slide-org61adc9e">
-<h3 id="org61adc9e"><span class="section-number-3">2.3</span> Analyse van notities, bijvoorbeeld overdrachten medische dossiers, warranty claims bij verzekeringen.</h3>
+<section id="slide-org96ac56e">
+<h3 id="org96ac56e"><span class="section-number-3">2.3</span> Analyse van notities, bijvoorbeeld overdrachten medische dossiers, warranty claims bij verzekeringen.</h3>
 <p>
 In video: detecteren van beweging. 
 </p>
 
 </section>
-<section id="slide-org366e9d2">
-<h3 id="org366e9d2"><span class="section-number-3">2.4</span> "Authorship attribution"</h3>
+<section id="slide-org0237c03">
+<h3 id="org0237c03"><span class="section-number-3">2.4</span> "Authorship attribution"</h3>
 <p>
 Gegeven een tekst, wie is de auteur? 
 </p>
@@ -307,8 +307,8 @@ Bijvoorbeeld: detectie van nepbellers bij de suicide hotlijn.
 </p>
 
 </section>
-<section id="slide-orgc61ec7e">
-<h3 id="orgc61ec7e"><span class="section-number-3">2.5</span> Named-Entity-Recognition.</h3>
+<section id="slide-org4300e09">
+<h3 id="org4300e09"><span class="section-number-3">2.5</span> Named-Entity-Recognition.</h3>
 <p>
 Herkennen van namen en persoonsgerelateerde informatie. 
 </p>
@@ -330,8 +330,8 @@ In video: detecteren van objecten.
 </section>
 </section>
 <section>
-<section id="slide-orge53f173">
-<h2 id="orge53f173"><span class="section-number-2">3</span> Spark (<a href="https://canvas.hu.nl/courses/1111/assignments/16022">Canvas</a>)</h2>
+<section id="slide-orgd66d41e">
+<h2 id="orgd66d41e"><span class="section-number-2">3</span> Spark (<a href="https://canvas.hu.nl/courses/1111/assignments/16022">Canvas</a>)</h2>
 
 <div class="figure">
 <p><img src="./images/apache-spark.jpg" alt="apache-spark.jpg" />
@@ -342,8 +342,8 @@ In video: detecteren van objecten.
 In-memory antwoord op MapReduce: parallel (zoals MapReduce) maar vriendelijker en voor <a href="https://www.scnsoft.com/blog/spark-vs-hadoop-mapreduce">sommige usecases</a> sneller. 
 </p>
 </section>
-<section id="slide-orga5123cb">
-<h3 id="orga5123cb"><span class="section-number-3">3.1</span> Introductie via notebook</h3>
+<section id="slide-org435e54e">
+<h3 id="org435e54e"><span class="section-number-3">3.1</span> Introductie via notebook</h3>
 <p>
 <a href="https://https//databricks.com/">Databricks</a> is een PAAS (Platform-as-a-service) provider voor Big Data analyse. Zij bieden een gratis Apache Spark omgeving, waar je direct Spark-notebooks kunt implementeren en testen. Ga naar hun <a href="https://databricks.com/try-databricks">trial-omgeving</a> en schrijf je in voor de Community Edition (gebruik eventueel een <a href="https://10minutemail.com/">tijdelijk account</a> als je geen spam wilt ontvangen).
 </p>
@@ -354,8 +354,8 @@ Volg binnen hun omgeving de
 </p>
 
 </section>
-<section id="slide-orge56815f">
-<h3 id="orge56815f"><span class="section-number-3">3.2</span> TF/IDF analyse</h3>
+<section id="slide-org2278163">
+<h3 id="org2278163"><span class="section-number-3">3.2</span> TF/IDF analyse</h3>
 <p>
 Apache Spark heeft standaard <a href="https://spark.apache.org/docs/2.3.3/ml-features.html">TF/IDF analysemogelijkheden</a> aan boord. 
 </p>
@@ -365,8 +365,8 @@ Her-implementeeer je oplossing van maandag met behulp van Spark.
 </p>
 
 </section>
-<section id="slide-orgb74b63c">
-<h3 id="orgb74b63c"><span class="section-number-3">3.3</span> De <b>echte</b> data</h3>
+<section id="slide-org32425da">
+<h3 id="org32425da"><span class="section-number-3">3.3</span> De <b>echte</b> data</h3>
 <p>
 Een run van de spider van OSF resulteerde in een eerste set met 1,5 Gb aan data. Je kunt de data via <a href="https://filesender.surf.nl/?s=download&amp;token=b2c65a3a-44d9-42ef-9974-1fff1068a3d0">deze link</a> downloaden. 
 </p>
