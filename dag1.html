@@ -31,20 +31,20 @@
 </section>
 
 <section>
-<section id="slide-org5066baf">
-<h2 id="org5066baf"><span class="section-number-2">1</span> Introductie</h2>
+<section id="slide-org21d3ce6">
+<h2 id="org21d3ce6"><span class="section-number-2">1</span> Introductie</h2>
 <p>
 Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/7548">Big Data System Design</a>. 
 </p>
 
 </section>
-<section id="slide-org0eb39dc">
-<h3 id="org0eb39dc"><span class="section-number-3">1.1</span> Over Big Data</h3>
+<section id="slide-orga969394">
+<h3 id="orga969394"><span class="section-number-3">1.1</span> Over Big Data</h3>
 <a href="https://roelanto.shinyapps.io/bigdata1/" data-preview-link>Systemen</a> waarin data zó snel groeit dat de kosten van opslag en verwerking per datapunt hoger wordt dan de waarde er van.
 
 </section>
-<section id="slide-org62e9a3c">
-<h3 id="org62e9a3c"><span class="section-number-3">1.2</span> Visualizatie van typen data</h3>
+<section id="slide-orgee7bd3c">
+<h3 id="orgee7bd3c"><span class="section-number-3">1.2</span> Visualizatie van typen data</h3>
 
 <div class="figure">
 <p><img src="./images/growthofdata.png" alt="growthofdata.png" />
@@ -52,8 +52,8 @@ Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/7548">Big 
 </div>
 
 </section>
-<section id="slide-org7299141">
-<h3 id="org7299141"><span class="section-number-3">1.3</span> Vijf V's</h3>
+<section id="slide-orgfd935cf">
+<h3 id="orgfd935cf"><span class="section-number-3">1.3</span> Vijf V's</h3>
 <p>
 De toename van het <b>volume</b> van data stelt nieuwe eisen aan de manier waarop we data opslaan (<b>storage</b>) en aan de manier waarop we data opvragen (<b>retrieval</b>).
 </p>
@@ -75,8 +75,8 @@ Voor sommige bedrijfsprocessen hoeft data niet per se 100% de werkelijkheid weer
 </p>
 
 </section>
-<section id="slide-org2e6defe">
-<h3 id="org2e6defe"><span class="section-number-3">1.4</span> Cursus outline</h3>
+<section id="slide-org3b5e0de">
+<h3 id="org3b5e0de"><span class="section-number-3">1.4</span> Cursus outline</h3>
 <p>
 Onderwerpen die we bespreken:
 </p>
@@ -110,8 +110,8 @@ Onderwerpen die we bespreken:
 </ul>
 
 </section>
-<section id="slide-org26bb3d4" data-background="#dbdbed" class="table-small">
-<h3 id="org26bb3d4"><span class="section-number-3">1.5</span> Programma</h3>
+<section id="slide-org0d23220" data-background="#dbdbed" class="table-small">
+<h3 id="org0d23220"><span class="section-number-3">1.5</span> Programma</h3>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -275,8 +275,8 @@ Let op:
 </ul>
 
 </section>
-<section id="slide-orgba4b7a3">
-<h3 id="orgba4b7a3"><span class="section-number-3">1.6</span> Toetsing</h3>
+<section id="slide-org370fe40">
+<h3 id="org370fe40"><span class="section-number-3">1.6</span> Toetsing</h3>
 <ul>
 <li>Tentamen: 
 <ul>
@@ -301,8 +301,8 @@ Let op:
 </section>
 </section>
 <section>
-<section id="slide-orgc8c3b06">
-<h2 id="orgc8c3b06"><span class="section-number-2">2</span> Soorten data: OLTP vs OLAP</h2>
+<section id="slide-org5427651">
+<h2 id="org5427651"><span class="section-number-2">2</span> Soorten data: OLTP vs OLAP</h2>
 <p>
 Een belangrijke toepassing van databases is om een analyse te doen van data: <b>Online Analytic Processing</b> (OLAP). Opgezochte informatie wordt dan vaak gebruikt om bedrijfsprocessen te sturen; de database wordt gebruikt als <b>decision support system</b>. Een bedrijf wil bijvoorbeeld weten welke producten beter of juist minder goed verkopen.
 </p>
@@ -316,8 +316,8 @@ Als je een aankoop doet bij Albert Heijn wordt die geregistreerd in een OLTP-sys
 </p>
 
 </section>
-<section id="slide-org91c4e40">
-<h3 id="org91c4e40"><span class="section-number-3">2.1</span> Verschil OLTP en OLAP.</h3>
+<section id="slide-org61c903e">
+<h3 id="org61c903e"><span class="section-number-3">2.1</span> Verschil OLTP en OLAP.</h3>
 <p>
 OLTP gaat uit van sommige aannames:
 </p>
@@ -334,8 +334,8 @@ OLAP-queries zijn bijna altijd ad-hoc, en dus kun je de database niet vantevoren
 </p>
 
 </section>
-<section id="slide-org32d9eed">
-<h3 id="org32d9eed"><span class="section-number-3">2.2</span> Uitgewerkt voorbeeld</h3>
+<section id="slide-org06259d5">
+<h3 id="org06259d5"><span class="section-number-3">2.2</span> Uitgewerkt voorbeeld</h3>
 <p>
 Gegeven een standaard database met gegevens van <b>producten</b>, <b>winkels</b> en <b>verkoop</b>.
 </p>
@@ -347,8 +347,8 @@ Gegeven een standaard database met gegevens van <b>producten</b>, <b>winkels</b>
 </div>
 
 </section>
-<section id="slide-org4b67961" data-background="./images/wpcoke.jpg" data-background-transition="slide" data-background-opacity="0.2">
-<h4 id="org4b67961"><span class="section-number-4">2.2.1</span> Voorbeeld-query #1</h4>
+<section id="slide-org566651d" data-background="./images/wpcoke.jpg" data-background-transition="slide" data-background-opacity="0.2">
+<h4 id="org566651d"><span class="section-number-4">2.2.1</span> Voorbeeld-query #1</h4>
 <p>
 Hoe veel Prodent tandpasta hebben we gisteren verkocht in kleine gemeentes?
 </p>
@@ -374,8 +374,8 @@ Hoe veel Prodent tandpasta hebben we gisteren verkocht in kleine gemeentes?
 </div>
 
 </section>
-<section id="slide-org1bfa0d5">
-<h4 id="org1bfa0d5"><span class="section-number-4">2.2.2</span> Voorbeeld-query : opwarmen</h4>
+<section id="slide-org7207d14">
+<h4 id="org7207d14"><span class="section-number-4">2.2.2</span> Voorbeeld-query : opwarmen</h4>
 <p>
 Query 2: Hoe veel producten hebben we in vakantiedagen verkocht?
 </p>
@@ -397,19 +397,25 @@ Query 2: Hoe veel producten hebben we in vakantiedagen verkocht?
 </p>
 
 <ul>
+<li>Gebruik een kant-en-klare database:
+<ul>
 <li>Log in via <a href="http://198.211.127.65/phpmyadmin">http://198.211.127.65/phpmyadmin</a>.</li>
 <li>Gebruik als username / wachtwoord: je studentnummer.</li>
 <li>Gebruik database: <code>sales</code>.</li>
 
+</ul></li>
+<li>Of maak je eigen database aan mbv. dit <a href="./resources/create_sales.sql">create-script</a>.</li>
+
 </ul>
+
 
 <p>
 Het antwoord moet zijn: 2006.
 </p>
 
 </section>
-<section id="slide-org09922ba">
-<h4 id="org09922ba"><span class="section-number-4">2.2.3</span> Voorbeeld-query: performance</h4>
+<section id="slide-orgdad9dbe">
+<h4 id="orgdad9dbe"><span class="section-number-4">2.2.3</span> Voorbeeld-query: performance</h4>
 <p>
 Query 4: Welke winkels verkopen best-sellers?
 </p>
@@ -432,23 +438,24 @@ Query 4: Welke winkels verkopen best-sellers?
 </p>
 
 <ul>
+<li>Gebruik een kant-en-klare database:
+<ul>
 <li>Log in via <a href="http://198.211.127.65/phpmyadmin">http://198.211.127.65/phpmyadmin</a>.</li>
 <li>Gebruik als username / wachtwoord: je studentnummer.</li>
 <li>Gebruik database: <code>sales</code>.</li>
 
-</ul>
+</ul></li>
+<li>Of maak je eigen database aan mbv. dit <a href="./resources/create_sales.sql">create-script</a>.</li>
 
-<p>
-Of maak je eigen database aan mbv. <a href="./resources/create_sales.sql">./resources/create_sales.sql</a>.
-</p>
+</ul>
 
 <p>
 Het antwoord moet zijn: 2004. 
 </p>
 
 </section>
-<section id="slide-org131c940">
-<h3 id="org131c940"><span class="section-number-3">2.3</span> Sterschema: gedenormaliseerde database.</h3>
+<section id="slide-org7bd7ea5">
+<h3 id="org7bd7ea5"><span class="section-number-3">2.3</span> Sterschema: gedenormaliseerde database.</h3>
 <p>
 De objects of interest staan gegroepeerd in een <b>fact table</b> met zogenaamde <b>dependent attributes</b>, en alle eigenschappen staan in zogenaamde <b>dimension tables</b>. De fact table vormt het midden van de ster, en de dimension tables zijn de punten van de ster. Dimensies van een tabel met verkoop kunnen zijn: de datum van verkoop, de plaats van verkoop, het type item, de betaal-methode, etc. 
 </p>
@@ -458,8 +465,8 @@ In het eerste jaar in de database-cursus wordt juist een andere manier aangeleer
 </p>
 
 </section>
-<section id="slide-org051a7bb">
-<h4 id="org051a7bb"><span class="section-number-4">2.3.1</span> Star schema voorbeeld</h4>
+<section id="slide-org01c9a57">
+<h4 id="org01c9a57"><span class="section-number-4">2.3.1</span> Star schema voorbeeld</h4>
 
 <div class="figure">
 <p><img src="./images/sales_star.png" alt="sales_star.png" />
@@ -467,8 +474,8 @@ In het eerste jaar in de database-cursus wordt juist een andere manier aangeleer
 </div>
 
 </section>
-<section id="slide-org6c3f4a1">
-<h4 id="org6c3f4a1"><span class="section-number-4">2.3.2</span> Star schema queries</h4>
+<section id="slide-orgb8da455">
+<h4 id="orgb8da455"><span class="section-number-4">2.3.2</span> Star schema queries</h4>
 <p>
 Query 2: Hoe veel producten hebben we in vakantiedagen verkocht?
 </p>
@@ -514,8 +521,8 @@ Query 4: Welke winkels verkopen best-sellers?
 </pre>
 
 </section>
-<section id="slide-orgfc2e0da">
-<h4 id="orgfc2e0da"><span class="section-number-4">2.3.3</span> Star schema: zelf doen</h4>
+<section id="slide-orga17c15f">
+<h4 id="orga17c15f"><span class="section-number-4">2.3.3</span> Star schema: zelf doen</h4>
 <p>
 Stel zelf de juiste queries op, maar nu in het star schema:
 </p>
@@ -537,18 +544,21 @@ Juiste antwoord: 2004
 </p>
 
 <ul>
+<li>Gebruik een kant-en-klare database:
+<ul>
 <li>Log in via <a href="http://198.211.127.65/phpmyadmin">http://198.211.127.65/phpmyadmin</a>.</li>
 <li>Gebruik als username / wachtwoord: je studentnummer.</li>
 <li>Gebruik database: <code>sales_star</code>.</li>
 
+</ul></li>
+<li>Of maak je eigen database aan mbv. dit <a href="./resources/create_sales_star.sql">create-script</a>.</li>
+
 </ul>
 
-<p>
-Of maak je eigen database aan mbv. <a href="./resources/create_sales_star.sql">./resources/create_sales_star.sql</a>.
-</p>
+
 </section>
-<section id="slide-org80a69ed">
-<h4 id="org80a69ed"><span class="section-number-4">2.3.4</span> Slicing en dicing</h4>
+<section id="slide-orgd5f5fb1">
+<h4 id="orgd5f5fb1"><span class="section-number-4">2.3.4</span> Slicing en dicing</h4>
 <p>
 Het is nu vrij eenvoudig om <i>per dimensie</i> de data samen te vatten:
 </p>
@@ -599,8 +609,8 @@ Verkopen per stad
 </pre>
 
 </section>
-<section id="slide-org6c80328">
-<h4 id="org6c80328"><span class="section-number-4">2.3.5</span> Combineren van dimensies</h4>
+<section id="slide-org853b121">
+<h4 id="org853b121"><span class="section-number-4">2.3.5</span> Combineren van dimensies</h4>
 <p>
 Verkopen per stad per fiscale periode:
 </p>
@@ -627,8 +637,8 @@ Verkopen per stad per fiscale periode:
 </pre>
 
 </section>
-<section id="slide-orgfc43e95">
-<h3 id="orgfc43e95"><span class="section-number-3">2.4</span> Slicing en dicing</h3>
+<section id="slide-orgae57ae8">
+<h3 id="orgae57ae8"><span class="section-number-3">2.4</span> Slicing en dicing</h3>
 <p>
 Soms willen we de granulariteit van een dimensie verminderen. We zijn bijvoorbeeld niet geïnteresseerd in individuele auto's, maar in auto's gegroepeerd naar merk of kleur; of we willen alle verkopen op een dag nauwkeurig, in plaats van op de seconde nauwkeurig weten. 
 </p>
@@ -642,8 +652,8 @@ Het groeperen in een kubus heet <b>dicing</b>. We zijn vaak geinteresseerd in é
 </p>
 
 </section>
-<section id="slide-org98cb667">
-<h3 id="org98cb667"><span class="section-number-3">2.5</span> De datakubus.</h3>
+<section id="slide-org65f063e">
+<h3 id="org65f063e"><span class="section-number-3">2.5</span> De datakubus.</h3>
 
 <div class="figure">
 <p><img src="./images/cube.png" alt="cube.png" />
@@ -653,8 +663,8 @@ Het groeperen in een kubus heet <b>dicing</b>. We zijn vaak geinteresseerd in é
 </section>
 </section>
 <section>
-<section id="slide-orged0f1c6">
-<h2 id="orged0f1c6"><span class="section-number-2">3</span> OLAP: Variety: Ongestructureerde data: text mining</h2>
+<section id="slide-org95edeed">
+<h2 id="org95edeed"><span class="section-number-2">3</span> OLAP: Variety: Ongestructureerde data: text mining</h2>
 <p>
 Eén van de vijf V's van big data: <b>variety</b>. 
 </p>
@@ -671,8 +681,8 @@ In de kern gaat het bij text mining om het "samenvatten van tekst": afleiden van
 
 
 </section>
-<section id="slide-org5be60ae">
-<h3 id="org5be60ae"><span class="section-number-3">3.1</span> Analyse van antwoorden op open vragen.</h3>
+<section id="slide-org887c64c">
+<h3 id="org887c64c"><span class="section-number-3">3.1</span> Analyse van antwoorden op open vragen.</h3>
 <p>
 Bijvoorbeeld: klant-contact data en het vinden van sentiment. 
 </p>
@@ -682,8 +692,8 @@ Big Data projecten: Vodafone-Ziggo project.
 </p>
 
 </section>
-<section id="slide-org861d07d">
-<h3 id="org861d07d"><span class="section-number-3">3.2</span> Automatisch categoriseren van berichten, email.</h3>
+<section id="slide-org6900da9">
+<h3 id="org6900da9"><span class="section-number-3">3.2</span> Automatisch categoriseren van berichten, email.</h3>
 <p>
 Bijvoorbeeld: routeren van klantcontacten. Implementatie achter chatbots. Detectie van spam. 
 </p>
@@ -693,15 +703,15 @@ In video: vinden van illegale kopieën van video's op youtube.
 </p>
 
 </section>
-<section id="slide-org2ac4282">
-<h3 id="org2ac4282"><span class="section-number-3">3.3</span> Analyse van notities, bijvoorbeeld overdrachten medische dossiers, warranty claims bij verzekeringen.</h3>
+<section id="slide-orgebb8836">
+<h3 id="orgebb8836"><span class="section-number-3">3.3</span> Analyse van notities, bijvoorbeeld overdrachten medische dossiers, warranty claims bij verzekeringen.</h3>
 <p>
 In video: detecteren van beweging. 
 </p>
 
 </section>
-<section id="slide-org9d33e57">
-<h3 id="org9d33e57"><span class="section-number-3">3.4</span> "Authorship attribution"</h3>
+<section id="slide-org61c1c84">
+<h3 id="org61c1c84"><span class="section-number-3">3.4</span> "Authorship attribution"</h3>
 <p>
 Gegeven een tekst, wie is de auteur? 
 </p>
@@ -715,8 +725,8 @@ Bijvoorbeeld: detectie van nepbellers bij de suicide hotlijn.
 </p>
 
 </section>
-<section id="slide-org2671fe9">
-<h3 id="org2671fe9"><span class="section-number-3">3.5</span> Named-Entity-Recognition.</h3>
+<section id="slide-org2274196">
+<h3 id="org2274196"><span class="section-number-3">3.5</span> Named-Entity-Recognition.</h3>
 <p>
 Herkennen van namen en persoonsgerelateerde informatie. 
 </p>
@@ -741,8 +751,8 @@ In video: detecteren van objecten.
 </section>
 </section>
 <section>
-<section id="slide-orgbfe5fcf">
-<h2 id="orgbfe5fcf"><span class="section-number-2">4</span> OLTP: Velocity: streaming data</h2>
+<section id="slide-org7e731eb">
+<h2 id="org7e731eb"><span class="section-number-2">4</span> OLTP: Velocity: streaming data</h2>
 <p>
 Een <b>stream</b> is een <i>unbounded, continuous, real-time flow of records</i>.
 </p>
@@ -767,8 +777,8 @@ Voorbeelden:
 
 
 </section>
-<section id="slide-org353f2da">
-<h3 id="org353f2da"><span class="section-number-3">4.1</span> Waarom is dat anders?</h3>
+<section id="slide-org14b3b46">
+<h3 id="org14b3b46"><span class="section-number-3">4.1</span> Waarom is dat anders?</h3>
 <p>
 Voor sommige inzichten geldt: de waarde (<i>value</i>) neemt af als het langer duurt tussen het verkrijgen van de data en het berekenen van het inzicht. 
 </p>
@@ -786,8 +796,8 @@ Bijvoorbeeld: bewegingsdetectie in beveiligingscamera's.
 </p>
 
 </section>
-<section id="slide-orgbb3bb02">
-<h3 id="orgbb3bb02"><span class="section-number-3">4.2</span> Realtime data is lastig voor een "batch"-model.</h3>
+<section id="slide-orgc6f6f91">
+<h3 id="orgc6f6f91"><span class="section-number-3">4.2</span> Realtime data is lastig voor een "batch"-model.</h3>
 <p>
 Data komt binnen als een continue stroom <i>events</i>. 
 </p>
@@ -804,13 +814,13 @@ Data komt binnen als een continue stroom <i>events</i>.
 </section>
 </section>
 <section>
-<section id="slide-org8d84367">
-<h2 id="org8d84367"><span class="section-number-2">5</span> Vooruitblik</h2>
+<section id="slide-org13848e8">
+<h2 id="org13848e8"><span class="section-number-2">5</span> Vooruitblik</h2>
 <div class="outline-text-2" id="text-5">
 </div>
 </section>
-<section id="slide-org4a0c8f1">
-<h3 id="org4a0c8f1"><span class="section-number-3">5.1</span> Vrijdag: oefenen met:</h3>
+<section id="slide-org9621028">
+<h3 id="org9621028"><span class="section-number-3">5.1</span> Vrijdag: oefenen met:</h3>
 <ul>
 <li>opstellen van functionele eisen met het MD3M-model.</li>
 <li>stoeien met data warehousing (SQL-queries).</li>
