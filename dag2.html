@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="du">
+<head>
+<meta charset="utf-8"/>
+<title>Big Data System Design</title>
+<meta name="author" content="((link (:type mailto :path roelant.ossewaarde@hu.nl :format bracket :raw-link mailto:roelant.ossewaarde@hu.nl :application nil :search-option nil :begin 1 :end 57 :contents-begin 36 :contents-end 54 :post-blank 1 :parent #0) Roelant Ossewaarde) en  (link (:type mailto :path jos.vanreenen@hu.nl :format bracket :raw-link mailto:jos.vanreenen@hu.nl :application nil :search-option nil :begin 60 :end 106 :contents-begin 90 :contents-end 104 :post-blank 0 :parent #0) Jos van Reenen) , B 2019-2020)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./personalization.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="images/huhl15.jpg"><h1>Big Data System Design</h1><h3>Architecturen en ADD</h3><p><small><a href="mailto:roelant.ossewaarde@hu.nl">Roelant Ossewaarde</a> en <a href="mailto:jos.vanreenen@hu.nl">Jos van Reenen</a>, B 2019-2020</small></p>
+</section>
+
+<section>
+<section id="slide-org0224603">
+<h2 id="org0224603"><span class="section-number-2">1</span> Architectural Design</h2>
+<p>
+Het boek van Kazman gaat over een strategie om architecturen te ontwerpen.
+</p>
+
+<a href="https://huict.github.io/tict-vkbdsd-17/images/kazman_fig_2_1.jpg" data-preview-link>
+
+
+<div id="org8f45030" class="figure">
+<p><img src="./images/kazman_fig_2_1.jpg" alt="kazman_fig_2_1.jpg" width="50%" style="border:2px solid black;" class="center-div" title="Kazman fig. 2.1" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Architecture Design (Kazman, fig. 2.1)</p>
+</div>
+
+</a>
+
+
+<p>
+"Architectural design is, therefore, a <i>key step</i> to achieving your product and project goals. Some of these goals are <b>technical</b> (e.g., achieving low and predictable latency in a video game or an e-commerce website), and some are <b>nontechnical</b> (e.g., keeping the workforce employed, entering a new market, meeting a deadline)."
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org17ee9d9">
+<h2 id="org17ee9d9"><span class="section-number-2">2</span> Bepalen van requirements</h2>
+<p>
+<i>Gebaseerd op hoofdstuk 5 van <a href="https://learning.oreilly.com/library/view/designing-software-architectures/9780134390857/">"Designing Software Architectures" (Cervantes &amp; Kazman 2016)</a>.</i>
+</p>
+
+<p>
+<b>Business case:</b> Een Internet bedrijf bedient veel klanten dmv. online-content (vgl. <i>reddit</i>). Al hun systemen maken logs aan met gegevens over de systemen, gedrag van gebruikers, etc. Deze logs worden gebruikt om bedrijfsprocessen bij te sturen.
+</p>
+
+<p>
+De infrastructuur groeit hard; er is behoefte aan een nieuw systeem waarmee de verschillende <i>stakeholders</i> inzicht kunnen krijgen in de gelogde gegevens. 
+</p>
+</section>
+<section id="slide-orgefbfaf0">
+<h3 id="orgefbfaf0"><span class="section-number-3">2.1</span> Marketecture</h3>
+
+<div class="figure">
+<p><img src="./images/kazman_fig_5_1.jpg" alt="kazman_fig_5_1.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-org30c0186" class="p-small">
+<h3 id="org30c0186"><span class="section-number-3">2.2</span> Use case model</h3>
+<ol class="org-ol">
+<li><a id="org1d26e6d"></a>UC-1: Monitor online services<br />
+<p>
+Mensen van <i>operations</i> moeten de huidige staat van de diensten en infrastructuur kunnen monitoren (zoals web load, aantal gebruikers, etc) op een real-time dashboard.
+</p>
+</li>
+<li><a id="org98ef145"></a>UC-2: Troubleshoot online service issues<br />
+<p>
+Als er problemen zijn, moeten systeembeheerders snel door recente logs kunnen zoeken naar relevante berichten over het systeem. 
+</p>
+</li>
+<li><a id="org2b9a766"></a>UC-3: Provide management reports<br />
+<p>
+Voor managementrapportages moeten er over een lange termijn logs opgevraagd kunnen worden over bijvoorbeeld het gebruik van de infrastructuur en knelpunten.
+</p>
+</li>
+<li><a id="org2309674"></a>UC-4: Support data analytics<br /></li>
+<li><a id="orgce21c0b"></a>UC-5: Anomaly detection<br /></li>
+<li><a id="orgd85d521"></a>UC-6: Provide security reports<br /></li>
+</ol>
+
+</section>
+<section id="slide-org61e8ec5" class="p-small">
+<h3 id="org61e8ec5"><span class="section-number-3">2.3</span> Quality attribute scenarios</h3>
+<ol class="org-ol">
+<li><a id="orgc75c703"></a>QA-1 Performance<br />
+<p>
+Het systeem moet 15000 events per seconde van ongeveer 300 web servers kunnen afhandelen.
+</p>
+</li>
+<li><a id="orgd34b12d"></a>QA-2 Performance<br />
+<p>
+Het systeem zal het dashboard updaten met maximaal 1 minuut vertraging (latency).
+</p>
+</li>
+<li><a id="orgaca10c9"></a>QA-3 Performance<br />
+<p>
+Het systeem zal real-time queries ondersteunen voor troubleshooting met een maximum query tijd van 10 seconden over data van 2 weken terug in het verleden. 
+</p>
+</li>
+<li><a id="org6c48c39"></a>QA-6 Schaalbaarheid<br />
+<p>
+Het systeem zal ruwe data voor de laatste 2 weken apart beschikbaar stellen voor full-text searches. 
+</p>
+</li>
+<li><a id="org061a8bb"></a>QA-7 Schaalbaarheid<br />
+<p>
+Het systeem zal ruwe data opslaan voor de afgelopen 60 dagen (1 Tb ruwe data per dag, 60 Tb ruwe data totaal).
+</p>
+</li>
+</ol>
+</section>
+<section id="slide-orgd679cc6" class="p-small">
+<h3 id="orgd679cc6"><span class="section-number-3">2.4</span> Constraints</h3>
+<ol class="org-ol">
+<li><a id="orgebe36b4"></a>CON-1 Gebruik open source<br />
+<p>
+Vanwege kostenoverwegingen zal het systeem primair gebruik maken van Open Source software. 
+</p>
+</li>
+<li><a id="orgec7706f"></a>CON-2 Gebruik visualizatie<br />
+<p>
+Het systeem zal gebruik maken van een corporate BI-tool met een SQL-interface voor het visualizeren van informatie.
+</p>
+</li>
+<li><a id="orga5a7235"></a>CON-3 Deployment<br />
+<p>
+Het systeem zal zowel in een private cloud als in een publieke cloud geïntegreerd kunnen worden. Architectuurbeslissingen moeten zo min mogelijk vendor-specifiek (Google, Amazon) zijn.
+</p>
+</li>
+</ol>
+</section>
+</section>
+<section>
+<section id="slide-org7ff3ba5" class="img-80">
+<h2 id="org7ff3ba5"><span class="section-number-2">3</span> Design proces:</h2>
+<a href="https://huict.github.io/tict-vkbdsd-17/images/kazman_fig_3_1.jpg" data-preview-link>
+
+
+<div id="org1ff219d" class="figure">
+<p><img src="./images/kazman_fig_3_1.jpg" alt="kazman_fig_3_1.jpg" width="50%" style="border:2px solid black;" data-preview-link="true" class="center-div" title="Kazman fig. 3.1" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Steps and artifacts of ADD (Kazman, fig. 3.1)</p>
+</div>
+
+</a>
+
+</section>
+<section id="slide-orgf120401" class="p-small">
+<h3 id="orgf120401"><span class="section-number-3">3.1</span> Stappen in Iteratie #1</h3>
+<ol class="org-ol">
+<li><a id="org34bcedc"></a>Review Inputs<br />
+<p>
+Bepaal welke use cases significant zijn.
+</p>
+</li>
+<li><a id="org0edb467"></a>Bepaal het doel van de iteratie op basis van de <i>drivers</i><br />
+<p>
+De drivers zijn de kwaliteitsattributen en constraints die van belang zijn voor de significante use cases (uit stap 1).
+</p>
+</li>
+<li><a id="org05153a4"></a>Kies elementen van het systeem om over te besluiten<br />
+<p>
+In een eerste iteratie is dat het hele systeem.
+</p>
+</li>
+<li><a id="org1b60990"></a>Kies design concepten voor de gekozen drivers uit stap 2.<br />
+<p>
+Geef ook een reden waarom je voor andere mogelijke design concepten <b>niet</b> hebt gekozen.
+Relevante designkeuzes voor databasetechniek: <a href="./misc/reference-architectures.pdf">Reference architectures for Data Analytics</a>. 
+</p>
+</li>
+<li><a id="orgc58e576"></a>Bepaal verantwoordelijkheden en interfaces<br />
+<p>
+In een eerste iteratie nog niet relevant. 
+</p>
+</li>
+<li><a id="orgb095e78"></a>Schets architectuur en documenteer beslissingen.<br /></li>
+<li><a id="org6cf3b77"></a>Review<br /></li>
+</ol>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org9d9612d">
+<h2 id="org9d9612d"><span class="section-number-2">4</span> Referentiestructuren</h2>
+<p>
+Er zijn verschillende keuzes te maken over met name <i>data opslag</i> en <i>analyse</i> bij het opstellen van een architectuur:
+</p>
+
+
+<div class="figure">
+<p><img src="./images/reference-architecture.png" alt="reference-architecture.png" />
+</p>
+</div>
+
+<p>
+NB terminologie:
+</p>
+
+
+<ul>
+<li> <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load" data-preview-link=>Extract Transform Load</a></li>
+<li> MPP: Massively Parallel Processing: problemen waar verschillende CPU's tegelijk aan kunnen werken.</li>
+</ul>
+
+</section>
+<section id="slide-orgc185829">
+<h3 id="orgc185829"><span class="section-number-3">4.1</span> Pure Relational</h3>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-pure-relational.png" alt="reference-architecture-pure-relational.png" />
+</p>
+</div>
+
+<p>
+Bekende technologie. De ETL en messaging vindt plaats in het RDBMS. Als er een voorbewerking van de data plaats vindt buiten het database-systeem (bijvoorbeeld door scripts), kies dan voor <i>data refinery</i> architectuur. 
+</p>
+</section>
+<section id="slide-org2d34c9e">
+<h3 id="org2d34c9e"><span class="section-number-3">4.2</span> Extended Relational</h3>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-extended-relational.png" alt="reference-architecture-extended-relational.png" />
+</p>
+</div>
+
+<p>
+Vooral geschikt voor CPU-intensieve problemen ("Massively Parallel Processing") waarbij het <i>volume</i> data minder ver opschaalt. 
+</p>
+
+<p>
+Variatie in <i>vorm</i> van queries mogelijk (snel antwoord), maar botteleneck: geen on-disk persistentie. 
+</p>
+</section>
+<section id="slide-orgb77d5dd">
+<h3 id="orgb77d5dd"><span class="section-number-3">4.3</span> Pure Non-relational</h3>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-pure-nonrelational.png" alt="reference-architecture-pure-nonrelational.png" />
+</p>
+</div>
+
+<p>
+Vooral geschikt als de <i>vorm</i> van queries al vaststaat en het schaalprobleem vooral het <i>volume</i> van de data betreft. 
+</p>
+
+</section>
+<section id="slide-org96ce21b">
+<h3 id="org96ce21b"><span class="section-number-3">4.4</span> Data refinery</h3>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-data-refinery.png" alt="reference-architecture-data-refinery.png" />
+</p>
+</div>
+
+<p>
+Voorbewerking vindt plaats buiten relationele database. Dat maakt in-memory relationele database mogelijk. 
+</p>
+
+<p>
+Real-time analyse is beperkt (want er is een voorbewerking), <i>volume</i> is beperkt tot geheugengrenzen, maar wel grote <i>varieteit</i> aan data mogelijk doordat er een uitgebreide voorbewerking mogelijk is. 
+</p>
+</section>
+<section id="slide-org266a910">
+<h3 id="org266a910"><span class="section-number-3">4.5</span> Lambda architecture</h3>
+
+<div class="figure">
+<p><img src="./images/lambda-architecture.png" alt="lambda-architecture.png" />
+</p>
+</div>
+
+<p>
+Kan alles, schaalt ongelimiteerd. Maar duur in onderhoud, want verschillende databases/codebases/etc. 
+</p>
+
+</section>
+<section id="slide-org13d1be7">
+<h3 id="org13d1be7"><span class="section-number-3">4.6</span> Kappa architecture</h3>
+
+<div class="figure">
+<p><img src="./images/kappa-architecture.png" alt="kappa-architecture.png" />
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+slideNumber:true,
+width:"80%",
+height:"100%",
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: 'reveal.js/plugin/reveald3.js', async: true },
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
