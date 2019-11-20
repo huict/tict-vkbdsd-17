@@ -2,8 +2,8 @@
 <html lang="du">
 <head>
 <meta charset="utf-8"/>
-<title>Big Data System Design: ADD, architecturen</title>
-<meta name="author" content="(Roelant Ossewaarde / HU)"/>
+<title>Big Data System Design</title>
+<meta name="author" content="((link (:type mailto :path roelant.ossewaarde@hu.nl :format bracket :raw-link mailto:roelant.ossewaarde@hu.nl :application nil :search-option nil :begin 1 :end 57 :contents-begin 36 :contents-end 54 :post-blank 1 :parent #0) Roelant Ossewaarde) en  (link (:type mailto :path jos.vanreenen@hu.nl :format bracket :raw-link mailto:jos.vanreenen@hu.nl :application nil :search-option nil :begin 60 :end 106 :contents-begin 90 :contents-end 104 :post-blank 0 :parent #0) Jos van Reenen) , B 2019-2020)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
 
-<link rel="stylesheet" href="./reveal.css"/>
+<link rel="stylesheet" href="./personalization.css"/>
 
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
@@ -27,31 +27,643 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Big Data System Design: ADD, architecturen</h1><h2 class="author">Roelant Ossewaarde / HU</h2><h2 class="date">Dag 3, 21 november 2019</h2>
+<section id="sec-title-slide" data-background="images/huhl15.jpg"><h1>Big Data System Design</h1><h3>Architecturen en ADD</h3><p><small><a href="mailto:roelant.ossewaarde@hu.nl">Roelant Ossewaarde</a> en <a href="mailto:jos.vanreenen@hu.nl">Jos van Reenen</a>, B 2019-2020</small></p>
 </section>
 
+
+<section>
+<section id="slide-org1b93f5f">
+<h2 id="org1b93f5f"><span class="section-number-2">1</span> Architectural Design</h2>
+<p>
+Het boek van Kazman (<a href="https://learning.oreilly.com/library/view/designing-software-architectures/9780134390857/">Link naar ebook</a>) gaat over een strategie om architecturen te ontwerpen.
+</p>
+
+<a href="https://huict.github.io/tict-vkbdsd-17/images/kazman_fig_2_1.jpg" data-preview-link>
+
+
+<div id="orga563447" class="figure">
+<p><img src="./images/kazman_fig_2_1.jpg" alt="kazman_fig_2_1.jpg" width="50%" style="border:2px solid black;" class="center-div" title="Kazman fig. 2.1" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Architecture Design (Kazman, fig. 2.1)</p>
+</div>
+
+</a>
+
+</section>
+<section id="slide-orgca46f8e">
+<h3 id="orgca46f8e"><span class="section-number-3">1.1</span> Technology family tree voor Big Data</h3>
+<a href="https://huict.github.io/tict-vkbdsd-17/images/kazman_fig_2_10.jpg" data-preview-link>
+
+
+<div id="orgc208269" class="figure">
+<p><img src="./images/kazman_fig_2_10.jpg" alt="kazman_fig_2_10.jpg" width="50%" style="border:2px solid black;" class="center-div" title="Kazman fig. 2.10" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Technology family tree for Big Data (Kazman, fig. 2.10)</p>
+</div>
+
+</a>
+
+<p>
+"Architectural design is, therefore, a <i>key step</i> to achieving your product and project goals. Some of these goals are <b>technical</b> (e.g., achieving low and predictable latency in a video game or an e-commerce website), and some are <b>nontechnical</b> (e.g., keeping the workforce employed, entering a new market, meeting a deadline)."
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdd37780">
+<h2 id="orgdd37780"><span class="section-number-2">2</span> Bepalen van requirements</h2>
+<p>
+<i>Gebaseerd op hoofdstuk 5 van <a href="https://learning.oreilly.com/library/view/designing-software-architectures/9780134390857/">"Designing Software Architectures" (Cervantes &amp; Kazman 2016)</a>.</i>
+</p>
+
+<p>
+<b>Business case:</b> Een Internet bedrijf bedient veel klanten dmv. online-content (vgl. <i>reddit</i>). Al hun systemen maken logs aan met gegevens over de systemen, gedrag van gebruikers, etc. Deze logs worden gebruikt om bedrijfsprocessen bij te sturen.
+</p>
+
+<p>
+De infrastructuur groeit hard; er is behoefte aan een nieuw systeem waarmee de verschillende <i>stakeholders</i> inzicht kunnen krijgen in de gelogde gegevens. 
+</p>
+</section>
+<section id="slide-org33d43ff">
+<h3 id="org33d43ff"><span class="section-number-3">2.1</span> Marketecture</h3>
+
+<div class="figure">
+<p><img src="./images/kazman_fig_5_1.jpg" alt="kazman_fig_5_1.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-org4e3c338" class="p-small">
+<h3 id="org4e3c338"><span class="section-number-3">2.2</span> Use case model</h3>
+<ol class="org-ol">
+<li><a id="orge228697"></a>UC-1: Monitor online services<br />
+<p>
+Mensen van <i>operations</i> moeten de huidige staat van de diensten en infrastructuur kunnen monitoren (zoals web load, aantal gebruikers, etc) op een real-time dashboard.
+</p>
+</li>
+<li><a id="orgf697dff"></a>UC-2: Troubleshoot online service issues<br />
+<p>
+Als er problemen zijn, moeten systeembeheerders snel door recente logs kunnen zoeken naar relevante berichten over het systeem. 
+</p>
+</li>
+<li><a id="org088a9f3"></a>UC-3: Provide management reports<br />
+<p>
+Voor managementrapportages moeten er over een lange termijn logs opgevraagd kunnen worden over bijvoorbeeld het gebruik van de infrastructuur en knelpunten.
+</p>
+</li>
+<li><a id="orgc62916e"></a>UC-4: Support data analytics<br /></li>
+<li><a id="org151c3b0"></a>UC-5: Anomaly detection<br /></li>
+<li><a id="orgd04cbf8"></a>UC-6: Provide security reports<br /></li>
+</ol>
+
+</section>
+<section id="slide-org272e252" class="p-small">
+<h3 id="org272e252"><span class="section-number-3">2.3</span> Quality attribute scenarios</h3>
+<ol class="org-ol">
+<li><a id="org9696c5b"></a>QA-1 Performance<br />
+<p>
+Het systeem moet 15000 events per seconde van ongeveer 300 web servers kunnen afhandelen.
+</p>
+</li>
+<li><a id="orgbd9a820"></a>QA-2 Performance<br />
+<p>
+Het systeem zal het dashboard updaten met maximaal 1 minuut vertraging (latency).
+</p>
+</li>
+<li><a id="org11ed771"></a>QA-3 Performance<br />
+<p>
+Het systeem zal real-time queries ondersteunen voor troubleshooting met een maximum query tijd van 10 seconden over data van 2 weken terug in het verleden. 
+</p>
+</li>
+<li><a id="org61b770e"></a>QA-6 Schaalbaarheid<br />
+<p>
+Het systeem zal ruwe data voor de laatste 2 weken apart beschikbaar stellen voor full-text searches. 
+</p>
+</li>
+<li><a id="org9eeeb4e"></a>QA-7 Schaalbaarheid<br />
+<p>
+Het systeem zal ruwe data opslaan voor de afgelopen 60 dagen (1 Tb ruwe data per dag, 60 Tb ruwe data totaal).
+</p>
+</li>
+</ol>
+</section>
+<section id="slide-org5df20e9" class="p-small">
+<h3 id="org5df20e9"><span class="section-number-3">2.4</span> Constraints</h3>
+<ol class="org-ol">
+<li><a id="org8b1183e"></a>CON-1 Gebruik open source<br />
+<p>
+Vanwege kostenoverwegingen zal het systeem primair gebruik maken van Open Source software. 
+</p>
+</li>
+<li><a id="org1e44d63"></a>CON-2 Gebruik visualizatie<br />
+<p>
+Het systeem zal gebruik maken van een corporate BI-tool met een SQL-interface voor het visualizeren van informatie.
+</p>
+</li>
+<li><a id="orga06793e"></a>CON-3 Deployment<br />
+<p>
+Het systeem zal zowel in een private cloud als in een publieke cloud geïntegreerd kunnen worden. Architectuurbeslissingen moeten zo min mogelijk vendor-specifiek (Google, Amazon) zijn.
+</p>
+</li>
+</ol>
+</section>
+</section>
+<section>
+<section id="slide-org8d4b056" class="img-80">
+<h2 id="org8d4b056"><span class="section-number-2">3</span> Design proces:</h2>
+<a href="https://huict.github.io/tict-vkbdsd-17/images/kazman_fig_3_1.jpg" data-preview-link>
+
+
+<div id="org8e6a5f9" class="figure">
+<p><img src="./images/kazman_fig_3_1.jpg" alt="kazman_fig_3_1.jpg" width="50%" style="border:2px solid black;" data-preview-link="true" class="center-div" title="Kazman fig. 3.1" />
+</p>
+<p><span class="figure-number">Figure 4: </span>Steps and artifacts of ADD (Kazman, fig. 3.1)</p>
+</div>
+
+</a>
+
+</section>
+<section id="slide-org2a40080" class="p-small">
+<h3 id="org2a40080"><span class="section-number-3">3.1</span> Stappen in Iteratie #1</h3>
+<ol class="org-ol">
+<li><a id="org9d34e9d"></a>Review Inputs<br />
+<p>
+Bepaal welke use cases significant zijn.
+</p>
+</li>
+<li><a id="org7374f8e"></a>Bepaal het doel van de iteratie op basis van de <i>drivers</i><br />
+<p>
+De drivers zijn de kwaliteitsattributen en constraints die van belang zijn voor de significante use cases (uit stap 1).
+</p>
+</li>
+<li><a id="org7d65dab"></a>Kies elementen van het systeem om over te besluiten<br />
+<p>
+In een eerste iteratie is dat het hele systeem.
+</p>
+</li>
+<li><a id="org1c8b87b"></a>Kies design concepten voor de gekozen drivers uit stap 2.<br />
+<p>
+Geef ook een reden waarom je voor andere mogelijke design concepten <b>niet</b> hebt gekozen.
+Relevante designkeuzes voor databasetechniek: <a href="./misc/reference-architectures.pdf">Reference architectures for Data Analytics</a>. 
+</p>
+</li>
+<li><a id="orge1c962e"></a>Bepaal verantwoordelijkheden en interfaces<br />
+<p>
+In een eerste iteratie nog niet relevant. 
+</p>
+</li>
+<li><a id="org8c1d022"></a>Schets architectuur en documenteer beslissingen.<br /></li>
+<li><a id="org1b85270"></a>Review<br /></li>
+</ol>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org5633d00">
+<h2 id="org5633d00"><span class="section-number-2">4</span> Referentiestructuren</h2>
+<p>
+Er zijn verschillende keuzes te maken over met name <i>data opslag</i> en <i>analyse</i> bij het opstellen van een architectuur:
+</p>
+
+
+<div class="figure">
+<p><img src="./images/reference-architecture.png" alt="reference-architecture.png" />
+</p>
+</div>
+
+<p>
+NB terminologie:
+</p>
+
+
+<ul>
+<li> <a href="https://en.wikipedia.org/wiki/Extract,_transform,_load" data-preview-link=>Extract Transform Load</a></li>
+<li> MPP: Massively Parallel Processing: problemen waar verschillende CPU's tegelijk aan kunnen werken.</li>
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org50f3505">
+<h2 id="org50f3505"><span class="section-number-2">5</span> Pure Relational</h2>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-pure-relational.png" alt="reference-architecture-pure-relational.png" />
+</p>
+</div>
+
+<p>
+Bekende technologie: MySQL, PostgreSQL, MSQL. 
+</p>
+
+<p>
+De ETL en messaging vinden plaats in het RDBMS. Als er een voorbewerking van de data plaats vindt buiten het database-systeem (bijvoorbeeld door scripts), dan is het een <a href="#/slide-orgb477639">7</a>. 
+</p>
+
+</section>
+<section id="slide-orgbcec3d7">
+<h3 id="orgbcec3d7"><span class="section-number-3">5.1</span> Relationele data model</h3>
+<p>
+Gebaseerd op <i>set theorie</i>:
+</p>
+
+<ul>
+<li>Selectie (welke rijen)</li>
+<li>Projectie (welke kolommen)</li>
+<li>JOIN (cartesisch product)</li>
+<li>Klassieke set-operaties</li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/relationalmodel1.png" alt="relationalmodel1.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org0891eff">
+<h3 id="org0891eff"><span class="section-number-3">5.2</span> Data integriteit slechts gegarandeerd door <i>design</i> (normalizatie)</h3>
+<p>
+Data anomalies worden voorkomen door redundantie te verminderen.
+</p>
+
+<p>
+Daardoor een grotere hoeveelheid tabellen (want tabellen vaker opgesplitst).
+</p>
+
+
+</section>
+<section id="slide-org077f3ba">
+<h3 id="org077f3ba"><span class="section-number-3">5.3</span> Transaction lifecycle</h3>
+
+<div class="figure">
+<p><img src="./images/transaction_lifecycle.png" alt="transaction_lifecycle.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org14d3210">
+<h3 id="org14d3210"><span class="section-number-3">5.4</span> Concurrency Issues - Dirty reads</h3>
+<p>
+Verschillende transacties tegelijk kunnen leiden tot 'dirty reads'. 
+</p>
+
+
+
+<div id="org4fb27fe" class="figure">
+<p><img src="./images/concurrency_1.png" alt="concurrency_1.png" width="50%" style="float: right" title="Interleaving of transaction can lead to anomalies." />
+</p>
+<p><span class="figure-number">Figure 9: </span>Concurrency issue: interleaving</p>
+</div>
+
+<p>
+De eerste transactie vraagt iets ('status') van de database, is VALID op dat moment. Binnen die transactie wordt de status op INVALID gezet. De transactie wordt niet afgemaakt, en dus wordt de status weer op VALID gezet.
+</p>
+
+<p>
+De tweede transactie leest halverwege de eerste transactie dat de status INVALID is. 
+</p>
+
+</section>
+<section id="slide-org24dd43e">
+<h3 id="org24dd43e"><span class="section-number-3">5.5</span> Concurrency Issues - Non-repeatable read.</h3>
+
+<div id="org092cb8d" class="figure">
+<p><img src="./images/concurrency_nonrepeatableread.png" alt="concurrency_nonrepeatableread.png" width="50%" style="float: right" title="Nonrepeatable read." />
+</p>
+<p><span class="figure-number">Figure 10: </span>Concurrency issue: nonrepeatable read.</p>
+</div>
+
+<p>
+De eerste transactie en de tweede transactie lezen allebei dezelfde variabele in. Binnen de eerste transactie wordt dezelfde variabele daarna nogmaals uitgelezen, maar misschien is die variabele inmiddels veranderd. 
+</p>
+
+</section>
+<section id="slide-org102f981">
+<h3 id="org102f981"><span class="section-number-3">5.6</span> Concurrency Issues - phantom read</h3>
+
+<div id="org8c35844" class="figure">
+<p><img src="./images/concurrency_phantomread.png" alt="concurrency_phantomread.png" width="50%" style="float: right" title="Phantom read." />
+</p>
+<p><span class="figure-number">Figure 11: </span>Concurrency issue: phantom read</p>
+</div>
+
+<p>
+Speciaal geval van non-repeatable read: de eerste transactie leest iets, en terwijl die transactie nog niet is afgelopen, verandert transactie 2 de database. Transactie 1 en transactie 2 hebben nu een verschillend beeld van de inhoud van de database. 
+</p>
+
+</section>
+<section id="slide-orgb3c44a9">
+<h3 id="orgb3c44a9"><span class="section-number-3">5.7</span> Verschillende niveaus van isolation maken database consistenter</h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Isolation level</th>
+<th scope="col" class="org-left">Dirty reads</th>
+<th scope="col" class="org-left">Non-repeatable reads</th>
+<th scope="col" class="org-left">Phantom reads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">serializable</td>
+<td class="org-left">&#10008;</td>
+<td class="org-left">&#10008;</td>
+<td class="org-left">&#10008;</td>
+</tr>
+
+<tr>
+<td class="org-left">Repeatable reads</td>
+<td class="org-left">&#10008;</td>
+<td class="org-left">&#10008;</td>
+<td class="org-left">&#10003;</td>
+</tr>
+
+<tr>
+<td class="org-left">Read committed</td>
+<td class="org-left">&#10008;</td>
+<td class="org-left">&#10003;</td>
+<td class="org-left">&#10003;</td>
+</tr>
+
+<tr>
+<td class="org-left">Read uncommitted</td>
+<td class="org-left">&#10003;</td>
+<td class="org-left">&#10003;</td>
+<td class="org-left">&#10003;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Voorbeeld: als de database transacties isoleert op het niveau van <i>read uncommitted</i> (het laagste niveau) dan kunnen er dirty reads, non-repeatable reads en phantom reads plaatsvinden. Op het hoogste niveau van transactie isolatie (<i>serializable</i>) kan dat niet. 
+</p>
+
+<p>
+Maar: hoe hoger het niveau van isolatie, hoe moeilijker de database schaalbaar wordt. 
+</p>
+
+</section>
+<section id="slide-org19f84c4">
+<h3 id="org19f84c4"><span class="section-number-3">5.8</span> Schaalbare systemen</h3>
+
+<div id="orgceb0e58" class="figure">
+<p><img src="./images/scalability_vertical.png" alt="scalability_vertical.png" width="40%" style="float: right" title="Scalability vertical" />
+</p>
+</div>
+
+
+<p>
+Vertical Scaling:
+</p>
+<ul>
+<li>Add resources to a node</li>
+<li>Increase capacity</li>
+<li>Load unaffected</li>
+<li>System complexity unaffected</li>
+<li>AKA Scale-Up</li>
+
+</ul>
+
+
+<div id="org9fa9acc" class="figure">
+<p><img src="./images/scalability_horizontal.png" alt="scalability_horizontal.png" width="40%" style="float: right" title="Scalability horizontal" />
+</p>
+</div>
+
+<p>
+Horizontal Scaling
+</p>
+<ul>
+<li>Add nodes to a cluster</li>
+<li>Capacity unaffected</li>
+<li>Decreased Load</li>
+<li>Availability and throughput with increased complexity</li>
+<li>AKA Scale-Out</li>
+
+</ul>
+
+</section>
+<section id="slide-orgf1cf23c">
+<h3 id="orgf1cf23c"><span class="section-number-3">5.9</span> Hoe kan een RDBMS horizontaal schalen?</h3>
+
+<div id="org781210e" class="figure">
+<p><img src="./images/scaling_horizontal1.png" alt="scaling_horizontal1.png" width="40%" style="float: right" title="Scalability horizontal 1" />
+</p>
+</div>
+
+<p>
+Replication
+</p>
+<ul>
+<li>Auto-backup</li>
+<li>Master = SPoF+ bottleneck</li>
+<li>Synchronization?</li>
+
+</ul>
+
+
+<p>
+Sharding
+</p>
+
+<div id="org262b33c" class="figure">
+<p><img src="./images/scaling_horizontal2.png" alt="scaling_horizontal2.png" width="30%" style="float: right" title="Scalability horizontal 2" />
+</p>
+</div>
+
+<ul>
+<li>Horizontal partitioning</li>
+<li>Split rows over nodes</li>
+<li>Cross-shard joins difficult</li>
+<li>Optimal sharding?</li>
+<li>Locality of reference</li>
+<li>Concurrency is complex</li>
+<li>Requires coordination</li>
+
+</ul>
+
+<section data-background-video="./images/cat.mp4" data-background-video-loop data-background-video-muted data-background-opacity="20%">
+	<h1 class="whitetext"></h1>
+</section>
+
+</section>
+<section id="slide-orga002622">
+<h3 id="orga002622"><span class="section-number-3">5.10</span> ACID en Distributed gaan niet goed samen</h3>
+<p>
+Want hoe kun je horizontaal schalen en tegelijkertijd database concurrency over verschillende systemen implementeren?
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org0df2c0e">
+<h2 id="org0df2c0e"><span class="section-number-2">6</span> Extended Relational</h2>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-extended-relational.png" alt="reference-architecture-extended-relational.png" />
+</p>
+</div>
+
+<p>
+Vooral geschikt voor CPU-intensieve problemen ("Massively Parallel Processing") waarbij het <i>volume</i> data minder ver opschaalt. 
+</p>
+
+<p>
+Variatie in <i>vorm</i> van queries mogelijk (snel antwoord), maar bottleneck: geen on-disk persistentie. 
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb477639">
+<h2 id="orgb477639"><span class="section-number-2">7</span> Data refinery</h2>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-data-refinery.png" alt="reference-architecture-data-refinery.png" />
+</p>
+</div>
+
+<p>
+Voorbewerking vindt plaats buiten relationele database. Dat maakt in-memory relationele database mogelijk. 
+</p>
+
+<p>
+Real-time analyse is beperkt (want er is een voorbewerking), <i>volume</i> is beperkt tot geheugengrenzen, maar wel grote <i>varieteit</i> aan data mogelijk doordat er een uitgebreide voorbewerking mogelijk is. 
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org437a1c6">
+<h2 id="org437a1c6"><span class="section-number-2">8</span> Pure Non-relational</h2>
+
+<div class="figure">
+<p><img src="./images/reference-architecture-pure-nonrelational.png" alt="reference-architecture-pure-nonrelational.png" />
+</p>
+</div>
+
+<p>
+Vooral geschikt als de <i>vorm</i> van queries al vaststaat en het schaalprobleem vooral het <i>volume</i> van de data betreft. 
+</p>
+
+</section>
+<section id="slide-org2bac31c">
+<h3 id="org2bac31c"><span class="section-number-3">8.1</span> CAP theorem</h3>
+
+<div id="org3d12916" class="figure">
+<p><img src="./images/cap1.png" alt="cap1.png" width="60%" style="float: right" title="CAP 1" />
+</p>
+</div>
+
+</section>
+<section id="slide-org4c4239f">
+<h3 id="org4c4239f"><span class="section-number-3">8.2</span> CAP theorem</h3>
+
+<div id="org4f3ff74" class="figure">
+<p><img src="./images/cap2.png" alt="cap2.png" width="80%" style="float: right" title="CAP 2" />
+</p>
+</div>
+
+</section>
+<section id="slide-org7d8615b">
+<h3 id="org7d8615b"><span class="section-number-3">8.3</span> NoSQL</h3>
+<p>
+Vier belangrijke categorieën:
+</p>
+<ul>
+<li>Key-Value stores (Dynamo, Cassandra, Riak, Redis)</li>
+<li>Document stores (CouchDB, MongoDB, ElasticSearch)</li>
+<li>Wide column stores (HBase, Cassandra, BigTable)</li>
+<li>Graph databases (Neo4J, OrientDB)</li>
+<li>Streaming databases (Spark, Flink)</li>
+
+</ul>
+
+<p>
+Vereenvoudigingen:
+</p>
+<ol>
+<li>Geen relationeel model.</li>
+<li>In plaats van ACID-properties, BASE: 
+<ol>
+<li>*B*asically *A*vailable. (data <i>mag</i> verouderd zijn)</li>
+<li>*S*oft state (het systeem <i>kan</i> veranderen, heb geen vertrouwen)</li>
+<li>*E*ventually consistent. (het duurt soms voordat de database consistent is).</li>
+
+</ol></li>
+
+</ol>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org61eafbf">
+<h2 id="org61eafbf"><span class="section-number-2">9</span> Lambda architecture</h2>
+
+<div class="figure">
+<p><img src="./images/lambda-architecture.png" alt="lambda-architecture.png" />
+</p>
+</div>
+
+<p>
+Kan alles, schaalt ongelimiteerd. Maar duur in onderhoud, want verschillende databases/codebases/etc. 
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org1c87e38">
+<h2 id="org1c87e38"><span class="section-number-2">10</span> Kappa architecture</h2>
+
+<div class="figure">
+<p><img src="./images/kappa-architecture.png" alt="kappa-architecture.png" />
+</p>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org623a5b1">
+<h2 id="org623a5b1"><span class="section-number-2">11</span> Vooruitblik</h2>
+<p>
+De hele keten van ontwerp naar implementatie vereist gedegen kennis van de technische mogelijkheden.
+</p>
+
+<p>
+In de workshops op vrijdagen gaan we spelen met de verschillende referentiearchitecturen zodat je aan het eind van de cursus een beeld hebt van hoe ze werken. 
+</p>
+</section>
+</section>
 </div>
 </div>
-<script src="./reveal.js/lib/js/head.min.js"></script>
 <script src="./reveal.js/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-
-controls: true,
-progress: true,
-history: false,
-center: false,
-slideNumber: 'c',
-rollingLinks: false,
-keyboard: true,
-overview: true,
-
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: 'fast',
+slideNumber:true,
+width:"80%",
+height:"100%",
 multiplex: {
     secret: '', // null if client
     id: '', // id, obtained from socket.io server
@@ -60,7 +672,7 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
-{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+{ src: 'reveal.js/plugin/reveald3.js', async: true }, { src: 'plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({}); } },
  { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
  { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
  { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
