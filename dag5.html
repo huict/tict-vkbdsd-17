@@ -31,13 +31,13 @@
 </section>
 
 <section>
-<section id="slide-orge3c66a7">
-<h2 id="orge3c66a7"><span class="section-number-2">1</span> Behandelde referentie-architecturen voor dataopslag</h2>
+<section id="slide-org98eb04a">
+<h2 id="org98eb04a"><span class="section-number-2">1</span> Behandelde referentie-architecturen voor dataopslag</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 </section>
-<section id="slide-orgef8c0fd">
-<h3 id="orgef8c0fd"><span class="section-number-3">1.1</span> Pure Relational</h3>
+<section id="slide-org16f10a8">
+<h3 id="org16f10a8"><span class="section-number-3">1.1</span> Pure Relational</h3>
 
 <div class="figure">
 <p><img src="./images/reference-architecture-pure-relational.png" alt="reference-architecture-pure-relational.png" />
@@ -49,12 +49,12 @@ Bekende technologie: MySQL, PostgreSQL, MSQL.
 </p>
 
 <p>
-De ETL en messaging vinden plaats in het RDBMS. Als er een voorbewerking van de data plaats vindt buiten het database-systeem (bijvoorbeeld door scripts), dan is het een <a href="#/slide-org1d20ce9">Data Refinery</a>. 
+De ETL en messaging vinden plaats in het RDBMS. Als er een voorbewerking van de data plaats vindt buiten het database-systeem (bijvoorbeeld door scripts), dan is het een <a href="#/slide-org9175a29">Data Refinery</a>. 
 </p>
 
 </section>
-<section id="slide-org4ef00ee">
-<h3 id="org4ef00ee"><span class="section-number-3">1.2</span> Extended Relational</h3>
+<section id="slide-orge0dca7c">
+<h3 id="orge0dca7c"><span class="section-number-3">1.2</span> Extended Relational</h3>
 
 <div class="figure">
 <p><img src="./images/reference-architecture-extended-relational.png" alt="reference-architecture-extended-relational.png" />
@@ -70,8 +70,8 @@ Variatie in <i>vorm</i> van queries mogelijk (snel antwoord), maar bottleneck: g
 </p>
 
 </section>
-<section id="slide-org1d20ce9">
-<h3 id="org1d20ce9"><span class="section-number-3">1.3</span> Data refinery</h3>
+<section id="slide-org9175a29">
+<h3 id="org9175a29"><span class="section-number-3">1.3</span> Data refinery</h3>
 
 <div class="figure">
 <p><img src="./images/reference-architecture-data-refinery.png" alt="reference-architecture-data-refinery.png" />
@@ -88,8 +88,8 @@ Real-time analyse is beperkt (want er is een voorbewerking), <i>volume</i> is be
 
 
 </section>
-<section id="slide-org7c1af36">
-<h3 id="org7c1af36"><span class="section-number-3">1.4</span> Pure Non-relational</h3>
+<section id="slide-org8723ab3">
+<h3 id="org8723ab3"><span class="section-number-3">1.4</span> Pure Non-relational</h3>
 
 <div class="figure">
 <p><img src="./images/reference-architecture-pure-nonrelational.png" alt="reference-architecture-pure-nonrelational.png" />
@@ -103,8 +103,8 @@ Vooral geschikt als de <i>vorm</i> van queries al vaststaat en het schaalproblee
 
 
 </section>
-<section id="slide-org33f05c4">
-<h3 id="org33f05c4"><span class="section-number-3">1.5</span> NIEUW: Lambda architecture</h3>
+<section id="slide-org25e736b">
+<h3 id="org25e736b"><span class="section-number-3">1.5</span> NIEUW: Lambda architecture</h3>
 
 <div class="figure">
 <p><img src="./images/lambda-architecture.png" alt="lambda-architecture.png" />
@@ -116,10 +116,10 @@ Kan alles, schaalt ongelimiteerd. Maar duur in onderhoud, want verschillende dat
 </p>
 
 </section>
-<section id="slide-orgedce1c8">
-<h3 id="orgedce1c8"><span class="section-number-3">1.6</span> Lambda architecture</h3>
+<section id="slide-org4d0209d">
+<h3 id="org4d0209d"><span class="section-number-3">1.6</span> Lambda architecture</h3>
 
-<div id="org75a1bcc" class="figure">
+<div id="org90ed409" class="figure">
 <p><img src="./images/lambda-architecture.png" alt="lambda-architecture.png" width="50%" style="border:0px solid black;" title="Lambda architecture" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Lambda architecture</p>
@@ -130,10 +130,10 @@ Nieuwe data komt continue binnen (zie Streaming volgende week). Data stroomt naa
 </p>
 
 </section>
-<section id="slide-org55cdb05">
-<h4 id="org55cdb05"><span class="section-number-4">1.6.1</span> Batch layer</h4>
+<section id="slide-org7391b7f">
+<h4 id="org7391b7f"><span class="section-number-4">1.6.1</span> Batch layer</h4>
 
-<div id="org6c0d8e9" class="figure">
+<div id="org40d18c1" class="figure">
 <p><img src="./images/lambda-architecture batch.png" alt="lambda-architecture batch.png" width="50%" style="border:0px solid black;" title="Lambda architecture" />
 </p>
 <p><span class="figure-number">Figure 7: </span>Lambda architecture Batch layer</p>
@@ -150,10 +150,10 @@ Data wordt gecontroleerd en eventueel vertaald. Klassieke plek voor ETL / data w
 </ol>
 
 </section>
-<section id="slide-org0413b37">
-<h4 id="org0413b37"><span class="section-number-4">1.6.2</span> Serving layer</h4>
+<section id="slide-orge9f3427">
+<h4 id="orge9f3427"><span class="section-number-4">1.6.2</span> Serving layer</h4>
 
-<div id="orge46e145" class="figure">
+<div id="org037fdcf" class="figure">
 <p><img src="./images/lambda-architecture serving.png" alt="lambda-architecture serving.png" width="50%" style="border:0px solid black;" title="Lambda architecture" />
 </p>
 <p><span class="figure-number">Figure 8: </span>Lambda architecture Serving layer</p>
@@ -165,10 +165,10 @@ De output van de batch layer (batch views) en van de streaming layer (real-time 
 </p>
 
 </section>
-<section id="slide-org1066092">
-<h4 id="org1066092"><span class="section-number-4">1.6.3</span> Streaming / Speed layer</h4>
+<section id="slide-orgdbe2cf2">
+<h4 id="orgdbe2cf2"><span class="section-number-4">1.6.3</span> Streaming / Speed layer</h4>
 
-<div id="org0a1a278" class="figure">
+<div id="org74cd06c" class="figure">
 <p><img src="./images/lambda-architecture speed.png" alt="lambda-architecture speed.png" width="50%" style="border:0px solid black;" title="Lambda architecture" />
 </p>
 <p><span class="figure-number">Figure 9: </span>Lambda architecture Streaming layer</p>
@@ -180,8 +180,8 @@ Data worden opgeslagen die nog niet in de batch layer is opgenomen. Omdat alleen
 
 
 </section>
-<section id="slide-org1bf81b1">
-<h3 id="org1bf81b1"><span class="section-number-3">1.7</span> NIEUW: Kappa architecture</h3>
+<section id="slide-orgafbd66d">
+<h3 id="orgafbd66d"><span class="section-number-3">1.7</span> NIEUW: Kappa architecture</h3>
 
 <div class="figure">
 <p><img src="./images/kappa-architecture.png" alt="kappa-architecture.png" />
@@ -199,8 +199,8 @@ Vooral geschikt voor toepassingen waarbij algoritmes die toegepast worden op de 
 </section>
 </section>
 <section>
-<section id="slide-org3c18367" class="p-smaller">
-<h2 id="org3c18367"><span class="section-number-2">2</span> HDFS</h2>
+<section id="slide-orgf6d4a15" class="p-smaller">
+<h2 id="orgf6d4a15"><span class="section-number-2">2</span> HDFS</h2>
 <p>
 Traditioneel: <b>storage</b> is een aparte component in het systeem, gescheiden van <b>compute</b>; tegenwoordig wordt storage vaak geïmplementeerd als bijvoorbeeld Netword Attached Storage (NAS) of Storage Area Networks (SAN). Dataverwerking volgt in zulke systemen steeds dezelfde stappen: haal input data uit store; plaats data in geheugen; verwerk data; schrijf data weg.
 </p>
@@ -214,8 +214,8 @@ De oplossing die Google bedacht: het Google File System (GFS). Het motto is om s
 </p>
 
 </section>
-<section id="slide-org50862ac">
-<h3 id="org50862ac"><span class="section-number-3">2.1</span> Bewerkingen via HDFS</h3>
+<section id="slide-org36bf73c">
+<h3 id="org36bf73c"><span class="section-number-3">2.1</span> Bewerkingen via HDFS</h3>
 
 <div class="figure">
 <p><img src="./images/hdfs.png" alt="hdfs.png" />
@@ -227,8 +227,8 @@ De oplossing die Google bedacht: het Google File System (GFS). Het motto is om s
 
 
 </section>
-<section id="slide-orgc5b0a56">
-<h3 id="orgc5b0a56"><span class="section-number-3">2.2</span> Andere architectuur, ander filesysteem</h3>
+<section id="slide-orgcc987a7">
+<h3 id="orgcc987a7"><span class="section-number-3">2.2</span> Andere architectuur, ander filesysteem</h3>
 <p>
 Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de opslag. Design principes van traditionele filesystemen vs. GFS:
 </p>
@@ -285,8 +285,8 @@ Zo'n modernere architectuur stelt ook andere eisen aan de organisatie van de ops
 
 
 </section>
-<section id="slide-orga48825a">
-<h3 id="orga48825a"><span class="section-number-3">2.3</span> Guiding principles van HDFS</h3>
+<section id="slide-org94e83da">
+<h3 id="org94e83da"><span class="section-number-3">2.3</span> Guiding principles van HDFS</h3>
 <p>
 HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementatie van het GFS. 
 </p>
@@ -301,8 +301,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 </ol>
 
 </section>
-<section id="slide-org274caca">
-<h3 id="org274caca"><span class="section-number-3">2.4</span> HDFS architectuur</h3>
+<section id="slide-orga2372a0">
+<h3 id="orga2372a0"><span class="section-number-3">2.4</span> HDFS architectuur</h3>
 
 <div class="figure">
 <p><img src="./images/hdfsarchitectuur.png" alt="hdfsarchitectuur.png" />
@@ -332,8 +332,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 </ol>
 
 </section>
-<section id="slide-org6ba8096">
-<h3 id="org6ba8096"><span class="section-number-3">2.5</span> HDFS Multirack architectuur</h3>
+<section id="slide-orgeea487c">
+<h3 id="orgeea487c"><span class="section-number-3">2.5</span> HDFS Multirack architectuur</h3>
 
 <div class="figure">
 <p><img src="./images/HDFS-multirack.png" alt="HDFS-multirack.png" />
@@ -342,8 +342,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 
 
 </section>
-<section id="slide-orga86e2f7">
-<h3 id="orga86e2f7"><span class="section-number-3">2.6</span> HDFS replicatie</h3>
+<section id="slide-org29b0499">
+<h3 id="org29b0499"><span class="section-number-3">2.6</span> HDFS replicatie</h3>
 
 <div class="figure">
 <p><img src="./images/HDFS-replication.png" alt="HDFS-replication.png" />
@@ -352,8 +352,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 
 
 </section>
-<section id="slide-orgb80b5ec">
-<h3 id="orgb80b5ec"><span class="section-number-3">2.7</span> HDFS rack awareness</h3>
+<section id="slide-orgc966ca1">
+<h3 id="orgc966ca1"><span class="section-number-3">2.7</span> HDFS rack awareness</h3>
 
 <div class="figure">
 <p><img src="./images/HDFS-rackawareness.png" alt="HDFS-rackawareness.png" />
@@ -362,8 +362,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 
 
 </section>
-<section id="slide-orgc7fc367">
-<h3 id="orgc7fc367"><span class="section-number-3">2.8</span> HDFS single-point-of-failure</h3>
+<section id="slide-org23330b2">
+<h3 id="org23330b2"><span class="section-number-3">2.8</span> HDFS single-point-of-failure</h3>
 
 <div class="figure">
 <p><img src="./images/HDFS-spof.png" alt="HDFS-spof.png" />
@@ -371,8 +371,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 </div>
 
 </section>
-<section id="slide-org4ecbee4">
-<h3 id="org4ecbee4"><span class="section-number-3">2.9</span> HDFS data locality</h3>
+<section id="slide-org8706d5c">
+<h3 id="org8706d5c"><span class="section-number-3">2.9</span> HDFS data locality</h3>
 
 <div class="figure">
 <p><img src="./images/HDFS-data-locality.png" alt="HDFS-data-locality.png" />
@@ -381,8 +381,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 
 
 </section>
-<section id="slide-orgfb6a2da">
-<h3 id="orgfb6a2da"><span class="section-number-3">2.10</span> HDFS namenode</h3>
+<section id="slide-org583ecde">
+<h3 id="org583ecde"><span class="section-number-3">2.10</span> HDFS namenode</h3>
 
 <div class="figure">
 <p><img src="./images/HDFS-namenode.png" alt="HDFS-namenode.png" />
@@ -390,8 +390,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 </div>
 
 </section>
-<section id="slide-org6a9cc39">
-<h3 id="org6a9cc39"><span class="section-number-3">2.11</span> HDFS namenode</h3>
+<section id="slide-org29779d3">
+<h3 id="org29779d3"><span class="section-number-3">2.11</span> HDFS namenode</h3>
 
 <div class="figure">
 <p><img src="./images/HDFS-namenode2.png" alt="HDFS-namenode2.png" />
@@ -399,8 +399,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 </div>
 
 </section>
-<section id="slide-org893e886">
-<h3 id="org893e886"><span class="section-number-3">2.12</span> HDFS leesoperatie</h3>
+<section id="slide-orgb4e211a">
+<h3 id="orgb4e211a"><span class="section-number-3">2.12</span> HDFS leesoperatie</h3>
 
 <div class="figure">
 <p><img src="./images/HDFS-read.png" alt="HDFS-read.png" />
@@ -415,8 +415,8 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 
 </ol>
 </section>
-<section id="slide-orgc738381">
-<h3 id="orgc738381"><span class="section-number-3">2.13</span> HDFS schrijfoperatie</h3>
+<section id="slide-orgc3bcb9e">
+<h3 id="orgc3bcb9e"><span class="section-number-3">2.13</span> HDFS schrijfoperatie</h3>
 
 <div class="figure">
 <p><img src="./images/HDFS-write.png" alt="HDFS-write.png" />
@@ -430,6 +430,112 @@ HDFS staat voor Hadoop File System. Het is de door Yahoo ontwikkelde implementat
 <li>Bij Node Failures: NN repliceert de ontbrekende blocks.</li>
 
 </ol>
+
+</section>
+<section id="slide-org2c33271">
+<h3 id="org2c33271"><span class="section-number-3">2.14</span> Netwerk-topologie</h3>
+
+<div id="org4dd0d3d" class="figure">
+<p><img src="./images/hdfs-topology1.png" alt="hdfs-topology1.png" width="50%" style="border:0px solid black;" title="hdfs_topology" />
+</p>
+<p><span class="figure-number">Figure 22: </span>HDFS Topologie</p>
+</div>
+
+<p>
+Een HDFS-netwerk heeft een structuur als een boom ('tree').
+</p>
+
+<p>
+<b>Afstand tussen twee nodes</b>: De som van de afstand tot hun ouder (<i>closest common ancestor</i>).
+</p>
+
+</section>
+<section id="slide-orgf4f8f55">
+<h4 id="orgf4f8f55"><span class="section-number-4">2.14.1</span> Voorbeeld</h4>
+
+<div id="orgf5de19a" class="figure">
+<p><img src="./images/hdfs-topology2.png" alt="hdfs-topology2.png" width="50%" style="border:0px solid black;" title="hdfs_topology2" />
+</p>
+<p><span class="figure-number">Figure 23: </span>HDFS Topologie voorbeeld</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>dist (d1/r1/n1, d1/r1/n1)</code></td>
+<td class="org-left">= 0</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>dist(d1/r1/n1, d1/r1/n2)</code></td>
+<td class="org-left">= 2</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>dist(d1/r1/n1, d1/r2/n3)</code></td>
+<td class="org-left">= 4</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>dist(d1/r1/n1, d2/r3/n6)</code></td>
+<td class="org-left">= 6</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgcf1297e">
+<h3 id="orgcf1297e"><span class="section-number-3">2.15</span> Strategieën voor replicatie</h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Betrouwbaarheid</th>
+<th scope="col" class="org-left">Schrijf-bandbreedte</th>
+<th scope="col" class="org-left">Lees-bandbreedte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Alle replica's in één node</td>
+<td class="org-left">Slecht</td>
+<td class="org-left">Goed</td>
+<td class="org-left">Slecht</td>
+</tr>
+
+<tr>
+<td class="org-left">Alle replica's verschillende racks</td>
+<td class="org-left">Goed</td>
+<td class="org-left">Slecht</td>
+<td class="org-left">Slecht</td>
+</tr>
+
+<tr>
+<td class="org-left">HDSFS</td>
+<td class="org-left">Goed</td>
+<td class="org-left">OK</td>
+<td class="org-left">OK</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 </div>
