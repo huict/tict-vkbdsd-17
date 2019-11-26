@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Big Data System Design: Streams, Apache, Spark</title>
-<meta name="author" content="(Roelant Ossewaarde / HU)"/>
+<meta name="author" content="((link (:type mailto :path roelant.ossewaarde@hu.nl :format bracket :raw-link mailto:roelant.ossewaarde@hu.nl :application nil :search-option nil :begin 1 :end 57 :contents-begin 36 :contents-end 54 :post-blank 1 :parent #0) Roelant Ossewaarde) en  (link (:type mailto :path jos.vanreenen@hu.nl :format bracket :raw-link mailto:jos.vanreenen@hu.nl :application nil :search-option nil :begin 60 :end 106 :contents-begin 90 :contents-end 104 :post-blank 0 :parent #0) Jos van Reenen) , B 2019-2020)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -27,31 +27,20 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Big Data System Design: Streams, Apache, Spark</h1><h2 class="author">Roelant Ossewaarde / HU</h2><h2 class="date">Dag 7, 4 december 2019</h2>
+<section id="sec-title-slide" data-background="images/huhl15.jpg"><h1>Big Data System Design</h1><h3>Streams, Apache, Spark & Flink</h3><p><small><a href="mailto:roelant.ossewaarde@hu.nl">Roelant Ossewaarde</a> en <a href="mailto:jos.vanreenen@hu.nl">Jos van Reenen</a>, B 2019-2020</small></p>
 </section>
 
 </div>
 </div>
-<script src="./reveal.js/lib/js/head.min.js"></script>
 <script src="./reveal.js/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-
-controls: true,
-progress: true,
-history: false,
-center: false,
-slideNumber: 'c',
-rollingLinks: false,
-keyboard: true,
-overview: true,
-
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: 'fast',
+slideNumber:true,
+width:"80%",
+height:"100%",
 multiplex: {
     secret: '', // null if client
     id: '', // id, obtained from socket.io server
@@ -60,7 +49,7 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
-{ src: './reveal.js-jump-plugin/jump/jump.js', async: true },
+{ src: 'reveal.js/plugin/reveald3.js', async: true }, { src: 'plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({}); } },
  { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
  { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
  { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
