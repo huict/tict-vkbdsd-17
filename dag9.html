@@ -31,8 +31,8 @@
 </section>
 
 <section>
-<section id="slide-org9ac34f8">
-<h2 id="org9ac34f8"><span class="section-number-2">1</span> Map-reduce</h2>
+<section id="slide-org1e6dcb4">
+<h2 id="org1e6dcb4"><span class="section-number-2">1</span> Map-reduce</h2>
 <p>
 Multi-core computers kunnen efficiënt processen in parallel
 afwerken. Ze moeten dan wel op de juiste manier aangestuurd
@@ -43,8 +43,63 @@ belangrijk algoritme: MapReduce. Yahoo ontwikkelde een architectuur
 </p>
 
 </section>
-<section id="slide-org7030258">
-<h3 id="org7030258"><span class="section-number-3">1.1</span> Architectuur van een MapReduce implementatie</h3>
+<section id="slide-orgee316b8">
+<h3 id="orgee316b8"><span class="section-number-3">1.1</span> Map / Reduce komt uit de wereld van Functional Programming</h3>
+<p>
+Voorbeeld-code van for-loop vs map (in Rust):
+</p>
+
+<pre><code class="rust" data-noescape>
+fn multiply_with_for_loop(input_numbers : &Vec<i32>) {
+    // vermenig alle elementen met een constante factor met een for-loop
+    let mut output_numbers = vec![0,0,0,0,0];
+    for i in 0..input_numbers.len() {
+      <mark>output_numbers[i] = input_numbers[i] * 10;</mark>
+    }
+    println!("Output met for-loop: {:?}", output_numbers);
+    // verwachtte output: Output met for-loop: [10, 20, 30, 40, 50]
+}
+</code></pre>
+
+<pre><code class="rust" data-noescape>
+fn multiply_with_map(input_numbers : &Vec<i32>) {
+    let input_numbers_iterator = input_numbers.iter();
+    let output_numbers :Vec<i32> = input_numbers_iterator.map(|i| i*10).collect();
+    println!("Output met map-loop: {:?}", output_numbers);
+    // verwachtte output: Output met map-loop: [10, 20, 30, 40, 50]
+}
+
+</section>
+<section id="slide-orgfae52a5">
+<h3 id="orgfae52a5"><span class="section-number-3">1.2</span> Map / Reduce komt uit de wereld van Functional Programming</h3>
+<p>
+Voorbeeld-code van for-loop vs reduce (in Rust):
+</p>
+
+<pre><code class="rust" data-noescape>
+fn sum_with_for_loop (input_numbers : &Vec<i32>) {
+    let mut output_sum = 0;
+    for i in 0..input_numbers.len() {
+<mark>	output_sum = output_sum + input_numbers[i];</mark>
+    }
+    println!("Output sum met for-loop: {:?}", output_sum);
+    // verwachtte output: Output sum met for-loop: 15
+    }
+
+fn sum_with_reduce (input_numbers : &Vec<i32>) {
+    let input_numbers_iterator = input_numbers.iter();
+<mark>    let output_sum : i32 = input_numbers_iterator.sum();</mark>
+    println!("Output sum met reduce: {:?}", output_sum);
+    // verwachtte output: Output sum met reduce: 15
+}
+
+</code></pre>
+
+
+
+</section>
+<section id="slide-org366b63e">
+<h3 id="org366b63e"><span class="section-number-3">1.3</span> Architectuur van een MapReduce implementatie</h3>
 
 <div class="figure">
 <p><img src="./images/mapreduce1.png" alt="mapreduce1.png" />
@@ -52,8 +107,8 @@ belangrijk algoritme: MapReduce. Yahoo ontwikkelde een architectuur
 </div>
 
 </section>
-<section id="slide-orge4b71ab" class="p-smaller">
-<h3 id="orge4b71ab"><span class="section-number-3">1.2</span> Workflow voorbeeld van Word Count</h3>
+<section id="slide-org648367a" class="p-smaller">
+<h3 id="org648367a"><span class="section-number-3">1.4</span> Workflow voorbeeld van Word Count</h3>
 
 <div class="figure">
 <p><img src="./images/mapreduce-workflow.png" alt="mapreduce-workflow.png" />
@@ -65,8 +120,8 @@ belangrijk algoritme: MapReduce. Yahoo ontwikkelde een architectuur
 </p>
 
 </section>
-<section id="slide-orgf73dfed">
-<h3 id="orgf73dfed"><span class="section-number-3">1.3</span> Voorbeeld-run van een word count mapper</h3>
+<section id="slide-orgab8514f">
+<h3 id="orgab8514f"><span class="section-number-3">1.5</span> Voorbeeld-run van een word count mapper</h3>
 <p>
 Zie <a href="https://github.com/roelanto/tcifbigdata">https://github.com/roelanto/tcifbigdata</a> voor een voorbeeldimplementatie met werkende code. 
 </p>
@@ -92,8 +147,8 @@ Mapper: <i>emit</i> een 1 voor ieder woord dat gevonden wordt.
 </div>
 
 </section>
-<section id="slide-org4d3245e">
-<h3 id="org4d3245e"><span class="section-number-3">1.4</span> Voorbeeld-run van een word count reducer</h3>
+<section id="slide-org6339092">
+<h3 id="org6339092"><span class="section-number-3">1.6</span> Voorbeeld-run van een word count reducer</h3>
 <p>
 Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </p>
@@ -118,13 +173,13 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </section>
 </section>
 <section>
-<section id="slide-org632ecf5">
-<h2 id="org632ecf5"><span class="section-number-2">2</span> Lambda, Kappa, Kudu</h2>
+<section id="slide-orgd215ed6">
+<h2 id="orgd215ed6"><span class="section-number-2">2</span> Lambda, Kappa, Kudu</h2>
 <div class="outline-text-2" id="text-2">
 </div>
 </section>
-<section id="slide-org8b29dec">
-<h3 id="org8b29dec"><span class="section-number-3">2.1</span> OLAP vs OLTP</h3>
+<section id="slide-org6ab166a">
+<h3 id="org6ab166a"><span class="section-number-3">2.1</span> OLAP vs OLTP</h3>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -200,17 +255,17 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </table>
 
 </section>
-<section id="slide-org282343a">
-<h3 id="org282343a"><span class="section-number-3">2.2</span> Lambda architectuur</h3>
+<section id="slide-org820c0e1">
+<h3 id="org820c0e1"><span class="section-number-3">2.2</span> Lambda architectuur</h3>
 
-<div id="org28108e0" class="figure">
+<div id="org904d2e6" class="figure">
 <p><img src="./images/lambda-architecture2.png" alt="lambda-architecture2.png" width="80%" style="float: right" title="Interleaving of transaction can lead to anomalies." />
 </p>
 <p><span class="figure-number">Figure 3: </span>Lambda architectuur</p>
 </div>
 
 <ol class="org-ol">
-<li><a id="orgd821314"></a>Batch-layer:<br />
+<li><a id="org7663f6c"></a>Batch-layer:<br />
 <ol>
 <li>Master data set. "Immutable": data verandert niet.</li>
 <li>Precompute alle "views".</li>
@@ -221,10 +276,10 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-orge3ff2e1">
-<h3 id="orge3ff2e1"><span class="section-number-3">2.3</span> Lambda architectuur</h3>
+<section id="slide-org618f93c">
+<h3 id="org618f93c"><span class="section-number-3">2.3</span> Lambda architectuur</h3>
 
-<div id="orge55f093" class="figure">
+<div id="orga4037bb" class="figure">
 <p><img src="./images/lambda-architecture2.png" alt="lambda-architecture2.png" width="80%" style="float: right" title="Interleaving of transaction can lead to anomalies." />
 </p>
 <p><span class="figure-number">Figure 4: </span>Lambda architectuur</p>
@@ -232,7 +287,7 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 
 
 <ol class="org-ol">
-<li><a id="orgdb0f31e"></a>Speed-layer<br />
+<li><a id="orgdfd6dbf"></a>Speed-layer<br />
 <ol>
 <li>Streaming data / micro-batches</li>
 <li>Traditioneel: Apache Spark en Stormm.</li>
@@ -242,10 +297,10 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-orgaf3164f">
-<h3 id="orgaf3164f"><span class="section-number-3">2.4</span> Lambda architectuur</h3>
+<section id="slide-orgc045436">
+<h3 id="orgc045436"><span class="section-number-3">2.4</span> Lambda architectuur</h3>
 
-<div id="orge892af3" class="figure">
+<div id="org4e45d20" class="figure">
 <p><img src="./images/lambda-architecture2.png" alt="lambda-architecture2.png" width="80%" style="float: right" title="Interleaving of transaction can lead to anomalies." />
 </p>
 <p><span class="figure-number">Figure 5: </span>Lambda architectuur</p>
@@ -253,7 +308,7 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 
 
 <ol class="org-ol">
-<li><a id="org77015fe"></a>Serving-layer:<br />
+<li><a id="org17158c0"></a>Serving-layer:<br />
 <ol>
 <li>Geen "ruwe" data, gebruikt views van batch- en speed-layer.</li>
 <li>Bijvoorbeeld een SQL-engine op een traditioneel filesysteem, of HBase of Apache Impala.</li>
@@ -263,8 +318,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-orgb5cae21">
-<h4 id="orgb5cae21"><span class="section-number-4">2.4.1</span> Voordelen van Lambda</h4>
+<section id="slide-orgc16f037">
+<h4 id="orgc16f037"><span class="section-number-4">2.4.1</span> Voordelen van Lambda</h4>
 <ol>
 <li>Verbinding van verschillende producten, elk met hun unieke sterke kanten.</li>
 <li>Schaalbaar via de batch-layer.</li>
@@ -273,8 +328,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-orgaf35d67">
-<h4 id="orgaf35d67"><span class="section-number-4">2.4.2</span> Nadelen van Lambda</h4>
+<section id="slide-org0dbc788">
+<h4 id="org0dbc788"><span class="section-number-4">2.4.2</span> Nadelen van Lambda</h4>
 <ol>
 <li>Complexiteit:
 <ol>
@@ -288,8 +343,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-orgf9023c4">
-<h3 id="orgf9023c4"><span class="section-number-3">2.5</span> Kudu: snelle analytics op snel-veranderende data.</h3>
+<section id="slide-orgf497aab">
+<h3 id="orgf497aab"><span class="section-number-3">2.5</span> Kudu: snelle analytics op snel-veranderende data.</h3>
 <ol>
 <li>HDFS excels at:
 <ul>
@@ -308,7 +363,7 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 
-<div id="org1437f80" class="figure">
+<div id="org0d20d3d" class="figure">
 <p><img src="./images/kudu-why-second.png" alt="kudu-why-second.png" width="30%" style="float: right" title="Architectuur van Kudu" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Kudu architectuur</p>
@@ -318,8 +373,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 
 
 </section>
-<section id="slide-org73a7f21">
-<h3 id="org73a7f21"><span class="section-number-3">2.6</span> Kudu: snelle analytics op snel-veranderende data.</h3>
+<section id="slide-org96fadf7">
+<h3 id="org96fadf7"><span class="section-number-3">2.6</span> Kudu: snelle analytics op snel-veranderende data.</h3>
 <ol>
 <li><b>High throughput</b> for big scans. Goal:Within 2x of Parquet</li>
 <li><b>Low-latency</b> for short accesses. Goal: 1ms read/write on SSD</li>
@@ -334,8 +389,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 
-<div id="orgc086111" class="figure">
-<p><img src="./images/kudu-why-first.png" alt="kudu-why-first.png" width="50%" style="float: right" title="Architectuur van Kudu" />
+<div id="orgc47e4a5" class="figure">
+<p><img src="./images/kudu-why-first.png" alt="kudu-why-first.png" width="30%" style="float: right" title="Architectuur van Kudu" />
 </p>
 <p><span class="figure-number">Figure 7: </span>Kudu architectuur</p>
 </div>
@@ -361,12 +416,12 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 
 
 </section>
-<section id="slide-orga0fd1f7">
-<h3 id="orga0fd1f7"><span class="section-number-3">2.7</span> Aspecten van Kudu</h3>
+<section id="slide-org3b67b64">
+<h3 id="org3b67b64"><span class="section-number-3">2.7</span> Aspecten van Kudu</h3>
 <div class="outline-text-3" id="text-2-7">
 </div>
 <ol class="org-ol">
-<li><a id="orge3c00f6"></a>Table-oriented storage<br />
+<li><a id="org33298cf"></a>Table-oriented storage<br />
 <ol>
 <li>Table has SQL/RDBMS-like schema
 <ol>
@@ -409,7 +464,7 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
-{ src: 'reveal.js/plugin/reveald3.js', async: true }, { src: 'plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({}); } },
+{ src: 'reveal.js/plugin/reveald3.js', async: true }, { src: 'plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({}); } }, { src: 'plugin/highlight/highlight.js', async: true },
  { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
  { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
  { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
