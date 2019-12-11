@@ -31,8 +31,8 @@
 </section>
 
 <section>
-<section id="slide-org219f614">
-<h2 id="org219f614"><span class="section-number-2">1</span> Map-reduce</h2>
+<section id="slide-org842d1a5">
+<h2 id="org842d1a5"><span class="section-number-2">1</span> Map-reduce</h2>
 <p>
 Multi-core computers kunnen efficiënt processen in parallel
 afwerken. Ze moeten dan wel op de juiste manier aangestuurd
@@ -43,8 +43,8 @@ belangrijk algoritme: MapReduce. Yahoo ontwikkelde een architectuur
 </p>
 
 </section>
-<section id="slide-org83e60ab">
-<h3 id="org83e60ab"><span class="section-number-3">1.1</span> Map / Reduce komt uit de wereld van Functional Programming</h3>
+<section id="slide-org22971ab">
+<h3 id="org22971ab"><span class="section-number-3">1.1</span> Map / Reduce komt uit de wereld van Functional Programming</h3>
 <p>
 Voorbeeld-code van for-loop vs map (in Rust):
 </p>
@@ -75,8 +75,8 @@ fn main() {
 </code></pre>
 
 </section>
-<section id="slide-orge82e3c6">
-<h3 id="orge82e3c6"><span class="section-number-3">1.2</span> Map / Reduce komt uit de wereld van Functional Programming</h3>
+<section id="slide-orgc0639dc">
+<h3 id="orgc0639dc"><span class="section-number-3">1.2</span> Map / Reduce komt uit de wereld van Functional Programming</h3>
 <p>
 Voorbeeld-code van for-loop vs reduce (in Rust):
 </p>
@@ -109,8 +109,8 @@ fn main() {
 
 
 </section>
-<section id="slide-org5b8e295">
-<h3 id="org5b8e295"><span class="section-number-3">1.3</span> Architectuur van een MapReduce implementatie</h3>
+<section id="slide-org2ca77fb">
+<h3 id="org2ca77fb"><span class="section-number-3">1.3</span> Architectuur van een MapReduce implementatie</h3>
 
 <div class="figure">
 <p><img src="./images/mapreduce1.png" alt="mapreduce1.png" />
@@ -118,8 +118,8 @@ fn main() {
 </div>
 
 </section>
-<section id="slide-orgc8f2f2e" class="p-smaller">
-<h3 id="orgc8f2f2e"><span class="section-number-3">1.4</span> Workflow voorbeeld van Word Count</h3>
+<section id="slide-org922d11e" class="p-smaller">
+<h3 id="org922d11e"><span class="section-number-3">1.4</span> Workflow voorbeeld van Word Count</h3>
 
 <div class="figure">
 <p><img src="./images/mapreduce-workflow.png" alt="mapreduce-workflow.png" />
@@ -131,8 +131,8 @@ fn main() {
 </p>
 
 </section>
-<section id="slide-org3118bcf">
-<h3 id="org3118bcf"><span class="section-number-3">1.5</span> Voorbeeld-run van een word count mapper</h3>
+<section id="slide-org9e09d8b">
+<h3 id="org9e09d8b"><span class="section-number-3">1.5</span> Voorbeeld-run van een word count mapper</h3>
 <p>
 Zie <a href="https://github.com/roelanto/tcifbigdata">https://github.com/roelanto/tcifbigdata</a> voor een voorbeeldimplementatie met werkende code. 
 </p>
@@ -141,56 +141,52 @@ Zie <a href="https://github.com/roelanto/tcifbigdata">https://github.com/roelant
 Mapper: <i>emit</i> een 1 voor ieder woord dat gevonden wordt. 
 </p>
 
-<div class="org-src-container">
+<pre>
+class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
-<pre  class="src src-java"><code trim><span style="color: #a020f0;">class</span> <span style="color: #228b22;">WordCountMapper</span> <span style="color: #a020f0;">extends</span> <span style="color: #228b22;">Mapper</span>&lt;<span style="color: #228b22;">LongWritable</span>, <span style="color: #228b22;">Text</span>, <span style="color: #228b22;">Text</span>, <span style="color: #228b22;">IntWritable</span>&gt; {
-
-    <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">map</span>(<span style="color: #228b22;">LongWritable</span> <span style="color: #a0522d;">Key</span>,
-                    <span style="color: #228b22;">Text</span> <span style="color: #a0522d;">value</span>,
-                    <span style="color: #228b22;">Context</span> <span style="color: #a0522d;">context</span>) <span style="color: #a020f0;">throws</span> <span style="color: #228b22;">IOException</span>, <span style="color: #228b22;">InterruptedException</span> {
-        <span style="color: #228b22;">String</span>[] <span style="color: #a0522d;">tokens</span> = value.toString().split(<span style="color: #8b2252;">"\\s"</span>);
-        <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">String</span> <span style="color: #a0522d;">s</span> : tokens) {
-            context.write(<span style="color: #a020f0;">new</span> <span style="color: #228b22;">Text</span>(s), <span style="color: #a020f0;">new</span> <span style="color: #228b22;">IntWritable</span>(1));
-        }
+    public void map(LongWritable Key,
+		    Text value,
+		    Context context) throws IOException, InterruptedException {
+	String[] tokens = value.toString().split("\\s");
+	for (String s : tokens) {
+	    context.write(new Text(s), new IntWritable(1));
+	}
     }
 }
-</code></pre>
-</div>
+</pre>
 
 </section>
-<section id="slide-org9a95c0e">
-<h3 id="org9a95c0e"><span class="section-number-3">1.6</span> Voorbeeld-run van een word count reducer</h3>
+<section id="slide-orga6c3d21">
+<h3 id="orga6c3d21"><span class="section-number-3">1.6</span> Voorbeeld-run van een word count reducer</h3>
 <p>
 Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </p>
 
-<div class="org-src-container">
-
-<pre  class="src src-java"><code trim><span style="color: #a020f0;">class</span> <span style="color: #228b22;">WordCountReducer</span> <span style="color: #a020f0;">extends</span> <span style="color: #228b22;">Reducer</span>&lt;<span style="color: #228b22;">Text</span>, <span style="color: #228b22;">IntWritable</span>, <span style="color: #228b22;">Text</span>, <span style="color: #228b22;">IntWritable</span>&gt; {
-        <span style="color: #a020f0;">public</span> <span style="color: #228b22;">void</span> <span style="color: #0000ff;">reduce</span>(<span style="color: #228b22;">Text</span> <span style="color: #a0522d;">key</span>,
-                           <span style="color: #228b22;">Iterable</span>&lt;<span style="color: #228b22;">IntWritable</span>&gt; <span style="color: #a0522d;">values</span>,
-                           <span style="color: #228b22;">Context</span> <span style="color: #a0522d;">context</span>) <span style="color: #a020f0;">throws</span> <span style="color: #228b22;">IOException</span>, <span style="color: #228b22;">InterruptedException</span> {
-                <span style="color: #228b22;">int</span> <span style="color: #a0522d;">sum</span> = 0;
-                <span style="color: #a020f0;">for</span> (<span style="color: #228b22;">IntWritable</span> <span style="color: #a0522d;">i</span> : values) {
-                        sum += i.get();
-                }
-                context.write(key, <span style="color: #a020f0;">new</span> <span style="color: #228b22;">IntWritable</span>(sum));
-        }
+<pre>
+class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+	public void reduce(Text key,
+			   Iterable<IntWritable> values,
+			   Context context) throws IOException, InterruptedException {
+		int sum = 0;
+		for (IntWritable i : values) {
+			sum += i.get();
+		}
+		context.write(key, new IntWritable(sum));
+	}
 }
-</code></pre>
-</div>
+</pre>
 
 
 </section>
 </section>
 <section>
-<section id="slide-org6d928b6">
-<h2 id="org6d928b6"><span class="section-number-2">2</span> Lambda, Kappa, Kudu</h2>
+<section id="slide-org2e70c84">
+<h2 id="org2e70c84"><span class="section-number-2">2</span> Lambda, Kappa, Kudu</h2>
 <div class="outline-text-2" id="text-2">
 </div>
 </section>
-<section id="slide-orgd03b239">
-<h3 id="orgd03b239"><span class="section-number-3">2.1</span> OLAP vs OLTP</h3>
+<section id="slide-org51404cf">
+<h3 id="org51404cf"><span class="section-number-3">2.1</span> OLAP vs OLTP</h3>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -266,17 +262,17 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </table>
 
 </section>
-<section id="slide-orgb3cdd5c">
-<h3 id="orgb3cdd5c"><span class="section-number-3">2.2</span> Lambda architectuur</h3>
+<section id="slide-org3135d1f">
+<h3 id="org3135d1f"><span class="section-number-3">2.2</span> Lambda architectuur</h3>
 
-<div id="orgde9d667" class="figure">
+<div id="org83b1cd4" class="figure">
 <p><img src="./images/lambda-architecture2.png" alt="lambda-architecture2.png" width="80%" style="float: right" title="Interleaving of transaction can lead to anomalies." />
 </p>
 <p><span class="figure-number">Figure 3: </span>Lambda architectuur</p>
 </div>
 
 <ol class="org-ol">
-<li><a id="org9b9f89b"></a>Batch-layer:<br />
+<li><a id="org5580362"></a>Batch-layer:<br />
 <ol>
 <li>Master data set. "Immutable": data verandert niet.</li>
 <li>Precompute alle "views".</li>
@@ -287,10 +283,10 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-org95546b7">
-<h3 id="org95546b7"><span class="section-number-3">2.3</span> Lambda architectuur</h3>
+<section id="slide-org5b240d1">
+<h3 id="org5b240d1"><span class="section-number-3">2.3</span> Lambda architectuur</h3>
 
-<div id="orgac293b1" class="figure">
+<div id="org426c634" class="figure">
 <p><img src="./images/lambda-architecture2.png" alt="lambda-architecture2.png" width="80%" style="float: right" title="Interleaving of transaction can lead to anomalies." />
 </p>
 <p><span class="figure-number">Figure 4: </span>Lambda architectuur</p>
@@ -298,7 +294,7 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 
 
 <ol class="org-ol">
-<li><a id="org455f5ba"></a>Speed-layer<br />
+<li><a id="org13c0438"></a>Speed-layer<br />
 <ol>
 <li>Streaming data / micro-batches</li>
 <li>Traditioneel: Apache Spark en Stormm.</li>
@@ -308,10 +304,10 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-orga3ace20">
-<h3 id="orga3ace20"><span class="section-number-3">2.4</span> Lambda architectuur</h3>
+<section id="slide-org89cc4c7">
+<h3 id="org89cc4c7"><span class="section-number-3">2.4</span> Lambda architectuur</h3>
 
-<div id="org2570d64" class="figure">
+<div id="org4c66348" class="figure">
 <p><img src="./images/lambda-architecture2.png" alt="lambda-architecture2.png" width="80%" style="float: right" title="Interleaving of transaction can lead to anomalies." />
 </p>
 <p><span class="figure-number">Figure 5: </span>Lambda architectuur</p>
@@ -319,7 +315,7 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 
 
 <ol class="org-ol">
-<li><a id="orge78150d"></a>Serving-layer:<br />
+<li><a id="org98a5656"></a>Serving-layer:<br />
 <ol>
 <li>Geen "ruwe" data, gebruikt views van batch- en speed-layer.</li>
 <li>Bijvoorbeeld een SQL-engine op een traditioneel filesysteem, of HBase of Apache Impala.</li>
@@ -329,8 +325,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-orga5b9bae">
-<h4 id="orga5b9bae"><span class="section-number-4">2.4.1</span> Voordelen van Lambda</h4>
+<section id="slide-org6cd2174">
+<h4 id="org6cd2174"><span class="section-number-4">2.4.1</span> Voordelen van Lambda</h4>
 <ol>
 <li>Verbinding van verschillende producten, elk met hun unieke sterke kanten.</li>
 <li>Schaalbaar via de batch-layer.</li>
@@ -339,8 +335,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-org15c10f0">
-<h4 id="org15c10f0"><span class="section-number-4">2.4.2</span> Nadelen van Lambda</h4>
+<section id="slide-orgfa522d7">
+<h4 id="orgfa522d7"><span class="section-number-4">2.4.2</span> Nadelen van Lambda</h4>
 <ol>
 <li>Complexiteit:
 <ol>
@@ -354,8 +350,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 </section>
-<section id="slide-org5ccdd6f">
-<h3 id="org5ccdd6f"><span class="section-number-3">2.5</span> Kudu: snelle analytics op snel-veranderende data.</h3>
+<section id="slide-orgd4158e9">
+<h3 id="orgd4158e9"><span class="section-number-3">2.5</span> Kudu: snelle analytics op snel-veranderende data.</h3>
 <ol>
 <li>HDFS excels at:
 <ul>
@@ -374,7 +370,7 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 
-<div id="org87dee9e" class="figure">
+<div id="orgb7730f3" class="figure">
 <p><img src="./images/kudu-why-second.png" alt="kudu-why-second.png" width="30%" style="float: right" title="Architectuur van Kudu" />
 </p>
 <p><span class="figure-number">Figure 6: </span>Kudu architectuur</p>
@@ -384,8 +380,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 
 
 </section>
-<section id="slide-org9573b55">
-<h3 id="org9573b55"><span class="section-number-3">2.6</span> Kudu: snelle analytics op snel-veranderende data.</h3>
+<section id="slide-orgb6a41bc">
+<h3 id="orgb6a41bc"><span class="section-number-3">2.6</span> Kudu: snelle analytics op snel-veranderende data.</h3>
 <ol>
 <li><b>High throughput</b> for big scans. Goal:Within 2x of Parquet</li>
 <li><b>Low-latency</b> for short accesses. Goal: 1ms read/write on SSD</li>
@@ -400,7 +396,7 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </ol>
 
 
-<div id="org7eb7945" class="figure">
+<div id="org28c95c8" class="figure">
 <p><img src="./images/kudu-why-first.png" alt="kudu-why-first.png" width="30%" style="float: right" title="Architectuur van Kudu" />
 </p>
 <p><span class="figure-number">Figure 7: </span>Kudu architectuur</p>
@@ -427,12 +423,12 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 
 
 </section>
-<section id="slide-org2e329fe">
-<h3 id="org2e329fe"><span class="section-number-3">2.7</span> Aspecten van Kudu</h3>
+<section id="slide-org31f606b">
+<h3 id="org31f606b"><span class="section-number-3">2.7</span> Aspecten van Kudu</h3>
 <div class="outline-text-3" id="text-2-7">
 </div>
 <ol class="org-ol">
-<li><a id="orga2b98c7"></a>Table-oriented storage<br />
+<li><a id="org55cdbe2"></a>Table-oriented storage<br />
 <ol>
 <li>Table has SQL/RDBMS-like schema
 <ol>
@@ -458,8 +454,8 @@ Reducer: <i>emit</i> de som van alle gevonden '1'-en.
 </section>
 </section>
 <section>
-<section id="slide-orgf8235d5">
-<h2 id="orgf8235d5"><span class="section-number-2">3</span> Case-study:  Netflix</h2>
+<section id="slide-orgf5d8b6e">
+<h2 id="orgf5d8b6e"><span class="section-number-2">3</span> Case-study:  Netflix</h2>
 <p>
 Zie <a href="https://www.infoq.com/articles/netflix-migrating-stream-processing">de video</a>. 
 </p>
