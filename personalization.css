@@ -53,6 +53,12 @@ Further customized: Roelant Ossewaarde, feb 2019
     font-style: normal; /* could make bold or italics */
 }
 
+.center-div
+{
+     margin: 0 auto;
+     width: 100px; 
+}
+
 #sec-title-slide > h1,
 #sec-title-slide > h2,
 #sec-title-slide > h3,
@@ -119,6 +125,10 @@ Further customized: Roelant Ossewaarde, feb 2019
     font-size: 3em;
 }
 
+td.hljs-ln-code {
+	white-space: pre-wrap;
+}
+
 body {
     background-image: url(./images/hu-logo.png);
     background-size: 8%;
@@ -146,7 +156,101 @@ body {
   content: "";
   clear: both;
   display: table;
-} 
+}
+
+/*********************************************
+ * Highlight.js code style
+*********************************************/
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #000;
+}
+
+.hljs-subst,
+.hljs-title {
+  font-weight: normal;
+  color: #000;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #808080;
+  font-style: italic;
+}
+
+.hljs-meta {
+  color: #808000;
+}
+
+.hljs-tag {
+  background: #efefef;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-literal,
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-type,
+.hljs-selector-id,
+.hljs-selector-class {
+  font-weight: bold;
+  color: #004bf0;
+}
+
+.hljs-attribute,
+.hljs-number,
+.hljs-regexp,
+.hljs-link {
+  font-weight: bold;
+  color: #c300ff;
+}
+
+.hljs-number,
+.hljs-regexp,
+.hljs-link {
+  font-weight: normal;
+}
+
+.hljs-string {
+  color: #009100;
+  font-weight: bold;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-formula {
+  color: #000;
+  background: #00b7ff;
+  font-style: italic;
+}
+
+.hljs-doctag {
+  text-decoration: underline;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+  color: #ffa600;
+}
+
+.hljs-addition {
+  background: #aadeb7;
+}
+
+.hljs-deletion {
+  background: #ff020294;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
 </style>
 
 
