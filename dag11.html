@@ -1,239 +1,415 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="du" xml:lang="du">
+<!DOCTYPE html>
+<html lang="du">
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Big Data System Design:</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Roelant Ossewaarde / HU" />
+<meta charset="utf-8"/>
+<title>Big Data System Design</title>
+<meta name="author" content="((link (:type mailto :path roelant.ossewaarde@hu.nl :format bracket :raw-link mailto:roelant.ossewaarde@hu.nl :application nil :search-option nil :begin 1 :end 57 :contents-begin 36 :contents-end 54 :post-blank 1 :parent #0) Roelant Ossewaarde) en  (link (:type mailto :path jos.vanreenen@hu.nl :format bracket :raw-link mailto:jos.vanreenen@hu.nl :application nil :search-option nil :begin 60 :end 106 :contents-begin 90 :contents-end 104 :post-blank 0 :parent #0) Jos van Reenen) , B 2019-2020)"/>
 <style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+.underline { text-decoration: underline; }
 </style>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
 
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+<link rel="stylesheet" href="./personalization.css"/>
 
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
 </script>
 </head>
 <body>
-<div id="content">
-<h1 class="title">Big Data System Design:</h1>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="images/huhl15.jpg"><h1>Big Data System Design</h1><h3>Tentamenvoorbereiding en losse eindjes</h3><p><small><a href="mailto:roelant.ossewaarde@hu.nl">Roelant Ossewaarde</a> en <a href="mailto:jos.vanreenen@hu.nl">Jos van Reenen</a>, B 2019-2020</small></p>
+</section>
+
+<section>
+<section id="slide-orgc800edd">
+<h2 id="orgc800edd"><span class="section-number-2">1</span> Oefententamen</h2>
+<p>
+Link naar socrative: <a href="http://socrative.com/">http://socrative.com/</a>, room: <b>ABE1A2CB</b>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org1c87588">
+<h2 id="org1c87588"><span class="section-number-2">2</span> Streaming processosrs - Kafka Stream</h2>
+
+<div id="org3b87bc4" class="figure">
+<p><img src="./images/kafka-apis.png" alt="kafka-apis.png" width="70%" style="border:2px solid black;" title="Kafka APIs" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Kafka APIs</p>
 </div>
-<div id="postamble" class="status">
-<p class="date">Date: Dag 11, 18 december 2019</p>
-<p class="author">Author: Roelant Ossewaarde / HU</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+
+
+</section>
+<section id="slide-orgf5aa711">
+<h3 id="orgf5aa711"><span class="section-number-3">2.1</span> Concepten van Apache Kafka</h3>
+<ol>
+<li>Een <b>event</b> (buiten de applicatie) genereert een <b>record</b> (de realtime data, binnen de applicatie). Een record is typisch een Key/Value-pair.</li>
+<li>De key/value zijn een <b>topic</b> en de <b>data</b>. Door middel van het topic wordt het type data aangegeven.</li>
+<li>Een <b>record</b> wordt bewaard door een <b>broker</b>. Ieder topic heeft zijn eigen <b>partition</b>.</li>
+<li>Een Publish-subscribe-pattern:
+<ol>
+<li>Een <b>producer</b> genereert en stuurt (publishes) een record over een topic.</li>
+<li>Een <b>consumer</b> luistert (subscribes) naar een topic.</li>
+
+</ol></li>
+
+</ol>
+
+</section>
+<section id="slide-org59b8823">
+<h3 id="org59b8823"><span class="section-number-3">2.2</span> Topics en partitions</h3>
+
+<div id="org4ba034b" class="figure">
+<p><img src="./images/log_anatomy.png" alt="log_anatomy.png" width="40%" style="border:2px solid black;" title="Anatomy of a kafka-log" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Anatomy of a kafka-log</p>
 </div>
+
+
+<p>
+Een <b>partition</b> is een geordende, read-only reeks van records waar
+steeds nieuwe informatie aan wordt toegevoegd. Binnen elke partition
+worden records genummerd (de zgn. offset).
+</p>
+
+<p>
+Een partition past op één machine. Maar een serie partities kan
+horizontaal schalen over verschillende systemen.
+</p>
+
+</section>
+<section id="slide-org060c9ba">
+<h3 id="org060c9ba"><span class="section-number-3">2.3</span> Partitions hebben consumers en producers</h3>
+
+<div id="org46a182c" class="figure">
+<p><img src="./images/log_consumer.png" alt="log_consumer.png" width="80%" style="border:2px solid black;" title="Anatomy of a kafka-log - consumers" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Anatomy of a kafka-log - consumers</p>
+</div>
+
+
+
+</section>
+<section id="slide-org70d5f74">
+<h3 id="org70d5f74"><span class="section-number-3">2.4</span> Consumers zijn georganiseerd in <b>consumer groups</b></h3>
+
+<div id="org6044c46" class="figure">
+<p><img src="./images/consumer-groups.png" alt="consumer-groups.png" width="50%" style="border:2px solid black;" title="Kafka-log - consumer groups" />
+</p>
+<p><span class="figure-number">Figure 4: </span>Kafka-log - consumer groups</p>
+</div>
+
+
+<p>
+NB: Kafka kan records verspreiden als in een <a href="http://en.wikipedia.org/wiki/Message_queue">queue</a> of als in een
+<a href="http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">publish-subscribe</a> pattern (zie <a href="https://dzone.com/articles/comparing-publish-subscribe-messaging-and-message">vergelijking)</a>.
+</p>
+
+</section>
+<section id="slide-orgeeddd41">
+<h3 id="orgeeddd41"><span class="section-number-3">2.5</span> Voorbeeld (abstract)</h3>
+
+<div class="figure">
+<p><object type="image/svg+xml" data="https://ci.apache.org/projects/flink/flink-docs-release-1.2/fig/parallel_dataflow.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+</section>
+<section id="slide-orgeaf5c5f">
+<h3 id="orgeaf5c5f"><span class="section-number-3">2.6</span> Voorbeeld: fraude-detectie van reviews, met batching</h3>
+
+<div id="org89427b3" class="figure">
+<p><img src="./images/kafka_case_a.png" alt="kafka_case_a.png" width="70%" style="border:2px solid black;" title="Kafka-log - batches" />
+</p>
+<p><span class="figure-number">Figure 6: </span>Kafka-log - case-study batching</p>
+</div>
+
+<p>
+(<a href="https://medium.com/@stephane.maarek/how-to-use-apache-kafka-to-transform-a-batch-pipeline-into-a-real-time-one-831b48a6ad85">bron</a>)
+</p>
+
+</section>
+<section id="slide-org2e9e6ae">
+<h3 id="org2e9e6ae"><span class="section-number-3">2.7</span> Voorbeeld: fraude-detectie van reviews, met streams</h3>
+
+<div id="org6fe0b62" class="figure">
+<p><img src="./images/kafka_case_b.png" alt="kafka_case_b.png" width="70%" style="border:2px solid black;" title="Kafka-log - streaming" />
+</p>
+<p><span class="figure-number">Figure 7: </span>Kafka-log - case-study streaming</p>
+</div>
+
+
+</section>
+<section id="slide-org0be2ade">
+<h3 id="org0be2ade"><span class="section-number-3">2.8</span> Voorbeeld-applicatie van Kafka (mbv Kafka Streams)</h3>
+
+<div id="org84654bf" class="figure">
+<p><img src="./images/streams-table-updates.png" alt="streams-table-updates.png" width="60%" style="border:2px solid black;" title="Kafka-log - streaming" />
+</p>
+<p><span class="figure-number">Figure 8: </span>Kafka-log - case-study streaming (2)</p>
+</div>
+
+
+</section>
+<section id="slide-orgf9f5583">
+<h3 id="orgf9f5583"><span class="section-number-3">2.9</span> De analyse van data gebeurt soms op basis van eeen window</h3>
+<p>
+De data is dan opgespaard over een bepaalde tijd (x minuten) of een bepaalde hoeveelheid data (x events).
+</p>
+
+<p>
+Er zijn verschillende typen windows:
+</p>
+
+<ol>
+<li><b><b>Sliding</b></b> window: het window "beweegt" steeds maar een deel van de window-breedte. Bijvoorbeeld voor het berekenen van Moving Averages.</li>
+<li><b><b>Tumbling</b></b> window: Het window "beweegt" zodat er geen overlap is tussen windows.</li>
+<li><b><b>Session</b></b> window:: Het window staat steeds om data heen die bij elkaar horen.</li>
+
+</ol>
+
+</section>
+<section id="slide-org52c1a75">
+<h3 id="org52c1a75"><span class="section-number-3">2.10</span> De latest and greatest</h3>
+<p>
+Er zijn onlangs implementaties verschenen waarmee je SQL-achtige
+statements kunt gebruiken om streaming data mee te bevragen. Zie
+<a href="https://www.youtube.com/watch?v=YO95iAkwapQ">bijvoorbeeld deze video</a> voor een technische uitleg daarvan.
+</p>
+
+<p>
+Als stream processor wordt tegenwoordig vaak <a href="https://flink.apache.org/">Apache Flink</a>
+gebruikt. Dat is dus het framework dat de consumer en producer API's
+(van bijvoorbeeld Kafka) aan elkaar knoopt. Flink is een
+gedistribueerd framework.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org46bdc84">
+<h2 id="org46bdc84"><span class="section-number-2">3</span> Parallelisme</h2>
+<p>
+Een probleem met het traditionele model van computers: <b>Von Neumann bottleneck</b>.
+</p>
+
+
+<div id="org8de2bd6" class="figure">
+<p><img src="./images/vonneumann2.png" alt="vonneumann2.png" width="90%" style="border:2px solid white;" title="Von Neumann architectuur" />
+</p>
+<p><span class="figure-number">Figure 9: </span>Von Neumann architectuur</p>
+</div>
+
+<p>
+Processor en memory zitten aan weerskanten van een langzame geheugenbus. Instructies en data gaan via bus tussen processor en geheugen. 
+</p>
+
+</section>
+<section id="slide-orge17358c">
+<h3 id="orge17358c"><span class="section-number-3">3.1</span> CPU en memory innoveren niet op hetzelfde tempo</h3>
+
+<div id="orgcf54cfd" class="figure">
+<p><img src="./images/vonneumann3.png" alt="vonneumann3.png" width="50%" style="border:2px solid white;" title="Von Neumann architectuur" />
+</p>
+<p><span class="figure-number">Figure 10: </span>CPU verbetert veel sneller dan geheugen</p>
+</div>
+
+<p>
+CPU's kunnen nauwelijks sneller worden zonder enorme <a href="https://physics.stackexchange.com/questions/34766/how-does-power-consumption-vary-with-the-processor-frequency-in-a-typical-comput">toename in energieverbruik</a> (en zie ook <a href="https://www.comsol.com/blogs/havent-cpu-clock-speeds-increased-last-years/">hier</a>). De aandacht is verschoven naar <b>multicore</b> machines. 
+</p>
+
+</section>
+<section id="slide-orge80a95d">
+<h3 id="orge80a95d"><span class="section-number-3">3.2</span> Parallele architecturen kunnen misschien helpen</h3>
+<p>
+Verschillende vormen van parallel dataverwerken:
+</p>
+
+<ol>
+<li><b><b>Data parallelism</b></b>: Data wordt verspreid over verschillende computers. Elke computer heeft eigen CPU en geheugen.
+<ul>
+<li>Voorbeelden: Map/Reduce architectuur; bitcoin mining op GPU's; geavanceerde gaming setups.</li>
+
+</ul></li>
+<li><b><b>Task parallelism</b></b>: Data in een centraal geheugen. Verschillende processoren benaderen 
+<ul>
+<li>Voorbeeld: multicore machines</li>
+
+</ul></li>
+<li><b><b>Pipeline parallelism</b></b>: Hybride vorm: verschillende delen werken elk aan een onderdeel van het probleem.
+<ul>
+<li>Voorbeeld: verdeling van werk bij opbouwen geavanceerde graphics; lopende bandwerk in een fabriek.</li>
+
+</ul></li>
+
+</ol>
+
+</section>
+<section id="slide-orgc19a244">
+<h3 id="orgc19a244"><span class="section-number-3">3.3</span> Parallele architecturen kunnen misschien helpen</h3>
+<p>
+Verschillende vormen van parallel dataverwerken:
+</p>
+
+<p>
+<b><b>Data parallelism</b></b>: Data wordt verspreid over verschillende computers. Elke computer heeft eigen CPU en geheugen.
+</p>
+<ul>
+<li>Voorbeelden: Map/Reduce architectuur; bitcoin mining op GPU's; geavanceerde gaming setups.</li>
+
+</ul>
+
+<p>
+<b><b>Task parallelism</b></b>: Data in een centraal geheugen. Verschillende processoren benaderen 
+</p>
+<ul>
+<li>Voorbeeld: multicore machines</li>
+
+</ul>
+
+<p>
+<b><b>Pipeline parallelism</b></b>: Hybride vorm: verschillende delen werken elk aan een onderdeel van het probleem.
+</p>
+<ul>
+<li>Voorbeeld: verdeling van werk bij opbouwen geavanceerde graphics; lopende bandwerk in een fabriek.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-org14fbd3b">
+<h4 id="org14fbd3b"><span class="section-number-4">3.3.1</span> Data parallelism.</h4>
+
+<div id="orgdec70d3" class="figure">
+<p><img src="./images/dataparallelism.png" alt="dataparallelism.png" width="50%" style="border:2px solid white;" title="Data parallelism" />
+</p>
+<p><span class="figure-number">Figure 11: </span>In data parallelism werkt iedere CPU met een eigen stuk data.</p>
+</div>
+
+<p>
+Voorbeeld-probleem: vertaal alle karakters naar upper-case. 
+</p>
+
+<p>
+Probleem-eigenschappen:
+</p>
+<ol>
+<li>De data kan verdeeld worden, er is geen onderlinge afhankelijkheid van de data.</li>
+<li>Iedere taak kan zelfstandig uitgevoerd worden.</li>
+
+</ol>
+
+</section>
+<section id="slide-orgad451f4">
+<h4 id="orgad451f4"><span class="section-number-4">3.3.2</span> Task parallelism.</h4>
+
+<div id="orge2e0d1e" class="figure">
+<p><img src="./images/taskparallelism.png" alt="taskparallelism.png" width="50%" style="border:2px solid white;" title="Task parallelism" />
+</p>
+<p><span class="figure-number">Figure 12: </span>In task parallelism werken meerdere CPUs aan dexelfde data.</p>
+</div>
+
+<p>
+Voorbeeld-probleem: bereken het gemiddelde en minimum en maximum van een set getallen.
+</p>
+
+<p>
+Probleem-eigenschappen:
+</p>
+<ol>
+<li>De data kan alleen als set in het geheel benaderd worden. Bijv: gemiddelde is een eigenschap van de hele dataset.</li>
+<li>Elke taak afzonderlijk (gemiddelde, minimum, maximum) kan zelfstandig uitgevoerd worden.</li>
+
+</ol>
+
+</section>
+<section id="slide-org4db9eaf">
+<h4 id="org4db9eaf"><span class="section-number-4">3.3.3</span> Pipeline parallelism.</h4>
+
+<div id="org4f9bef0" class="figure">
+<p><img src="./images/pipelineparallelism.png" alt="pipelineparallelism.png" width="60%" style="border:2px solid white;" title="Pipeline parallelism" />
+</p>
+<p><span class="figure-number">Figure 13: </span>In pipeline parallelism wordt een probleem stapsgewijs verdeeld.</p>
+</div>
+
+<p>
+Voorbeeld-probleem: toepassen van serie bewerkingen op een set plaatjes.
+</p>
+
+<p>
+Probleem-eigenschappen:
+</p>
+<ol>
+<li>De data vereist verschillende bewerkingen.</li>
+<li>Iedere bewerking kan zelfstandig uitgevoerd worden.</li>
+
+</ol>
+
+</section>
+<section id="slide-org84b0449">
+<h3 id="org84b0449"><span class="section-number-3">3.4</span> Alternatieven voor computerarchitectuur</h3>
+
+<div id="orgd3f054c" class="figure">
+<p><img src="./images/newarchitectures.png" alt="newarchitectures.png" width="50%" style="border:2px solid white;" title="Alternatieve architecturen" />
+</p>
+<p><span class="figure-number">Figure 14: </span>Varianten van het Von Neumann model</p>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgd5a4f3c">
+<h2 id="orgd5a4f3c"><span class="section-number-2">4</span> Programma</h2>
+<p>
+Aanstaande vrijdag:
+</p>
+
+<ol>
+<li>We bespeken assignments 1 en 2.</li>
+<li>We doen voor hoe je importeert in Kafka, Flink en Spark.</li>
+
+</ol>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+slideNumber:true,
+width:"80%",
+height:"100%",
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+{ src: 'reveal.js/plugin/reveald3.js', async: true }, { src: 'plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({}); } }, { src: 'reveal.js/plugin/highlight/highlight.js', async: true },
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
 </body>
 </html>
