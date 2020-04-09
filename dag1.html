@@ -2,8 +2,8 @@
 <html lang="du">
 <head>
 <meta charset="utf-8"/>
-<title>Big Data System Design</title>
-<meta name="author" content="((link (:type mailto :path roelant.ossewaarde@hu.nl :format bracket :raw-link mailto:roelant.ossewaarde@hu.nl :application nil :search-option nil :begin 1 :end 57 :contents-begin 36 :contents-end 54 :post-blank 1 :parent #0) Roelant Ossewaarde) en  (link (:type mailto :path jos.vanreenen@hu.nl :format bracket :raw-link mailto:jos.vanreenen@hu.nl :application nil :search-option nil :begin 60 :end 106 :contents-begin 90 :contents-end 104 :post-blank 0 :parent #0) Jos van Reenen) , B 2019-2020)"/>
+<title>TAAI-V2DIP Distributed Processing</title>
+<meta name="author" content="((link (:type mailto :path roelant.ossewaarde@hu.nl :format bracket :raw-link mailto:roelant.ossewaarde@hu.nl :application nil :search-option nil :begin 1 :end 57 :contents-begin 36 :contents-end 54 :post-blank 1 :parent #0) Roelant Ossewaarde) , D 2019-2020)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -27,24 +27,24 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="images/huhl15.jpg"><h1>Big Data System Design</h1><h3>Introductie, thema's: V's, architecturen</h3><p><small><a href="mailto:roelant.ossewaarde@hu.nl">Roelant Ossewaarde</a> en <a href="mailto:jos.vanreenen@hu.nl">Jos van Reenen</a>, B 2019-2020</small></p>
+<section id="sec-title-slide" data-background="images/huhl15.jpg"><h1>TAAI-V2DIP Distributed Processing</h1><h3>Introductie, thema's: V's, architecturen</h3><p><small><a href="mailto:roelant.ossewaarde@hu.nl">Roelant Ossewaarde</a> , D 2019-2020</small></p>
 </section>
 
 <section>
-<section id="slide-orge54c1a8">
-<h2 id="orge54c1a8"><span class="section-number-2">1</span> Introductie</h2>
+<section id="slide-orged6c096">
+<h2 id="orged6c096"><span class="section-number-2">1</span> Introductie</h2>
 <p>
-Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/7548">Big Data System Design</a>. 
+Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/7561">AAI Distributed Processing</a>. 
 </p>
 
 </section>
-<section id="slide-org0350b40">
-<h3 id="org0350b40"><span class="section-number-3">1.1</span> Over Big Data</h3>
+<section id="slide-orgf2b91e6">
+<h3 id="orgf2b91e6"><span class="section-number-3">1.1</span> Over Big Data</h3>
 <a href="https://roelanto.shinyapps.io/bigdata1/" data-preview-link>Systemen</a> waarin data zó snel groeit dat de kosten van opslag en verwerking per datapunt hoger wordt dan de waarde er van.
 
 </section>
-<section id="slide-org89b038a">
-<h3 id="org89b038a"><span class="section-number-3">1.2</span> Visualizatie van typen data</h3>
+<section id="slide-org95f4212">
+<h3 id="org95f4212"><span class="section-number-3">1.2</span> Visualizatie van typen data</h3>
 
 <div class="figure">
 <p><img src="./images/growthofdata.png" alt="growthofdata.png" />
@@ -52,8 +52,8 @@ Deze slides horen bij de cursus <a href="https://canvas.hu.nl/courses/7548">Big 
 </div>
 
 </section>
-<section id="slide-orga444505">
-<h3 id="orga444505"><span class="section-number-3">1.3</span> Vijf V's</h3>
+<section id="slide-org4e7f8b3">
+<h3 id="org4e7f8b3"><span class="section-number-3">1.3</span> Vijf V's</h3>
 <p>
 De toename van het <b>volume</b> van data stelt nieuwe eisen aan de manier waarop we data opslaan (<b>storage</b>) en aan de manier waarop we data opvragen (<b>retrieval</b>).
 </p>
@@ -75,51 +75,43 @@ Voor sommige bedrijfsprocessen hoeft data niet per se 100% de werkelijkheid weer
 </p>
 
 </section>
-<section id="slide-org3c6b0b7">
-<h3 id="org3c6b0b7"><span class="section-number-3">1.4</span> Cursus outline</h3>
+<section id="slide-orgd532d8f">
+<h3 id="orgd532d8f"><span class="section-number-3">1.4</span> Cursus outline</h3>
 <p>
 Onderwerpen die we bespreken:
 </p>
 
 <ul>
+<li>Hoe je algoritmes in een Big Data omgeving distribueert.</li>
 <li>Big Data Architectuur
 <ul>
-<li>Attribute Driven Design (ADD)</li>
 <li>Lambda en Kappa architectuur</li>
 
 </ul></li>
 <li>Big Data Storage &amp; Retrieval
 <ul>
 <li>HDFS</li>
-<li>NoSQL</li>
+<li>NoSQL oplossingen</li>
 
 </ul></li>
 <li>Big Data Processing
 <ul>
-<li>(Parallel en gedistribueerd programmeren)</li>
+<li>Parallel en gedistribueerd programmeren</li>
 <li>MapReduce</li>
 <li>Stream processing (Apache Spark &amp; Flink)</li>
 
 </ul></li>
-<li>Big Data Analyse (Machine Learning)
-<ul>
-<li>Text analyse? Beeldherkenning?</li>
-
-</ul></li>
+<li>Big Data Analyse (Machine Learning)</li>
 
 </ul>
 
 </section>
-<section id="slide-org029208d" data-background="#dbdbed" class="table-small">
-<h3 id="org029208d"><span class="section-number-3">1.5</span> Programma</h3>
+<section id="slide-org86981ad" data-background="#dbdbed" class="table-small">
+<h3 id="org86981ad"><span class="section-number-3">1.5</span> Programma</h3>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="org-right" />
-
-<col  class="org-left" />
-
 <col  class="org-right" />
 
 <col  class="org-left" />
@@ -132,10 +124,8 @@ Onderwerpen die we bespreken:
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-right">Week</th>
+<th scope="col" class="org-right">Lesweek</th>
 <th scope="col" class="org-left">Dag</th>
-<th scope="col" class="org-right">Tijd</th>
-<th scope="col" class="org-left">Lokatie</th>
 <th scope="col" class="org-left">Onderwerp</th>
 <th scope="col" class="org-left">Opdracht</th>
 <th scope="col" class="org-left">Voorbereiding</th>
@@ -144,9 +134,7 @@ Onderwerpen die we bespreken:
 <tbody>
 <tr>
 <td class="org-right">1</td>
-<td class="org-left">wo 13 nov</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-Collegezaal 4</td>
+<td class="org-left">di 14 apr</td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag1.html">Introductie; NoSQL, Big Data</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
@@ -154,19 +142,15 @@ Onderwerpen die we bespreken:
 
 <tr>
 <td class="org-right">1</td>
-<td class="org-left">vr 15 nov</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-3.100 (klas A)/ 4.020 (klas B)</td>
+<td class="org-left">vr 17 apr</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">1</td>
-<td class="org-left"><a href="http://dx.doi.org/10.1016/j.chb.2014.09.030">MD3M model</a> (<a href="https://hu.on.worldcat.org/oclc/5693215120">bibliotheek</a>, <a href="https://canvas.hu.nl/files/507619/download?download_frd=1">Canvas</a>)</td>
+<td class="org-left"><a href="https://canvas.hu.nl/courses/7561/assignments/77191">Opdracht 1</a> inleveren</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-right">2</td>
-<td class="org-left">woe 21 nov</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left"><b>HL15-1.022, HL15-1.024</b></td>
+<td class="org-left">di 21 apr</td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag3.html">ADD, Apache ecostructuur</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left"><a href="http://ptgmedia.pearsoncmg.com/images/9780134390789/samplepages/9780134390789.pdf">Kazman, ch. 2</a></td>
@@ -174,39 +158,39 @@ Onderwerpen die we bespreken:
 
 <tr>
 <td class="org-right">2</td>
-<td class="org-left">vr 23 nov</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
+<td class="org-left">vr 24</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">1 inleveren</td>
+<td class="org-left">peer review 1 inleveren</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">**</td>
+<td class="org-left">**</td>
+<td class="org-left">Paasvakantie</td>
+<td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-right">3</td>
-<td class="org-left"><b>di 26 nov</b></td>
-<td class="org-right"><b>8:30-10:30</b></td>
-<td class="org-left">HL15-Collegezaal 4</td>
+<td class="org-left">di 5 mei</td>
+<td class="org-left">Bevrijdingsdag</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">vr 8 mei</td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag5.html">Nog meer architecturen, HDFS, dataopslag</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
-<td class="org-right">3</td>
-<td class="org-left">vr 29 nov</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">2</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
 <td class="org-right">4</td>
-<td class="org-left">wo 4 dec</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-Collegezaal 4</td>
+<td class="org-left">di 12 mei</td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag7.html">Streams &amp; Apache; Spark</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
@@ -214,19 +198,15 @@ Onderwerpen die we bespreken:
 
 <tr>
 <td class="org-right">4</td>
-<td class="org-left">vr 6 dec</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
+<td class="org-left">vr 15 mei</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">2 inleveren</td>
+<td class="org-left"><a href="https://canvas.hu.nl/courses/7561/assignments/77318">Opdracht 2</a> inleveren</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-right">5</td>
-<td class="org-left">wo 11 dec</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-Collegezaal 4</td>
+<td class="org-left">di 19 mei</td>
 <td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag9.html">Casus: actuele systemen</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left"><a href="https://www.infoq.com/articles/netflix-migrating-stream-processing">Case-study streaming Netflix</a></td>
@@ -234,19 +214,7 @@ Onderwerpen die we bespreken:
 
 <tr>
 <td class="org-right">5</td>
-<td class="org-left">vr 13 dec</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">3</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-right">6</td>
-<td class="org-left">wo 18 dec</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-Collegezaal 4</td>
+<td class="org-left">vr 22 mei</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
@@ -254,55 +222,48 @@ Onderwerpen die we bespreken:
 
 <tr>
 <td class="org-right">6</td>
-<td class="org-left">vr 20 dec</td>
-<td class="org-right">9:30-11:30</td>
-<td class="org-left">HL15-3.100 / 4.020</td>
-<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag12.html">Proeftentamen</a></td>
-<td class="org-left">3 inleveren</td>
+<td class="org-left">di 26 mei</td>
+<td class="org-left"><a href="https://huict.github.io/tict-vkbdsd-17/dag11.html">Proeftentamen, losse eindjes</a></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">vr 29 mei</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://canvas.hu.nl/courses/7561/assignments/77319">Opdracht 3</a> inleveren</td>
 <td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
 
-<p>
-Let op: 
-</p>
 <ul>
-<li>Wk 2: woensdag ander lokaal.</li>
-<li>Wk 3: di ipv woe, en een uur eerder.</li>
-<li>Deadlines voor opdrachten: vr 23 nov, 6 dec, 20 dec.</li>
+<li>De contactmomenten vinden steeds plaats via de discord-server.</li>
+<li><a href="https://canvas.hu.nl/courses/7561/assignments/77318">Opdracht 2</a> wordt ingeleverd via de <a href="https://www.kaggle.com/c/hu-dip-bike-rentals">Kaggle HU-DIP Bike Rentals competitie</a>.</li>
+<li><a href="https://canvas.hu.nl/courses/7561/assignments/77319">Opdracht 3</a> wordt ingeleverd via <a href="https://classroom.github.com/classrooms/18382135-hogeschool-utrecht-institute-for-ict-ai-dip">Github Classroom</a>.</li>
 
 </ul>
 
 </section>
-<section id="slide-org0baf662">
-<h3 id="org0baf662"><span class="section-number-3">1.6</span> Toetsing</h3>
+<section id="slide-orgea6bdd8">
+<h3 id="orgea6bdd8"><span class="section-number-3">1.6</span> Toetsing</h3>
 <ul>
-<li>Tentamen: 
-<ul>
-<li>Alle stof op Canvas.</li>
-<li>Alle stof in de slides.</li>
-<li><a href="http://dx.doi.org/10.1016/j.chb.2014.09.030">MD3M model</a> (Link via de <a href="https://hu.on.worldcat.org/oclc/5693215120">bibliotheek</a>, <a href="https://canvas.hu.nl/files/507619/download?download_frd=1">kopie op Canvas</a>)</li>
-<li><a href="http://ptgmedia.pearsoncmg.com/images/9780134390789/samplepages/9780134390789.pdf">hoofdstuk 2 van Cervantes &amp; Kazman "Designing Software Architectures"</a></li>
-<li><a href="https://www.infoq.com/articles/netflix-migrating-stream-processing">Case-study streaming Netflix</a></li>
-
-</ul></li>
 <li>Opdracht: 
 <ul>
 <li>Je moet elk van de opdrachten voldoende afronden.</li>
 <li>Er zijn drie opdrachten die meetellen voor je cijfer.</li>
-<li>Als je opdrachten te laat inlevert, kijken we die misschien pas aan het eind van het blok na.</li>
+<li>De opdrachten "volgen" op elkaar. Je kunt dus niet achterlopen.</li>
 
 </ul></li>
-<li>Studiebelasting: 140 uur, 5 ECTS.</li>
 
 </ul>
 
 </section>
 </section>
 <section>
-<section id="slide-org6cd83ff">
-<h2 id="org6cd83ff"><span class="section-number-2">2</span> Soorten data: OLTP vs OLAP</h2>
+<section id="slide-orgc161522">
+<h2 id="orgc161522"><span class="section-number-2">2</span> Soorten data: OLTP vs OLAP</h2>
 <p>
 Een belangrijke toepassing van databases is om een analyse te doen van data: <b>Online Analytic Processing</b> (OLAP). Opgezochte informatie wordt dan vaak gebruikt om bedrijfsprocessen te sturen; de database wordt gebruikt als <b>decision support system</b>. Een bedrijf wil bijvoorbeeld weten welke producten beter of juist minder goed verkopen.
 </p>
@@ -316,8 +277,8 @@ Als je een aankoop doet bij Albert Heijn wordt die geregistreerd in een OLTP-sys
 </p>
 
 </section>
-<section id="slide-orgd089769">
-<h3 id="orgd089769"><span class="section-number-3">2.1</span> Verschil OLTP en OLAP.</h3>
+<section id="slide-orgf4e5b74">
+<h3 id="orgf4e5b74"><span class="section-number-3">2.1</span> Verschil OLTP en OLAP.</h3>
 <p>
 OLTP gaat uit van sommige aannames:
 </p>
@@ -334,8 +295,8 @@ OLAP-queries zijn bijna altijd ad-hoc, en dus kun je de database niet vantevoren
 </p>
 
 </section>
-<section id="slide-org3e7c0a6">
-<h3 id="org3e7c0a6"><span class="section-number-3">2.2</span> Uitgewerkt voorbeeld</h3>
+<section id="slide-org7b7a236">
+<h3 id="org7b7a236"><span class="section-number-3">2.2</span> Uitgewerkt voorbeeld</h3>
 <p>
 Gegeven een standaard database met gegevens van <b>producten</b>, <b>winkels</b> en <b>verkoop</b>.
 </p>
@@ -347,8 +308,8 @@ Gegeven een standaard database met gegevens van <b>producten</b>, <b>winkels</b>
 </div>
 
 </section>
-<section id="slide-orgf1e2b73" data-background="./images/wpcoke.jpg" data-background-transition="slide" data-background-opacity="0.2">
-<h4 id="orgf1e2b73"><span class="section-number-4">2.2.1</span> Voorbeeld-query #1</h4>
+<section id="slide-orgfccd038" data-background="./images/wpcoke.jpg" data-background-transition="slide" data-background-opacity="0.2">
+<h4 id="orgfccd038"><span class="section-number-4">2.2.1</span> Voorbeeld-query #1</h4>
 <p>
 Hoe veel Prodent tandpasta hebben we gisteren verkocht in kleine gemeentes?
 </p>
@@ -374,8 +335,8 @@ Hoe veel Prodent tandpasta hebben we gisteren verkocht in kleine gemeentes?
 </div>
 
 </section>
-<section id="slide-org2a63509">
-<h4 id="org2a63509"><span class="section-number-4">2.2.2</span> Voorbeeld-query : opwarmen</h4>
+<section id="slide-org8b1a425">
+<h4 id="org8b1a425"><span class="section-number-4">2.2.2</span> Voorbeeld-query : opwarmen</h4>
 <p>
 Query 2: Hoe veel producten hebben we in vakantiedagen verkocht?
 </p>
@@ -414,8 +375,8 @@ Het antwoord moet zijn: 2006.
 </p>
 
 </section>
-<section id="slide-org1680a0d">
-<h4 id="org1680a0d"><span class="section-number-4">2.2.3</span> Voorbeeld-query: performance</h4>
+<section id="slide-orgfea4461">
+<h4 id="orgfea4461"><span class="section-number-4">2.2.3</span> Voorbeeld-query: performance</h4>
 <p>
 Query 4: Welke winkels verkopen best-sellers?
 </p>
@@ -454,8 +415,8 @@ Het antwoord moet zijn: 2004.
 </p>
 
 </section>
-<section id="slide-orgb44389a">
-<h3 id="orgb44389a"><span class="section-number-3">2.3</span> Sterschema: gedenormaliseerde database.</h3>
+<section id="slide-org31ae70a">
+<h3 id="org31ae70a"><span class="section-number-3">2.3</span> Sterschema: gedenormaliseerde database.</h3>
 <p>
 De objects of interest staan gegroepeerd in een <b>fact table</b> met zogenaamde <b>dependent attributes</b>, en alle eigenschappen staan in zogenaamde <b>dimension tables</b>. De fact table vormt het midden van de ster, en de dimension tables zijn de punten van de ster. Dimensies van een tabel met verkoop kunnen zijn: de datum van verkoop, de plaats van verkoop, het type item, de betaal-methode, etc. 
 </p>
@@ -465,8 +426,8 @@ In het eerste jaar in de database-cursus wordt juist een andere manier aangeleer
 </p>
 
 </section>
-<section id="slide-orgb72fbbe">
-<h4 id="orgb72fbbe"><span class="section-number-4">2.3.1</span> Star schema voorbeeld</h4>
+<section id="slide-orgaba6fdf">
+<h4 id="orgaba6fdf"><span class="section-number-4">2.3.1</span> Star schema voorbeeld</h4>
 <p>
 Dimensioneel (Star schema):
 <img src="./images/sales_star.png" alt="sales_star.png" />
@@ -481,8 +442,8 @@ Dimensioneel (Star schema):
 </ul>
 
 </section>
-<section id="slide-orgab8c678">
-<h4 id="orgab8c678"><span class="section-number-4">2.3.2</span> Star schema queries</h4>
+<section id="slide-org45e0ab0">
+<h4 id="org45e0ab0"><span class="section-number-4">2.3.2</span> Star schema queries</h4>
 <p>
 Query 2: Hoe veel producten hebben we in vakantiedagen verkocht?
 </p>
@@ -528,8 +489,8 @@ Query 4: Welke winkels verkopen best-sellers?
 </pre>
 
 </section>
-<section id="slide-orgcb73054">
-<h4 id="orgcb73054"><span class="section-number-4">2.3.3</span> Star schema: zelf doen</h4>
+<section id="slide-org7b1a251">
+<h4 id="org7b1a251"><span class="section-number-4">2.3.3</span> Star schema: zelf doen</h4>
 <p>
 Stel zelf de juiste queries op, maar nu in het star schema:
 </p>
@@ -564,8 +525,8 @@ Juiste antwoord: 2004
 
 
 </section>
-<section id="slide-org0f485b8">
-<h4 id="org0f485b8"><span class="section-number-4">2.3.4</span> Slicing en dicing</h4>
+<section id="slide-orgeebe070">
+<h4 id="orgeebe070"><span class="section-number-4">2.3.4</span> Slicing en dicing</h4>
 <p>
 Het is nu vrij eenvoudig om <i>per dimensie</i> de data samen te vatten:
 </p>
@@ -616,8 +577,8 @@ Verkopen per stad
 </pre>
 
 </section>
-<section id="slide-org41ff1cf">
-<h4 id="org41ff1cf"><span class="section-number-4">2.3.5</span> Combineren van dimensies</h4>
+<section id="slide-org2d18db6">
+<h4 id="org2d18db6"><span class="section-number-4">2.3.5</span> Combineren van dimensies</h4>
 <p>
 Verkopen per stad per fiscale periode:
 </p>
@@ -644,8 +605,8 @@ Verkopen per stad per fiscale periode:
 </pre>
 
 </section>
-<section id="slide-org2b8d31c">
-<h3 id="org2b8d31c"><span class="section-number-3">2.4</span> Slicing en dicing</h3>
+<section id="slide-orgac3cbaf">
+<h3 id="orgac3cbaf"><span class="section-number-3">2.4</span> Slicing en dicing</h3>
 <p>
 Soms willen we de granulariteit van een dimensie verminderen. We zijn bijvoorbeeld niet geïnteresseerd in individuele auto's, maar in auto's gegroepeerd naar merk of kleur; of we willen alle verkopen op een dag nauwkeurig, in plaats van op de seconde nauwkeurig weten. 
 </p>
@@ -659,8 +620,8 @@ Het groeperen in een kubus heet <b>dicing</b>. We zijn vaak geinteresseerd in é
 </p>
 
 </section>
-<section id="slide-orgc76fb4a">
-<h3 id="orgc76fb4a"><span class="section-number-3">2.5</span> De datakubus.</h3>
+<section id="slide-orgc2061f6">
+<h3 id="orgc2061f6"><span class="section-number-3">2.5</span> De datakubus.</h3>
 
 <div class="figure">
 <p><img src="./images/cube.png" alt="cube.png" />
@@ -670,8 +631,8 @@ Het groeperen in een kubus heet <b>dicing</b>. We zijn vaak geinteresseerd in é
 </section>
 </section>
 <section>
-<section id="slide-org12c0613">
-<h2 id="org12c0613"><span class="section-number-2">3</span> OLAP: Variety: Ongestructureerde data: text mining</h2>
+<section id="slide-org8d5b7f0">
+<h2 id="org8d5b7f0"><span class="section-number-2">3</span> OLAP: Variety: Ongestructureerde data: text mining</h2>
 <p>
 Eén van de vijf V's van big data: <b>variety</b>. 
 </p>
@@ -688,8 +649,8 @@ In de kern gaat het bij text mining om het "samenvatten van tekst": afleiden van
 
 
 </section>
-<section id="slide-orgb2bc57d">
-<h3 id="orgb2bc57d"><span class="section-number-3">3.1</span> Analyse van antwoorden op open vragen.</h3>
+<section id="slide-org93f05e9">
+<h3 id="org93f05e9"><span class="section-number-3">3.1</span> Analyse van antwoorden op open vragen.</h3>
 <p>
 Bijvoorbeeld: klant-contact data en het vinden van sentiment. 
 </p>
@@ -699,8 +660,8 @@ Big Data projecten: Vodafone-Ziggo project.
 </p>
 
 </section>
-<section id="slide-org5e9dd4a">
-<h3 id="org5e9dd4a"><span class="section-number-3">3.2</span> Automatisch categoriseren van berichten, email.</h3>
+<section id="slide-org948b820">
+<h3 id="org948b820"><span class="section-number-3">3.2</span> Automatisch categoriseren van berichten, email.</h3>
 <p>
 Bijvoorbeeld: routeren van klantcontacten. Implementatie achter chatbots. Detectie van spam. 
 </p>
@@ -710,15 +671,15 @@ In video: vinden van illegale kopieën van video's op youtube.
 </p>
 
 </section>
-<section id="slide-orge517710">
-<h3 id="orge517710"><span class="section-number-3">3.3</span> Analyse van notities, bijvoorbeeld overdrachten medische dossiers, warranty claims bij verzekeringen.</h3>
+<section id="slide-org34efaef">
+<h3 id="org34efaef"><span class="section-number-3">3.3</span> Analyse van notities, bijvoorbeeld overdrachten medische dossiers, warranty claims bij verzekeringen.</h3>
 <p>
 In video: detecteren van beweging. 
 </p>
 
 </section>
-<section id="slide-orgcb35d6d">
-<h3 id="orgcb35d6d"><span class="section-number-3">3.4</span> "Authorship attribution"</h3>
+<section id="slide-orgea7a9c4">
+<h3 id="orgea7a9c4"><span class="section-number-3">3.4</span> "Authorship attribution"</h3>
 <p>
 Gegeven een tekst, wie is de auteur? 
 </p>
@@ -732,8 +693,8 @@ Bijvoorbeeld: detectie van nepbellers bij de suicide hotlijn.
 </p>
 
 </section>
-<section id="slide-orgfbe1c54">
-<h3 id="orgfbe1c54"><span class="section-number-3">3.5</span> Named-Entity-Recognition.</h3>
+<section id="slide-orgf9ff62f">
+<h3 id="orgf9ff62f"><span class="section-number-3">3.5</span> Named-Entity-Recognition.</h3>
 <p>
 Herkennen van namen en persoonsgerelateerde informatie. 
 </p>
@@ -758,8 +719,8 @@ In video: detecteren van objecten.
 </section>
 </section>
 <section>
-<section id="slide-orgef7d636">
-<h2 id="orgef7d636"><span class="section-number-2">4</span> OLTP: Velocity: streaming data</h2>
+<section id="slide-org330c646">
+<h2 id="org330c646"><span class="section-number-2">4</span> OLTP: Velocity: streaming data</h2>
 <p>
 Een <b>stream</b> is een <i>unbounded, continuous, real-time flow of records</i>.
 </p>
@@ -784,8 +745,8 @@ Voorbeelden:
 
 
 </section>
-<section id="slide-orgf36deb3">
-<h3 id="orgf36deb3"><span class="section-number-3">4.1</span> Waarom is dat anders?</h3>
+<section id="slide-orge922d95">
+<h3 id="orge922d95"><span class="section-number-3">4.1</span> Waarom is dat anders?</h3>
 <p>
 Voor sommige inzichten geldt: de waarde (<i>value</i>) neemt af als het langer duurt tussen het verkrijgen van de data en het berekenen van het inzicht. 
 </p>
@@ -803,8 +764,8 @@ Bijvoorbeeld: bewegingsdetectie in beveiligingscamera's.
 </p>
 
 </section>
-<section id="slide-org2611fd6">
-<h3 id="org2611fd6"><span class="section-number-3">4.2</span> Realtime data is lastig voor een "batch"-model.</h3>
+<section id="slide-orgc81646d">
+<h3 id="orgc81646d"><span class="section-number-3">4.2</span> Realtime data is lastig voor een "batch"-model.</h3>
 <p>
 Data komt binnen als een continue stroom <i>events</i>. 
 </p>
@@ -821,13 +782,13 @@ Data komt binnen als een continue stroom <i>events</i>.
 </section>
 </section>
 <section>
-<section id="slide-orgbf4a3bd">
-<h2 id="orgbf4a3bd"><span class="section-number-2">5</span> Vooruitblik</h2>
+<section id="slide-org2dd1b28">
+<h2 id="org2dd1b28"><span class="section-number-2">5</span> Vooruitblik</h2>
 <div class="outline-text-2" id="text-5">
 </div>
 </section>
-<section id="slide-org5510e79">
-<h3 id="org5510e79"><span class="section-number-3">5.1</span> Vrijdag: oefenen met:</h3>
+<section id="slide-org07597df">
+<h3 id="org07597df"><span class="section-number-3">5.1</span> Vrijdag: oefenen met:</h3>
 <ul>
 <li>opstellen van functionele eisen met het MD3M-model.</li>
 <li>stoeien met data warehousing (SQL-queries).</li>
@@ -854,7 +815,7 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
-{ src: 'reveal.js/plugin/reveald3.js', async: true },
+{ src: 'reveal.js/plugin/reveald3.js', async: true }, { src: 'plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({}); } }, { src: 'reveal.js/plugin/highlight/highlight.js', async: true },
  { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
  { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
  { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
